@@ -1,4 +1,9 @@
 # react-stickynode
+[![npm version](https://badge.fury.io/js/react-stickynode.svg)](http://badge.fury.io/js/react-stickynode)
+[![Build Status](https://travis-ci.org/yahoo/react-stickynode.svg?branch=master)](https://travis-ci.org/yahoo/react-stickynode)
+[![Coverage Status](https://coveralls.io/repos/yahoo/react-stickynode/badge.svg)](https://coveralls.io/r/yahoo/react-stickynode)
+[![Dependency Status](https://david-dm.org/yahoo/react-stickynode.svg)](https://david-dm.org/yahoo/react-stickynode)
+[![devDependency Status](https://david-dm.org/yahoo/react-stickynode/dev-status.svg)](https://david-dm.org/yahoo/react-stickynode#info=devDependencies)
 
 A performant and comprehensive React sticky component.
 
