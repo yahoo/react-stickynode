@@ -28,7 +28,6 @@
   ],
   "dependencies": {
     "classnames": "^2.0.0",
-    "react": "^0.13.x",
     "subscribe-ui-event": "^0.2.0"
   },
   "devDependencies": {
