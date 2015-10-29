@@ -6,6 +6,7 @@
   "scripts": {
     "build": "grunt react",
     "devtest": "grunt unit",
+    "func": "./tests/functional/saucelabs.sh",
     "lint": "jshint",
     "test": "grunt cover"
   },
