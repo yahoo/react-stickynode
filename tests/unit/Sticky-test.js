@@ -70,27 +70,27 @@ describe('Sticky', function () {
     };
 
     function shouldBeFixedAt (t, pos) {
-        expect(t.getAttribute('style')).to.contain('width: 100px');
-        expect(t._style.transform).to.be('translate3d(0,' + pos + 'px,0)');
-        expect(t.className).to.contain('Pos(f)');
-        expect(t.className).to.contain('T(0)');
+        expect(t.style.width).to.contain('100px');
+        // expect(t._style).to.contain('translate3d(0,' + pos + 'px,0)');
+        expect(t.style.position).to.be('fixed');
+        expect(t.style.top).to.be('0px');
     }
 
     function shouldBeReleasedAt (t, pos) {
-        expect(t.getAttribute('style')).to.contain('width: 100px');
-        expect(t._style.transform).to.be('translate3d(0,' + pos + 'px,0)');
-        expect(t.className).to.not.contain('Pos(f)');
-        expect(t.className).to.not.contain('T(0)');
+        expect(t.style.width).to.be('100px');
+        // expect(t._style.transform).to.be('translate3d(0,' + pos + 'px,0)');
+        expect(t.style.position).to.be('relative');
+        expect(t.style.top).to.be('');
     }
 
     function shouldBeReset (t) {
-        if (typeof t._style === 'string') {
-            expect(t._style).to.be('transform:translate3d(0,0px,0);');
-        } else {
-            expect(t._style.transform).to.be('translate3d(0,0px,0)');
-        }
-        expect(t.className).to.not.contain('Pos(f)');
-        expect(t.className).to.not.contain('T(0)');
+        // if (typeof t._style === 'string') {
+        //     expect(t._style).to.be('transform:translate3d(0,0px,0);');
+        // } else {
+        //     expect(t._style.transform).to.be('translate3d(0,0px,0)');
+        // }
+        expect(t.style.position).to.be('relative');
+        expect(t.style.top).to.be('');
     }
 
     beforeEach(function () {
