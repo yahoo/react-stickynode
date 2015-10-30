@@ -46,6 +46,9 @@ var StickyDemo = React.createClass({
                 <div id='ref' className='IbBox W(1/4)'>
                     <TestText className='H(1500px) Bgc(#defd35)'/>
                 </div>
+                <div className='IbBox W(1/4)'>
+                    <TestText className='H(1800px) Bgc(#defd35)'/>
+                </div>
             </div>
         );
     }

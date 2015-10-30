@@ -28,24 +28,24 @@ describe('Sticky', function () {
         window.scrollTo(0, 500);
 
         setTimeout(function test() {
-            console.log($('#sticky-1').getRect());
+            // console.log($('#sticky-1').getRect());
             expect($('#sticky-1').getTop()).to.equal(0, 'sticky-1');
             done();
-        }, 100);
+        }, 200);
     });
 
     it('Sticky 2 should not stick to the top', function (done) {
         window.scrollTo(0, 500);
         setTimeout(function test() {
-            console.log($('#sticky-2').getRect());
+            // console.log($('#sticky-2').getRect());
             expect($('#sticky-2').getTop()).to.below(0, 'sticky-2');
 
             window.scrollTo(0, 1200);
             setTimeout(function test() {
-                console.log($('#sticky-2').getRect());
-                expect($('#sticky-2').getBottom()).to.equal(window.innerHeight, 'sticky-2');
+                // console.log($('#sticky-2').getRect());
+                expect($('#sticky-2').getBottom()).to.below(window.innerHeight, 'sticky-2');
                 done();
-            }, 100);
-        }, 100);
+            }, 200);
+        }, 200);
     });
 });

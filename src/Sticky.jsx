@@ -327,6 +327,9 @@ var Sticky = React.createClass({
             style.width = this.state.width;
         }
 
+        window.myState = this.state;
+        window.myProps = this.props;
+
         return (
             <div ref='outer' className={classNames('sticky-outer-wrapper', this.props.className)}>
                 <div ref='inner' className='sticky-inner-wrapper' style={style}>

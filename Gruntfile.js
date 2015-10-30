@@ -84,7 +84,7 @@ module.exports = function (grunt) {
             // used by functional tests
             functional: {
                 files: [{
-                    src: ['<%= project.src %>/*.jsx', 'tests/**/*.jsx'],
+                    src: ['<%= project.src %>/*.jsx', 'tests/**/*.jsx', 'tests/**/*.html'],
                     dest: 'tests/functional/css/atomic.css'
                 }]
             }
@@ -205,11 +205,6 @@ module.exports = function (grunt) {
                     },
                     throttled: 3,
                     browsers: [
-                        {
-                            browserName: 'internet explorer',
-                            platform: 'Windows 7',
-                            version: '8'
-                        },
                         {
                             browserName: 'internet explorer',
                             platform: 'Windows 7',
