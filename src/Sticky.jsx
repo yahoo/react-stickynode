@@ -13,16 +13,16 @@ var shallowCompare = require('react-addons-shallow-compare');
 var subscribe = require('subscribe-ui-event').subscribe;
 
 // constants
-var STATUS_ORIGINAL = 0;// The default status, locating at the original position.
-var STATUS_RELEASED = 1;// The released status, locating at somewhere on document but not default one.
-var STATUS_FIXED = 2;// The sticky status, locating fixed to the top or the bottom of screen.
+var STATUS_ORIGINAL = 0; // The default status, locating at the original position.
+var STATUS_RELEASED = 1; // The released status, locating at somewhere on document but not default one.
+var STATUS_FIXED = 2; // The sticky status, locating fixed to the top or the bottom of screen.
 var TRANSFORM_PROP = 'transform';
 
 // global variable for all instances
 var doc;
 var docBody;
 var docEl;
-var enableTransforms = true;// Use transform by default, so no Sticky on lower-end browser when no Modernizr
+var enableTransforms = true; // Use transform by default, so no Sticky on lower-end browser when no Modernizr
 var M;
 var scrollDelta = 0;
 var scrollTop = -1;
