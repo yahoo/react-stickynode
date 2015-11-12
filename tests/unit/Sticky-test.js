@@ -10,7 +10,7 @@ process.env.NODE_ENV = 'development';
 var jsx = require('jsx-test').jsxTranspile(process.env.COVERAGE);
 
 var ae;
-var ee = require('../../../node_modules/subscribe-ui-event/dist/eventEmitter').eventEmitter;
+var ee = require('subscribe-ui-event/dist/eventEmitter').eventEmitter;
 var expect = require('expect.js');
 var inner;
 var outer;
@@ -92,8 +92,6 @@ function shouldBeReset (t) {
     expect(t.style.position).to.be('relative');
     expect(t.style.top).to.be('');
 }
-
-
 
 describe('Sticky', function () {
     beforeEach(function () {

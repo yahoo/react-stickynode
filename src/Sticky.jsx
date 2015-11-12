@@ -336,7 +336,7 @@ var Sticky = React.createClass({
                 </div>
             </div>
         );
-    }
+    },
 });
 
 module.exports = Sticky;
