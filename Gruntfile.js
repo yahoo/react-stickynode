@@ -14,7 +14,7 @@ module.exports = function (grunt) {
         'grunt-contrib-connect',
         'grunt-contrib-jshint',
         'grunt-contrib-watch',
-        'grunt-react',
+        'grunt-babel',
         'grunt-shell',
         'grunt-webpack'
     ].forEach(function (packageName) {
@@ -91,8 +91,11 @@ module.exports = function (grunt) {
         },
         // react
         // compiles jsx to js
-        react: {
+        babel: {
             dist: {
+                options: {
+                    sourceMap: false
+                },
                 files: [
                     {
                         expand: true,
@@ -105,6 +108,9 @@ module.exports = function (grunt) {
                 ]
             },
             functional: {
+                options: {
+                    sourceMap: false
+                },
                 files: [
                     {
                         expand: true,
@@ -265,7 +271,7 @@ module.exports = function (grunt) {
     // 9. run protractor
     grunt.registerTask('functional', [
         'atomizer:functional',
-        'react:functional',
+        'babel:functional',
         'webpack:functional',
         'connect:functional',
         'saucelabs-mocha',
@@ -275,7 +281,7 @@ module.exports = function (grunt) {
     // similar to functional, but don't run protractor, just open the test page
     grunt.registerTask('functional-debug', [
         'atomizer:functional',
-        'react:functional',
+        'babel:functional',
         'webpack:functional',
         'connect:functionalOpen',
         'watch:functional'
@@ -289,8 +295,8 @@ module.exports = function (grunt) {
     grunt.registerTask('cover', [
         'clean:tmp',
         'clean:dist',
-        'react:unit',
-        'react:dist',
+        'babel:unit',
+        'babel:dist',
         'shell:istanbul',
         'clean:tmp'
     ]);
@@ -298,16 +304,16 @@ module.exports = function (grunt) {
     grunt.registerTask('unit', [
         'clean:tmp',
         'clean:dist',
-        'react:unit',
-        'react:dist',
+        'babel:unit',
+        'babel:dist',
         'shell:mocha'
     ]);
 
     // dist
     // 1. clean dist/
     // 2. compile jsx to js in dist/
-    grunt.registerTask('dist', ['clean:dist', 'react:dist']);
-    grunt.registerTask('test', ['clean:dist', 'react:dist', 'clean:tmp', 'react:unit']);
+    grunt.registerTask('dist', ['clean:dist', 'babel:dist']);
+    grunt.registerTask('test', ['clean:dist', 'babel:dist', 'clean:tmp', 'babel:unit']);
 
     // default
     grunt.registerTask('default', ['dist']);

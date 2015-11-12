@@ -6,11 +6,11 @@
 
 'use strict';
 
-var React = require('react/addons');
+var React = require('react');
 
 var classNames = require('classnames');
+var shallowCompare = require('react-addons-shallow-compare');
 var subscribe = require('subscribe-ui-event').subscribe;
-var PureRenderMixin = React.addons.PureRenderMixin;
 
 // constants
 var STATUS_ORIGINAL = 0; // The default status, locating at the original position.
@@ -45,8 +45,6 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
 }
 
 var Sticky = React.createClass({
-    mixins: [PureRenderMixin],
-
     /**
      * @param {Bool} enabled A switch to enable or disable Sticky.
      * @param {String/Number} top A top offset px for Sticky. Could be a selector representing a node
@@ -172,8 +170,8 @@ var Sticky = React.createClass({
      */
     updateInitialDimension: function () {
         this.timer = +new Date;
-        var outer = React.findDOMNode(this.refs.outer);
-        var inner = React.findDOMNode(this.refs.inner);
+        var outer = this.refs.outer;
+        var inner = this.refs.inner;
         var outerRect = outer.getBoundingClientRect();
 
         var width = outer.offsetWidth;
@@ -313,6 +311,10 @@ var Sticky = React.createClass({
         }
     },
 
+    shouldComponentUpdate: function(nextProps, nextState) {
+        return shallowCompare(this, nextProps, nextState);
+    },
+
     render: function () {
         // TODO, "overflow: auto" prevents collapse, need a good way to get children height
         var style = {
@@ -337,7 +339,7 @@ var Sticky = React.createClass({
                 </div>
             </div>
         );
-    }
+    },
 });
 
 module.exports = Sticky;
