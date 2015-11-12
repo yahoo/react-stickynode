@@ -9,7 +9,7 @@
 process.env.NODE_ENV = 'development';
 var jsx = require('jsx-test').jsxTranspile(process.env.COVERAGE);
 
-var React = require('react');
+var ReactDOM = require('react-dom');
 var ee = require('../../../node_modules/subscribe-ui-event/dist/eventEmitter').eventEmitter;
 var expect = require('expect.js');
 
@@ -104,7 +104,7 @@ describe('Sticky', function () {
 
     it('should work as expected (short Sticky)', function () {
         sticky = jsx.renderComponent(Sticky);
-        outer = React.findDOMNode(sticky);
+        outer = ReactDOM.findDOMNode(sticky);
         inner = outer.firstChild;
 
         // regular case
@@ -125,7 +125,7 @@ describe('Sticky', function () {
     it('should work as expected (long Sticky)', function () {
         STICKY_HEIGHT = 1200;
         sticky = jsx.renderComponent(Sticky);
-        outer = React.findDOMNode(sticky);
+        outer = ReactDOM.findDOMNode(sticky);
         inner = outer.firstChild;
 
         // regular case
@@ -162,7 +162,7 @@ describe('Sticky', function () {
     it('should work as expected with original postion 20px from top (short Sticky)', function () {
         STICKY_TOP = 20;
         sticky = jsx.renderComponent(Sticky);
-        outer = React.findDOMNode(sticky);
+        outer = ReactDOM.findDOMNode(sticky);
         inner = outer.firstChild;
 
         // regular case
@@ -185,7 +185,7 @@ describe('Sticky', function () {
         sticky = jsx.renderComponent(Sticky, {
             bottomBoundary: 400
         });
-        outer = React.findDOMNode(sticky);
+        outer = ReactDOM.findDOMNode(sticky);
         inner = outer.firstChild;
 
         // regular case
@@ -211,7 +211,7 @@ describe('Sticky', function () {
         sticky = jsx.renderComponent(Sticky, {
             bottomBoundary: 200
         });
-        outer = React.findDOMNode(sticky);
+        outer = ReactDOM.findDOMNode(sticky);
         inner = outer.firstChild;
 
         // regular case
@@ -235,7 +235,7 @@ describe('Sticky', function () {
             top: '#test',
             bottomBoundary: '#test'
         });
-        outer = React.findDOMNode(sticky);
+        outer = ReactDOM.findDOMNode(sticky);
         inner = outer.firstChild;
 
         // regular case
