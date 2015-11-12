@@ -9,14 +9,26 @@
 process.env.NODE_ENV = 'development';
 var jsx = require('jsx-test').jsxTranspile(process.env.COVERAGE);
 
-var React = require('react');
-var ee = require('../../../node_modules/subscribe-ui-event/dist/eventEmitter').eventEmitter;
+var ae;
+var ee = require('subscribe-ui-event/dist/eventEmitter').eventEmitter;
 var expect = require('expect.js');
+var inner;
+var outer;
+var ReactDOM = require('react-dom');
+var Sticky = require('../../../dist/Sticky');
+var sticky;
 
 var STICKY_WIDTH = 100;
 var STICKY_HEIGHT = 300;
 var STICKY_TOP = 0;
 var SCROLL_POS = 0;
+
+ae = {
+    scroll: {
+        top: SCROLL_POS,
+        delta: 0
+    }
+};
 
 window.HTMLElement.prototype.getBoundingClientRect = function () {
     return {
@@ -49,50 +61,39 @@ Object.defineProperties(window.HTMLElement.prototype, {
     }
 });
 
+window.scrollTo = function (x, y) {
+    SCROLL_POS = y;
+    ae.scroll.delta = SCROLL_POS - ae.scroll.top;
+    ae.scroll.top = SCROLL_POS;
+    ee.emit('scrollStart:15:raf', {}, ae);
+    ee.emit('scroll:15:raf', {}, ae);
+};
+
+function shouldBeFixedAt (t, pos) {
+    expect(t.style.width).to.contain('100px');
+    // expect(t._style).to.contain('translate3d(0,' + pos + 'px,0)');
+    expect(t.style.position).to.be('fixed');
+    expect(t.style.top).to.be('0px');
+}
+
+function shouldBeReleasedAt (t, pos) {
+    expect(t.style.width).to.be('100px');
+    // expect(t._style.transform).to.be('translate3d(0,' + pos + 'px,0)');
+    expect(t.style.position).to.be('relative');
+    expect(t.style.top).to.be('');
+}
+
+function shouldBeReset (t) {
+    // if (typeof t._style === 'string') {
+    //     expect(t._style).to.be('transform:translate3d(0,0px,0);');
+    // } else {
+    //     expect(t._style.transform).to.be('translate3d(0,0px,0)');
+    // }
+    expect(t.style.position).to.be('relative');
+    expect(t.style.top).to.be('');
+}
+
 describe('Sticky', function () {
-    var Sticky = require('../../../dist/Sticky');
-    var sticky;
-    var outer;
-    var inner;
-    var ae = {
-        scroll: {
-            top: SCROLL_POS,
-            delta: 0
-        }
-    };
-
-    window.scrollTo = function (x, y) {
-        SCROLL_POS = y;
-        ae.scroll.delta = SCROLL_POS - ae.scroll.top;
-        ae.scroll.top = SCROLL_POS;
-        ee.emit('scrollStart:15:raf', {}, ae);
-        ee.emit('scroll:15:raf', {}, ae);
-    };
-
-    function shouldBeFixedAt (t, pos) {
-        expect(t.style.width).to.contain('100px');
-        // expect(t._style).to.contain('translate3d(0,' + pos + 'px,0)');
-        expect(t.style.position).to.be('fixed');
-        expect(t.style.top).to.be('0px');
-    }
-
-    function shouldBeReleasedAt (t, pos) {
-        expect(t.style.width).to.be('100px');
-        // expect(t._style.transform).to.be('translate3d(0,' + pos + 'px,0)');
-        expect(t.style.position).to.be('relative');
-        expect(t.style.top).to.be('');
-    }
-
-    function shouldBeReset (t) {
-        // if (typeof t._style === 'string') {
-        //     expect(t._style).to.be('transform:translate3d(0,0px,0);');
-        // } else {
-        //     expect(t._style.transform).to.be('translate3d(0,0px,0)');
-        // }
-        expect(t.style.position).to.be('relative');
-        expect(t.style.top).to.be('');
-    }
-
     beforeEach(function () {
         STICKY_WIDTH = 100;
         STICKY_HEIGHT = 300;
@@ -102,9 +103,13 @@ describe('Sticky', function () {
         ae.scroll.delta = 0;
     });
 
+    afterEach(function () {
+        jsx.unmountComponent();
+    });
+
     it('should work as expected (short Sticky)', function () {
         sticky = jsx.renderComponent(Sticky);
-        outer = React.findDOMNode(sticky);
+        outer = ReactDOM.findDOMNode(sticky);
         inner = outer.firstChild;
 
         // regular case
@@ -125,7 +130,7 @@ describe('Sticky', function () {
     it('should work as expected (long Sticky)', function () {
         STICKY_HEIGHT = 1200;
         sticky = jsx.renderComponent(Sticky);
-        outer = React.findDOMNode(sticky);
+        outer = ReactDOM.findDOMNode(sticky);
         inner = outer.firstChild;
 
         // regular case
@@ -162,7 +167,7 @@ describe('Sticky', function () {
     it('should work as expected with original postion 20px from top (short Sticky)', function () {
         STICKY_TOP = 20;
         sticky = jsx.renderComponent(Sticky);
-        outer = React.findDOMNode(sticky);
+        outer = ReactDOM.findDOMNode(sticky);
         inner = outer.firstChild;
 
         // regular case
@@ -185,7 +190,7 @@ describe('Sticky', function () {
         sticky = jsx.renderComponent(Sticky, {
             bottomBoundary: 400
         });
-        outer = React.findDOMNode(sticky);
+        outer = ReactDOM.findDOMNode(sticky);
         inner = outer.firstChild;
 
         // regular case
@@ -211,7 +216,7 @@ describe('Sticky', function () {
         sticky = jsx.renderComponent(Sticky, {
             bottomBoundary: 200
         });
-        outer = React.findDOMNode(sticky);
+        outer = ReactDOM.findDOMNode(sticky);
         inner = outer.firstChild;
 
         // regular case
@@ -235,7 +240,7 @@ describe('Sticky', function () {
             top: '#test',
             bottomBoundary: '#test'
         });
-        outer = React.findDOMNode(sticky);
+        outer = ReactDOM.findDOMNode(sticky);
         inner = outer.firstChild;
 
         // regular case

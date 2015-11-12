@@ -1,6 +1,6 @@
 {
   "name": "react-stickynode",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "description": "A performant and comprehensive React sticky",
   "main": "index.js",
   "scripts": {
@@ -30,6 +30,7 @@
   ],
   "dependencies": {
     "classnames": "^2.0.0",
+    "react-addons-shallow-compare": "0.14.x",
     "subscribe-ui-event": "^0.2.0"
   },
   "devDependencies": {
@@ -38,12 +39,12 @@
     "es5-shim": "^4.0.0",
     "expect.js": "^0.3.1",
     "grunt-atomizer": "^3.0.0",
+    "grunt-babel": "^5.0.0",
     "grunt-cli": "^0.1.13",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-connect": "^0.11.2",
     "grunt-contrib-jshint": "^0.11.2",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-react": "^0.12.2",
     "grunt-saucelabs": "^8.3.2",
     "grunt-shell": "^1.1.2",
     "grunt-webpack": "^1.0.8",
@@ -52,16 +53,18 @@
     "jsdom": "^7.0.2",
     "jshint": "^2.5.1",
     "jsx-loader": "^0.13.2",
-    "jsx-test": "^0.7.6",
+    "jsx-test": "^0.8.0",
     "minimist": "^1.2.0",
     "mocha": "^2.0",
     "mockery": "^1.4.0",
     "pre-commit": "^1.0.0",
-    "react": "<=0.13.x",
+    "react-dom": "0.14.x",
+    "react": "0.14.x",
     "xunit-file": "^0.0.8"
   },
   "peerDependencies": {
-    "react": "<0.14.0"
+    "react": "0.14.x",
+    "react-dom": "0.14.x"
   },
   "precommit": [
     "lint",
