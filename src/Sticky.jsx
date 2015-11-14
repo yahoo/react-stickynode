@@ -322,7 +322,6 @@ var Sticky = React.createClass({
             position: this.state.status === STATUS_FIXED ? 'fixed' : 'relative',
             top: this.state.status === STATUS_FIXED ? '0' : ''
         };
-        console.log('======', M, enableTransforms, TRANSFORM_PROP);
 
         // always use translate3d to enhance the performance
         this.translate(style, this.state.pos);
