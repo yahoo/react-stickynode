@@ -32,7 +32,7 @@ var TestText = React.createClass({
 var StickyDemo = React.createClass({
     render: function () {
         return (
-            <div>
+            <div className='H(1800px)'>
                 <div className='IbBox W(1/4)'>
                     <Sticky>
                         <TestText id='sticky-1' className='H(300px) Bgc(#defd35)'/>
@@ -43,11 +43,13 @@ var StickyDemo = React.createClass({
                         <TestText id='sticky-2' className='H(1200px) Bgc(#defd35)'/>
                     </Sticky>
                 </div>
+                <div className='IbBox W(1/4)'>
+                    <Sticky>
+                        <TestText id='sticky-2' className='H(1200px) Bgc(#defd35)'/>
+                    </Sticky>
+                </div>
                 <div id='ref' className='IbBox W(1/4)'>
                     <TestText className='H(1500px) Bgc(#defd35)'/>
-                </div>
-                <div className='IbBox W(1/4)'>
-                    <TestText className='H(1800px) Bgc(#defd35)'/>
                 </div>
             </div>
         );

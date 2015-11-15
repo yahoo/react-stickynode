@@ -28,6 +28,10 @@ This is also inspired by [Steve Carlson](https://github.com/src-code).
 
 ## Usage
 
+The sticky uses Modernizr `csstransforms3d` and `prefixed` features to detect IE8/9, so it can downgrade to not use transform3d.
+
+http://modernizr.com/download/?-csstransforms3d-prefixed
+
 ```js
 var Sticky = require('react-stickynode');
 <Sticky enabled={true} top={50} bottomBoundary={1200}>
