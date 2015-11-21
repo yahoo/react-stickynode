@@ -28,7 +28,7 @@ This is also inspired by [Steve Carlson](https://github.com/src-code).
 
 ## Usage
 
-The sticky uses Modernizr `csstransforms3d` and `prefixed` features to detect IE8/9, so it can downgrade to not use transform3d.
+The sticky uses Modernizr `csstransforms3d` and `prefixed` features to detect IE8/9, so it can downgrade not to use transform3d.
 
 http://modernizr.com/download/?-csstransforms3d-prefixed
 
@@ -39,11 +39,18 @@ var Sticky = require('react-stickynode');
 </Sticky>
 ```
 
+```js
+var Sticky = require('react-stickynode');
+<Sticky top='#header' bottomBoundary='#content'>
+    <YourComponent/>
+</Sticky>
+```
+
 ### Props
 
-- enabled {Bool} - The switch to enable or disable Sticky (true by default).
-- top {Number/String} - The offset from the top of window where the top of the element will be when sticky state is triggered (0 by default). If it is a selector to a target (via `querySelector()`), the offset will be the height of the target.
-- bottomBoundary {Number/String} - The offset from the top of document which release state will be triggered when the bottom of the element reaches at. If it is a selector to a target (via `querySelector()`), the offset will be the bottom of the target.
+- `enabled {Boolean}` - The switch to enable or disable Sticky (true by default).
+- `top {Number/String}` - The offset from the top of window where the top of the element will be when sticky state is triggered (0 by default). If it is a selector to a target (via `querySelector()`), the offset will be the height of the target.
+- `bottomBoundary {Number/String}` - The offset from the top of document which release state will be triggered when the bottom of the element reaches at. If it is a selector to a target (via `querySelector()`), the offset will be the bottom of the target.
 
 ## Install & Development
 
