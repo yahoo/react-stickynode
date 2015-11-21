@@ -9,6 +9,7 @@
 var React = require('react');
 
 var classNames = require('classnames');
+var propTypes = React.PropTypes;
 var shallowCompare = require('react-addons-shallow-compare');
 var subscribe = require('subscribe-ui-event').subscribe;
 
@@ -45,6 +46,7 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
 }
 
 var Sticky = React.createClass({
+    autobind: false,
     /**
      * @param {Bool} enabled A switch to enable or disable Sticky.
      * @param {String/Number} top A top offset px for Sticky. Could be a selector representing a node
@@ -53,15 +55,15 @@ var Sticky = React.createClass({
      *        Could be a selector representing a node whose bottom should serve as the bottom boudary.
      */
     propTpes: {
-        enabled: React.PropTypes.bool,
-        top: React.PropTypes.oneOfType([
-            React.PropTypes.string,
-            React.PropTypes.number
+        enabled: propTypes.bool,
+        top: propTypes.oneOfType([
+            propTypes.string,
+            propTypes.number
         ]),
-        bottomBoundary: React.PropTypes.oneOfType([
-            React.PropTypes.object,  // TODO, may remove
-            React.PropTypes.string,
-            React.PropTypes.number
+        bottomBoundary: propTypes.oneOfType([
+            propTypes.object,  // TODO, may remove
+            propTypes.string,
+            propTypes.number
         ])
     },
 
@@ -103,13 +105,14 @@ var Sticky = React.createClass({
     },
 
     getTopPosition: function () {
+        var self = this;
         // TODO, topTarget is for current layout, may remove
-        var top = this.props.top || this.props.topTarget || 0;
+        var top = self.props.top || self.props.topTarget || 0;
         if (typeof top === 'string') {
-            if (!this.topTarget) {
-                this.topTarget = doc.querySelector(top);
+            if (!self.topTarget) {
+                self.topTarget = doc.querySelector(top);
             }
-            top = this.getTargetHeight(this.topTarget);
+            top = self.getTargetHeight(self.topTarget);
         }
         return top;
     },
@@ -123,7 +126,9 @@ var Sticky = React.createClass({
     },
 
     getBottomBoundary: function () {
-        var boundary = this.props.bottomBoundary;
+        var self = this;
+
+        var boundary = self.props.bottomBoundary;
 
         // TODO, bottomBoundary was an object, depricate it later.
         if (typeof boundary === 'object') {
@@ -131,10 +136,10 @@ var Sticky = React.createClass({
         }
 
         if (typeof boundary === 'string') {
-            if (!this.bottomBoundaryTarget) {
-                this.bottomBoundaryTarget = doc.querySelector(boundary);
+            if (!self.bottomBoundaryTarget) {
+                self.bottomBoundaryTarget = doc.querySelector(boundary);
             }
-            boundary = this.getTargetBottom(this.bottomBoundaryTarget);
+            boundary = self.getTargetBottom(self.bottomBoundaryTarget);
         }
         return boundary && boundary > 0 ? boundary : Infinity;
     },
@@ -169,23 +174,25 @@ var Sticky = React.createClass({
      * Update the initial position, width, and height. It should update whenever children change.
      */
     updateInitialDimension: function () {
-        this.timer = +new Date;
-        var outer = this.refs.outer;
-        var inner = this.refs.inner;
+        var self = this;
+
+        self.timer = +new Date;
+        var outer = self.refs.outer;
+        var inner = self.refs.inner;
         var outerRect = outer.getBoundingClientRect();
 
         var width = outer.offsetWidth;
         var height = inner.offsetHeight;
         var outerY = outerRect.top + scrollTop;
 
-        this.setState({
-            top: this.getTopPosition(),
-            bottom: Math.min(this.state.top + height, winHeight),
+        self.setState({
+            top: self.getTopPosition(),
+            bottom: Math.min(self.state.top + height, winHeight),
             width: width,
             height: height,
             x: outerRect.left,
             y: outerY,
-            bottomBoundary: this.getBottomBoundary(),
+            bottomBoundary: self.getBottomBoundary(),
             topBoundary: outerY
         });
     },
@@ -224,61 +231,63 @@ var Sticky = React.createClass({
      * 3. Release Sticky when "top" and "bottom" are between Sticky current top and bottom.
      */
     update: function () {
-        if (this.state.bottomBoundary - this.state.topBoundary <= this.state.height || !this.props.enabled) {
-            if (this.state.status !== STATUS_ORIGINAL) {
-                this.reset();
+        var self = this;
+
+        if (self.state.bottomBoundary - self.state.topBoundary <= self.state.height || !self.props.enabled) {
+            if (self.state.status !== STATUS_ORIGINAL) {
+                self.reset();
             }
             return;
         }
 
         var delta = scrollDelta;
-        var top = scrollTop + this.state.top;
-        var bottom = scrollTop + this.state.bottom;
+        var top = scrollTop + self.state.top;
+        var bottom = scrollTop + self.state.bottom;
 
-        if (top <= this.state.topBoundary) {
-            this.reset();
-        } else if (bottom >= this.state.bottomBoundary) {
-            this.stickyBottom = this.state.bottomBoundary;
-            this.stickyTop = this.stickyBottom - this.state.height;
-            this.release(this.stickyTop);
+        if (top <= self.state.topBoundary) {
+            self.reset();
+        } else if (bottom >= self.state.bottomBoundary) {
+            self.stickyBottom = self.state.bottomBoundary;
+            self.stickyTop = self.stickyBottom - self.state.height;
+            self.release(self.stickyTop);
         } else {
-            if (this.state.height > winHeight) {
+            if (self.state.height > winHeight) {
                 // In this case, Sticky is larger then screen
-                switch (this.state.status) {
+                switch (self.state.status) {
                     case STATUS_ORIGINAL:
-                        this.release(this.state.y);
-                        this.stickyTop = this.state.y;
-                        this.stickyBottom = this.stickyTop + this.state.height;
+                        self.release(self.state.y);
+                        self.stickyTop = self.state.y;
+                        self.stickyBottom = self.stickyTop + self.state.height;
                         break;
                     case STATUS_RELEASED:
-                        if (delta > 0 && bottom > this.stickyBottom) { // scroll down
-                            this.fix(this.state.bottom - this.state.height);
-                        } else if (delta < 0 && top < this.stickyTop) { // scroll up
-                            this.fix(this.state.top);
+                        if (delta > 0 && bottom > self.stickyBottom) { // scroll down
+                            self.fix(self.state.bottom - self.state.height);
+                        } else if (delta < 0 && top < self.stickyTop) { // scroll up
+                            this.fix(self.state.top);
                         }
                         break;
                     case STATUS_FIXED:
                         var isChanged = true;
-                        if (delta > 0 && this.state.pos === this.state.top) { // scroll down
-                            this.stickyTop = top - delta;
-                            this.stickyBottom = this.stickyTop + this.state.height;
-                        } else if (delta < 0 && this.state.pos === this.state.bottom - this.state.height) { // up
-                            this.stickyBottom = bottom - delta;
-                            this.stickyTop = this.stickyBottom - this.state.height;
+                        if (delta > 0 && self.state.pos === self.state.top) { // scroll down
+                            self.stickyTop = top - delta;
+                            self.stickyBottom = self.stickyTop + self.state.height;
+                        } else if (delta < 0 && self.state.pos === self.state.bottom - self.state.height) { // up
+                            self.stickyBottom = bottom - delta;
+                            self.stickyTop = self.stickyBottom - self.state.height;
                         } else {
                             isChanged = false;
                         }
 
                         if (isChanged) {
-                            this.release(this.stickyTop);
+                            self.release(self.stickyTop);
                         }
                         break;
                 }
             } else {
-                this.fix(this.state.top);
+                self.fix(self.state.top);
             }
         }
-        this.delta = delta;
+        self.delta = delta;
     },
 
     componentWillReceiveProps: function () {
@@ -293,12 +302,13 @@ var Sticky = React.createClass({
     },
 
     componentDidMount: function () {
-        if (this.props.enabled) {
-            this.updateInitialDimension();
-            this.subscribers = [
-                subscribe('scrollStart', this.handleScrollStart, {useRAF: true}),
-                subscribe('scroll', this.handleScroll, {useRAF: true, enableScrollInfo: true}),
-                subscribe('resize', this.handleResize, {enableResizeInfo: true})
+        var self = this;
+        if (self.props.enabled) {
+            self.updateInitialDimension();
+            self.subscribers = [
+                subscribe('scrollStart', self.handleScrollStart.bind(self), {useRAF: true}),
+                subscribe('scroll', self.handleScroll.bind(self), {useRAF: true, enableScrollInfo: true}),
+                subscribe('resize', self.handleResize.bind(self), {enableResizeInfo: true})
             ];
         }
     },
@@ -316,23 +326,24 @@ var Sticky = React.createClass({
     },
 
     render: function () {
+        var self = this;
         // TODO, "overflow: auto" prevents collapse, need a good way to get children height
         var style = {
             overflow: 'hidden',
-            position: this.state.status === STATUS_FIXED ? 'fixed' : 'relative',
-            top: this.state.status === STATUS_FIXED ? '0' : ''
+            position: self.state.status === STATUS_FIXED ? 'fixed' : 'relative',
+            top: self.state.status === STATUS_FIXED ? '0' : ''
         };
 
         // always use translate3d to enhance the performance
-        this.translate(style, this.state.pos);
-        if (this.state.status !== STATUS_ORIGINAL) {
-            style.width = this.state.width;
+        self.translate(style, self.state.pos);
+        if (self.state.status !== STATUS_ORIGINAL) {
+            style.width = self.state.width;
         }
 
         return (
-            <div ref='outer' className={classNames('sticky-outer-wrapper', this.props.className)}>
+            <div ref='outer' className={classNames('sticky-outer-wrapper', self.props.className)}>
                 <div ref='inner' className='sticky-inner-wrapper' style={style}>
-                    {this.props.children}
+                    {self.props.children}
                 </div>
             </div>
         );
