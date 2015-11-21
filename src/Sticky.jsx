@@ -144,11 +144,6 @@ var Sticky = React.createClass({
         return boundary && boundary > 0 ? boundary : Infinity;
     },
 
-    changeDirection: function (d1, d2) {
-        d2 = d2 || this.delta;
-        return (d1 !== 0 && d2 !== 0) && (d1 > 0 ^ d2 > 0);
-    },
-
     reset: function () {
         this.setState({
             status: STATUS_ORIGINAL,
