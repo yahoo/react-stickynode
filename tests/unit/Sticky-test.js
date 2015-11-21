@@ -27,6 +27,9 @@ ae = {
     scroll: {
         top: SCROLL_POS,
         delta: 0
+    },
+    resize: {
+        height: 0
     }
 };
 
@@ -69,28 +72,32 @@ window.scrollTo = function (x, y) {
     ee.emit('scroll:15:raf', {}, ae);
 };
 
+window.resizeTo = function (x, y) {
+    ae.resize.height = y;
+    ee.emit('resize:50', {}, ae);
+};
+
 function shouldBeFixedAt (t, pos) {
-    expect(t.style.width).to.contain('100px');
-    // expect(t._style).to.contain('translate3d(0,' + pos + 'px,0)');
-    expect(t.style.position).to.be('fixed');
-    expect(t.style.top).to.be('0px');
+    var style = t._reactInternalComponent._currentElement.props.style;
+    expect(style.width).to.be(100);
+    expect(style.transform).to.be('translate3d(0,' + pos + 'px,0)');
+    expect(style.position).to.be('fixed');
+    expect(style.top).to.be('0');
 }
 
 function shouldBeReleasedAt (t, pos) {
-    expect(t.style.width).to.be('100px');
-    // expect(t._style.transform).to.be('translate3d(0,' + pos + 'px,0)');
-    expect(t.style.position).to.be('relative');
-    expect(t.style.top).to.be('');
+    var style = t._reactInternalComponent._currentElement.props.style;
+    expect(style.width).to.be(100);
+    expect(style.transform).to.be('translate3d(0,' + pos + 'px,0)');
+    expect(style.position).to.be('relative');
+    expect(style.top).to.be('');
 }
 
 function shouldBeReset (t) {
-    // if (typeof t._style === 'string') {
-    //     expect(t._style).to.be('transform:translate3d(0,0px,0);');
-    // } else {
-    //     expect(t._style.transform).to.be('translate3d(0,0px,0)');
-    // }
-    expect(t.style.position).to.be('relative');
-    expect(t.style.top).to.be('');
+    var style = t._reactInternalComponent._currentElement.props.style;
+    expect(style.transform).to.be('translate3d(0,0px,0)');
+    expect(style.position).to.be('relative');
+    expect(style.top).to.be('');
 }
 
 describe('Sticky', function () {
@@ -260,5 +267,25 @@ describe('Sticky', function () {
         // Scroll down to 150px, and Sticky should release
         window.scrollTo(0, 150);
         shouldBeReleasedAt(inner, 100);
+    });
+
+    it('should stick to the top when window resizes larger then Sticky (long Sticky)', function () {
+        STICKY_HEIGHT = 800;
+        sticky = jsx.renderComponent(Sticky);
+        outer = ReactDOM.findDOMNode(sticky);
+        inner = outer.firstChild;
+
+        // regular case
+        expect(outer.className).to.contain('sticky-outer-wrapper');
+        expect(inner.className).to.contain('sticky-inner-wrapper');
+        // should always have translate3d
+        expect(inner.getAttribute('style')).to.contain('transform:translate3d');
+
+        // Scroll down to 10px, and Sticky should fix
+        window.scrollTo(0, 10);
+        shouldBeReleasedAt(inner, 0);
+
+        window.resizeTo(0, 900);
+        shouldBeFixedAt(inner, 0);
     });
 });
