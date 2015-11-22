@@ -45,37 +45,12 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
     }
 }
 
-var Sticky = React.createClass({
-    autobind: false,
-    /**
-     * @param {Bool} enabled A switch to enable or disable Sticky.
-     * @param {String/Number} top A top offset px for Sticky. Could be a selector representing a node
-     *        whose height should serve as the top offset.
-     * @param {String/Number} bottomBoundary A bottom boundary px on document where Sticky will stop.
-     *        Could be a selector representing a node whose bottom should serve as the bottom boudary.
-     */
-    propTpes: {
-        enabled: propTypes.bool,
-        top: propTypes.oneOfType([
-            propTypes.string,
-            propTypes.number
-        ]),
-        bottomBoundary: propTypes.oneOfType([
-            propTypes.object,  // TODO, may remove
-            propTypes.string,
-            propTypes.number
-        ])
-    },
-
-    getDefaultProps: function () {
-        return {
-            enabled: true,
-            top: 0,
-            bottomBoundary: 0
-        };
-    },
-
-    getInitialState: function () {
+class Sticky extends React.Component {
+    constructor (props, context) {
+        super(props, context);
+        this.handleResize = this.handleResize.bind(this);
+        this.handleScroll = this.handleScroll.bind(this);
+        this.handleScrollStart = this.handleScrollStart.bind(this);
         this.delta = 0;
         this.stickyTop = 0;
         this.stickyBottom = 0;
@@ -84,7 +59,7 @@ var Sticky = React.createClass({
         this.topTarget;
         this.subscribers;
 
-        return {
+        this.state = {
             top: 0, // A top offset px from screen top for Sticky when scrolling down
             bottom: 0, // A bottom offset px from screen top for Sticky when scrolling up *1*
             width: 0, // Sticky width
@@ -96,15 +71,13 @@ var Sticky = React.createClass({
             status: STATUS_ORIGINAL, // The Sticky status
             pos: 0 // Real y-axis offset for rendering position-fixed and position-relative
         };
-        // *1* When Sticky is higher then screen, it will be screen bottom.
-        //     When Sticky is shorter, it will be the difference of Sticky bottom and screen top.
-    },
+    }
 
-    getTargetHeight: function (target) {
+    getTargetHeight (target) {
         return target && target.offsetHeight || 0;
-    },
+    }
 
-    getTopPosition: function () {
+    getTopPosition () {
         var self = this;
         // TODO, topTarget is for current layout, may remove
         var top = self.props.top || self.props.topTarget || 0;
@@ -115,17 +88,17 @@ var Sticky = React.createClass({
             top = self.getTargetHeight(self.topTarget);
         }
         return top;
-    },
+    }
 
-    getTargetBottom: function (target) {
+    getTargetBottom (target) {
         if (!target) {
             return -1;
         }
         var rect = target.getBoundingClientRect();
         return scrollTop + rect.bottom;
-    },
+    }
 
-    getBottomBoundary: function () {
+    getBottomBoundary () {
         var self = this;
 
         var boundary = self.props.bottomBoundary;
@@ -142,33 +115,33 @@ var Sticky = React.createClass({
             boundary = self.getTargetBottom(self.bottomBoundaryTarget);
         }
         return boundary && boundary > 0 ? boundary : Infinity;
-    },
+    }
 
-    reset: function () {
+    reset () {
         this.setState({
             status: STATUS_ORIGINAL,
             pos: 0
         });
-    },
+    }
 
-    release: function (pos) {
+    release (pos) {
         this.setState({
             status: STATUS_RELEASED,
             pos: pos - this.state.y
         });
-    },
+    }
 
-    fix: function (pos) {
+    fix (pos) {
         this.setState({
             status: STATUS_FIXED,
             pos: pos
         });
-    },
+    }
 
     /**
      * Update the initial position, width, and height. It should update whenever children change.
      */
-    updateInitialDimension: function () {
+    updateInitialDimension () {
         var self = this;
 
         self.timer = +new Date;
@@ -190,24 +163,24 @@ var Sticky = React.createClass({
             bottomBoundary: self.getBottomBoundary(),
             topBoundary: outerY
         });
-    },
+    }
 
-    handleResize: function (e, ae) {
+    handleResize (e, ae) {
         winHeight = ae.resize.height;
         this.updateInitialDimension();
         this.update();
-    },
+    }
 
-    handleScrollStart: function (e, ae) {
+    handleScrollStart (e, ae) {
         scrollTop = ae.scroll.top;
         this.updateInitialDimension();
-    },
+    }
 
-    handleScroll: function (e, ae) {
+    handleScroll (e, ae) {
         scrollDelta = ae.scroll.delta;
         scrollTop = ae.scroll.top;
         this.update();
-    },
+    }
 
     /**
      * Update Sticky position.
@@ -225,7 +198,7 @@ var Sticky = React.createClass({
      * (The above 2 points act kind of "bottom" dragging Sticky down or "top" dragging it up.)
      * 3. Release Sticky when "top" and "bottom" are between Sticky current top and bottom.
      */
-    update: function () {
+    update () {
         var self = this;
 
         if (self.state.bottomBoundary - self.state.topBoundary <= self.state.height || !self.props.enabled) {
@@ -283,20 +256,20 @@ var Sticky = React.createClass({
             }
         }
         self.delta = delta;
-    },
+    }
 
-    componentWillReceiveProps: function () {
+    componentWillReceiveProps () {
         this.forceUpdate();
-    },
+    }
 
-    componentWillUnmount: function componentWillUnmount() {
+    componentWillUnmount () {
         var subscribers = this.subscribers || [];
         for (var i = subscribers.length - 1; i >= 0; i--) {
             this.subscribers[i].unsubscribe();
         }
-    },
+    }
 
-    componentDidMount: function () {
+    componentDidMount () {
         var self = this;
         if (self.props.enabled) {
             self.updateInitialDimension();
@@ -306,21 +279,21 @@ var Sticky = React.createClass({
                 subscribe('resize', self.handleResize.bind(self), {enableResizeInfo: true})
             ];
         }
-    },
+    }
 
-    translate: function (style, pos) {
+    translate (style, pos) {
         if (enableTransforms) {
             style[TRANSFORM_PROP] = 'translate3d(0,' + pos + 'px,0)';
         } else {
             style.top = pos;
         }
-    },
+    }
 
-    shouldComponentUpdate: function(nextProps, nextState) {
+    shouldComponentUpdate (nextProps, nextState) {
         return shallowCompare(this, nextProps, nextState);
-    },
+    }
 
-    render: function () {
+    render () {
         var self = this;
         // TODO, "overflow: auto" prevents collapse, need a good way to get children height
         var style = {
@@ -342,7 +315,33 @@ var Sticky = React.createClass({
                 </div>
             </div>
         );
-    },
-});
+    }
+}
+
+Sticky.defaultProps = {
+    enabled: true,
+    top: 0,
+    bottomBoundary: 0
+};
+
+/**
+ * @param {Bool} enabled A switch to enable or disable Sticky.
+ * @param {String/Number} top A top offset px for Sticky. Could be a selector representing a node
+ *        whose height should serve as the top offset.
+ * @param {String/Number} bottomBoundary A bottom boundary px on document where Sticky will stop.
+ *        Could be a selector representing a node whose bottom should serve as the bottom boudary.
+ */
+Sticky.propTypes = {
+    enabled: propTypes.bool,
+    top: propTypes.oneOfType([
+        propTypes.string,
+        propTypes.number
+    ]),
+    bottomBoundary: propTypes.oneOfType([
+        propTypes.object,  // TODO, may remove
+        propTypes.string,
+        propTypes.number
+    ])
+};
 
 module.exports = Sticky;

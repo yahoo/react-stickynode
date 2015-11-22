@@ -10,3 +10,4 @@ dist/
 tests/functional/css/
 tests/functional/bundle.js
 tests/functional/sticky-functional.js
+.eslintcache
