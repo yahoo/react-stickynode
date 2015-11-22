@@ -2,7 +2,7 @@
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
-/* global window, document, describe, it, beforeEach */
+/* global window, document, describe, it, beforeEach, afterEach */
 
 'use strict';
 
@@ -57,10 +57,14 @@ document.querySelector = function () {
 
 Object.defineProperties(window.HTMLElement.prototype, {
     offsetHeight: {
-        get: function() { return STICKY_HEIGHT; }
+        get: function () {
+            return STICKY_HEIGHT;
+        }
     },
     offsetWidth: {
-        get: function() { return STICKY_WIDTH; }
+        get: function () {
+            return STICKY_WIDTH;
+        }
     }
 });
 
@@ -192,7 +196,7 @@ describe('Sticky', function () {
         shouldBeFixedAt(inner, 0);
     });
 
-    it('should work as expected with original postion 20px from top and 400px bottom boundary (short Sticky)', function () {
+    it('should work as expected with original top 20px and 400px bottom boundary (short Sticky)', function () {
         STICKY_TOP = 20;
         sticky = jsx.renderComponent(Sticky, {
             bottomBoundary: 400

@@ -1,74 +1,121 @@
 {
-  "name": "react-stickynode",
-  "version": "1.0.2",
-  "description": "A performant and comprehensive React sticky",
-  "main": "index.js",
-  "scripts": {
-    "build": "grunt react",
-    "devtest": "grunt unit",
-    "func": "./tests/functional/saucelabs.sh",
-    "lint": "jshint",
-    "test": "grunt cover"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/yahoo/react-stickynode"
-  },
-  "keywords": [
-    "Sticky",
-    "React"
-  ],
-  "author": {
-    "name": "Hank Hsiao",
-    "email": "hankxiao@yahoo-inc.com"
-  },
-  "contributors": [
-    {
-      "name": "Steve Carlson",
-      "email": "yasteve@yahoo-inc.com"
-    }
-  ],
-  "dependencies": {
-    "classnames": "^2.0.0",
-    "react-addons-shallow-compare": "^0.14.2",
-    "subscribe-ui-event": "^0.2.0"
-  },
-  "devDependencies": {
-    "babel": "^5.0.0",
-    "coveralls": "^2.11.1",
-    "es5-shim": "^4.0.0",
-    "expect.js": "^0.3.1",
-    "grunt-atomizer": "^3.0.0",
-    "grunt-babel": "^5.0.0",
-    "grunt-cli": "^0.1.13",
-    "grunt-contrib-clean": "^0.6.0",
-    "grunt-contrib-connect": "^0.11.2",
-    "grunt-contrib-jshint": "^0.11.2",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-saucelabs": "^8.3.2",
-    "grunt-shell": "^1.1.2",
-    "grunt-webpack": "^1.0.8",
-    "grunt": "^0.4.5",
-    "istanbul": "^0.4.0",
-    "jsdom": "^7.0.2",
-    "jshint": "^2.5.1",
-    "jsx-loader": "^0.13.2",
-    "jsx-test": "^0.8.0",
-    "minimist": "^1.2.0",
-    "mocha": "^2.0",
-    "mockery": "^1.4.0",
-    "pre-commit": "^1.0.0",
-    "react-dom": "^0.14.2",
-    "react": "^0.14.2",
-    "xunit-file": "^0.0.8"
-  },
-  "peerDependencies": {
-    "react": "^0.14.2",
-    "react-dom": "^0.14.2"
-  },
-  "precommit": [
-    "lint",
-    "test"
-  ],
-  "license": "BSD-3-Clause"
+    "name": "react-stickynode",
+    "version": "1.0.2",
+    "description": "A performant and comprehensive React sticky",
+    "main": "index.js",
+    "scripts": {
+        "build": "grunt react",
+        "devtest": "grunt unit",
+        "func": "./tests/functional/saucelabs.sh",
+        "lint": "eslint --cache --ext .js,.jsx . --fix",
+        "test": "grunt cover"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/yahoo/react-stickynode"
+    },
+    "keywords": [
+        "Sticky",
+        "React"
+    ],
+    "author": {
+        "name": "Hank Hsiao",
+        "email": "hankxiao@yahoo-inc.com"
+    },
+    "contributors": [
+        {
+            "name": "Steve Carlson",
+            "email": "yasteve@yahoo-inc.com"
+        }
+    ],
+    "dependencies": {
+        "classnames": "^2.0.0",
+        "react-addons-shallow-compare": "^0.14.2",
+        "subscribe-ui-event": "^0.2.0"
+    },
+    "devDependencies": {
+        "babel": "^5.0.0",
+        "coveralls": "^2.11.1",
+        "es5-shim": "^4.0.0",
+        "eslint-plugin-react": "^3.4.2",
+        "eslint": "^1.5.1",
+        "expect.js": "^0.3.1",
+        "grunt-atomizer": "^3.0.0",
+        "grunt-babel": "^5.0.0",
+        "grunt-cli": "^0.1.13",
+        "grunt-contrib-clean": "^0.7.0",
+        "grunt-contrib-connect": "^0.11.2",
+        "grunt-contrib-jshint": "^0.11.2",
+        "grunt-contrib-watch": "^0.6.1",
+        "grunt-saucelabs": "^8.3.2",
+        "grunt-shell": "^1.1.2",
+        "grunt-webpack": "^1.0.8",
+        "grunt": "^0.4.5",
+        "istanbul": "^0.4.0",
+        "jsdom": "^7.0.2",
+        "jsx-loader": "^0.13.2",
+        "jsx-test": "^0.8.0",
+        "minimist": "^1.2.0",
+        "mocha": "^2.0",
+        "mockery": "^1.4.0",
+        "pre-commit": "^1.0.0",
+        "react-dom": "^0.14.2",
+        "react": "^0.14.2",
+        "xunit-file": "~0.0.9"
+    },
+    "eslintConfig": {
+        "rules": {
+            "space-before-function-paren": 2,
+            "valid-jsdoc": [
+                2,
+                {
+                    "requireReturn": false,
+                    "requireReturnDescription": false
+                }
+            ],
+            "no-else-return": 2,
+            "no-extra-bind": 2,
+            "no-multi-spaces": 2,
+            "no-useless-call": 2,
+            "radix": 2,
+            "handle-callback-err": [
+                2,
+                "^(err|error)$"
+            ],
+            "array-bracket-spacing": 2,
+            "block-spacing": 2,
+            "comma-spacing": 2,
+            "jsx-quotes": [
+                2,
+                "prefer-single"
+            ],
+            "no-multiple-empty-lines": 2,
+            "no-trailing-spaces": 2,
+            "sort-vars": 2,
+            "space-after-keywords": 2,
+            "space-before-blocks": 2,
+            "space-infix-ops": 2,
+            "space-return-throw-case": 2,
+            "wrap-regex": 2,
+            "new-cap": 0
+        },
+        "plugins": [
+            "react"
+        ],
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "env": {
+            "es6": true
+        }
+    },
+    "peerDependencies": {
+        "react": "^0.14.2",
+        "react-dom": "^0.14.2"
+    },
+    "precommit": [
+        "lint",
+        "test"
+    ],
+    "license": "BSD-3-Clause"
 }

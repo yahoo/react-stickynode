@@ -1,6 +1,6 @@
 /* global describe, it, beforeEach, expect, window, document */
 
-function $(selector) {
+function $ (selector) {
     var node = document.querySelector(selector);
     var rect = node.getBoundingClientRect();
     return {
@@ -19,7 +19,7 @@ function $(selector) {
 describe('Sticky', function () {
     beforeEach(function (done) {
         window.scrollTo(0, 0);
-        setTimeout(function test() {
+        setTimeout(function test () {
             done();
         }, 100);
     });
@@ -27,7 +27,7 @@ describe('Sticky', function () {
     it('Sticky 1 should stick to the top', function (done) {
         window.scrollTo(0, 500);
 
-        setTimeout(function test() {
+        setTimeout(function test () {
             // console.log($('#sticky-1').getRect());
             expect($('#sticky-1').getTop()).to.equal(0, 'sticky-1');
             done();
@@ -36,12 +36,12 @@ describe('Sticky', function () {
 
     it('Sticky 2 should not stick to the top', function (done) {
         window.scrollTo(0, 500);
-        setTimeout(function test() {
+        setTimeout(function test () {
             // console.log($('#sticky-2').getRect());
             expect($('#sticky-2').getTop()).to.below(0, 'sticky-2');
 
             window.scrollTo(0, 1200);
-            setTimeout(function test() {
+            setTimeout(function test () {
                 // console.log($('#sticky-2').getRect());
                 expect($('#sticky-2').getBottom()).to.below(window.innerHeight, 'sticky-2');
                 done();

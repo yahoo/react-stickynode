@@ -1,0 +1,12 @@
+.idea/
+*-debug.log
+artifacts/
+build/
+components-dist/
+configs/atomizer.json
+dist/
+node_modules/
+npm-*.log
+protractor-batch-artifacts/
+results/
+tests/functional/bootstrap.js

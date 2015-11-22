@@ -21,7 +21,7 @@ for (var i = 0; i < 10; i++) {
 content = content.join('');
 
 var TestText = React.createClass({
-    render: function() {
+    render: function () {
         return (
             <div id={this.props.id} className={classNames('test-text Ov(h)', this.props.className)}
                  dangerouslySetInnerHTML={{__html: content}}/>
