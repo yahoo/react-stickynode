@@ -10,7 +10,7 @@ process.env.NODE_ENV = 'development';
 var jsx = require('jsx-test').jsxTranspile(process.env.COVERAGE);
 
 var ae;
-var ee = require('subscribe-ui-event/dist/eventEmitter').eventEmitter;
+var ee = require('subscribe-ui-event/dist/globalVars').EE;
 var expect = require('expect.js');
 var inner;
 var outer;
