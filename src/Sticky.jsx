@@ -17,7 +17,6 @@ var subscribe = require('subscribe-ui-event').subscribe;
 var STATUS_ORIGINAL = 0; // The default status, locating at the original position.
 var STATUS_RELEASED = 1; // The released status, locating at somewhere on document but not default one.
 var STATUS_FIXED = 2; // The sticky status, locating fixed to the top or the bottom of screen.
-var TRANSFORM_PROP = 'transform';
 
 // global variable for all instances
 var doc;
@@ -41,7 +40,6 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
     // No Sticky on lower-end browser when no Modernizr
     if (M) {
         enableTransforms = M.csstransforms3d;
-        TRANSFORM_PROP = M.prefixed('transform');
     }
 }
 
@@ -283,7 +281,9 @@ class Sticky extends React.Component {
 
     translate (style, pos) {
         if (enableTransforms) {
-            style[TRANSFORM_PROP] = 'translate3d(0,' + pos + 'px,0)';
+            style['transform'] = 'translate3d(0,' + pos + 'px,0)';
+            style['WebkitTransform'] = 'translate3d(0,' + pos + 'px,0)';
+            style['MsTransform'] = 'translate3d(0,' + pos + 'px,0)';
         } else {
             style.top = pos;
         }
