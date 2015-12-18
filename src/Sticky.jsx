@@ -70,7 +70,7 @@ class Sticky extends React.Component {
             bottomBoundary: Infinity, // The bottom boundary on document
             status: STATUS_ORIGINAL, // The Sticky status
             pos: 0, // Real y-axis offset for rendering position-fixed and position-relative
-            activated: false
+            activated: false // once browser info is available after mounted, it becomes true to avoid checksum error 
         };
     }
 
