@@ -69,7 +69,8 @@ class Sticky extends React.Component {
             topBoundary: 0, // The top boundary on document
             bottomBoundary: Infinity, // The bottom boundary on document
             status: STATUS_ORIGINAL, // The Sticky status
-            pos: 0 // Real y-axis offset for rendering position-fixed and position-relative
+            pos: 0, // Real y-axis offset for rendering position-fixed and position-relative
+            activated: false // once browser info is available after mounted, it becomes true to avoid checksum error 
         };
     }
 
@@ -272,6 +273,7 @@ class Sticky extends React.Component {
     componentDidMount () {
         var self = this;
         if (self.props.enabled) {
+            self.setState({activated: true});
             self.updateInitialDimension();
             self.subscribers = [
                 subscribe('scrollStart', self.handleScrollStart.bind(self), {useRAF: true}),
@@ -282,7 +284,7 @@ class Sticky extends React.Component {
     }
 
     translate (style, pos) {
-        if (enableTransforms) {
+        if (enableTransforms && this.state.activated) {
             style[TRANSFORM_PROP] = 'translate3d(0,' + pos + 'px,0)';
         } else {
             style.top = pos;

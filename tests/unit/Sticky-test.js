@@ -104,6 +104,11 @@ function shouldBeReset (t) {
     expect(style.top).to.be('');
 }
 
+function checkTransform3d (inner) {
+    var style = inner._reactInternalComponent._currentElement.props.style;
+    expect(style.transform).to.contain('translate3d');
+}
+
 describe('Sticky', function () {
     beforeEach(function () {
         STICKY_WIDTH = 100;
@@ -127,7 +132,7 @@ describe('Sticky', function () {
         expect(outer.className).to.contain('sticky-outer-wrapper');
         expect(inner.className).to.contain('sticky-inner-wrapper');
         // should always have translate3d
-        expect(inner.getAttribute('style')).to.contain('transform:translate3d');
+        checkTransform3d(inner);
 
         // Scroll down to 10px, and Sticky should fix
         window.scrollTo(0, 10);
@@ -148,7 +153,7 @@ describe('Sticky', function () {
         expect(outer.className).to.contain('sticky-outer-wrapper');
         expect(inner.className).to.contain('sticky-inner-wrapper');
         // should always have translate3d
-        expect(inner.getAttribute('style')).to.contain('transform:translate3d');
+        checkTransform3d(inner);
 
         // Scroll down to 10px, and Sticky should stay as it was
         window.scrollTo(0, 10);
@@ -185,7 +190,7 @@ describe('Sticky', function () {
         expect(outer.className).to.contain('sticky-outer-wrapper');
         expect(inner.className).to.contain('sticky-inner-wrapper');
         // should always have translate3d
-        expect(inner.getAttribute('style')).to.contain('transform:translate3d');
+        checkTransform3d(inner);
 
         // Scroll down to 10px, and Sticky should stay
         window.scrollTo(0, 10);
@@ -208,7 +213,7 @@ describe('Sticky', function () {
         expect(outer.className).to.contain('sticky-outer-wrapper');
         expect(inner.className).to.contain('sticky-inner-wrapper');
         // should always have translate3d
-        expect(inner.getAttribute('style')).to.contain('transform:translate3d');
+        checkTransform3d(inner);
 
         // Scroll down to 10px, and Sticky should stay
         window.scrollTo(0, 10);
@@ -234,7 +239,7 @@ describe('Sticky', function () {
         expect(outer.className).to.contain('sticky-outer-wrapper');
         expect(inner.className).to.contain('sticky-inner-wrapper');
         // should always have translate3d
-        expect(inner.getAttribute('style')).to.contain('transform:translate3d');
+        checkTransform3d(inner);
 
         // Scroll down to 10px, and Sticky should stay
         window.scrollTo(0, 10);
@@ -258,7 +263,7 @@ describe('Sticky', function () {
         expect(outer.className).to.contain('sticky-outer-wrapper');
         expect(inner.className).to.contain('sticky-inner-wrapper');
         // should always have translate3d
-        expect(inner.getAttribute('style')).to.contain('transform:translate3d');
+        checkTransform3d(inner);
 
         // Scroll down to 10px, and Sticky should fix
         window.scrollTo(0, 10);
@@ -283,7 +288,7 @@ describe('Sticky', function () {
         expect(outer.className).to.contain('sticky-outer-wrapper');
         expect(inner.className).to.contain('sticky-inner-wrapper');
         // should always have translate3d
-        expect(inner.getAttribute('style')).to.contain('transform:translate3d');
+        checkTransform3d(inner);
 
         // Scroll down to 10px, and Sticky should fix
         window.scrollTo(0, 10);
