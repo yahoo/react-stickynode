@@ -31,7 +31,7 @@
   "dependencies": {
     "classnames": "^2.0.0",
     "react-addons-shallow-compare": "^0.14.2",
-    "subscribe-ui-event": "^0.2.0"
+    "subscribe-ui-event": "^1.0.0"
   },
   "devDependencies": {
     "babel": "^5.0.0",

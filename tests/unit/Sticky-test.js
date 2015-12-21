@@ -10,7 +10,7 @@ process.env.NODE_ENV = 'development';
 var jsx = require('jsx-test').jsxTranspile(process.env.COVERAGE);
 
 var ae;
-var ee = require('subscribe-ui-event/dist/eventEmitter').eventEmitter;
+var ee = require('subscribe-ui-event/dist/globalVars').EE;
 var expect = require('expect.js');
 var inner;
 var outer;
@@ -72,8 +72,8 @@ window.scrollTo = function (x, y) {
     SCROLL_POS = y;
     ae.scroll.delta = SCROLL_POS - ae.scroll.top;
     ae.scroll.top = SCROLL_POS;
-    ee.emit('scrollStart:15:raf', {}, ae);
-    ee.emit('scroll:15:raf', {}, ae);
+    ee.emit('scrollStart:raf', {}, ae);
+    ee.emit('scroll:raf', {}, ae);
 };
 
 window.resizeTo = function (x, y) {
