@@ -5,6 +5,7 @@ coverage/
 node_modules/
 tmp/
 dist/
+umd/
 *.log
 *.tap
 tests/functional/css/
