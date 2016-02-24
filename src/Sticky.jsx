@@ -298,20 +298,22 @@ class Sticky extends React.Component {
     render () {
         var self = this;
         // TODO, "overflow: auto" prevents collapse, need a good way to get children height
-        var style = {
+        var innerStyle = {
             position: self.state.status === STATUS_FIXED ? 'fixed' : 'relative',
             top: self.state.status === STATUS_FIXED ? '0' : ''
         };
+        var outerStyle = {};
 
         // always use translate3d to enhance the performance
-        self.translate(style, self.state.pos);
+        self.translate(innerStyle, self.state.pos);
         if (self.state.status !== STATUS_ORIGINAL) {
-            style.width = self.state.width;
+            innerStyle.width = self.state.width;
+            outerStyle.height = self.state.height;
         }
 
         return (
-            <div ref='outer' className={classNames('sticky-outer-wrapper', self.props.className)}>
-                <div ref='inner' className='sticky-inner-wrapper' style={style}>
+            <div ref='outer' className={classNames('sticky-outer-wrapper', self.props.className)} style={outerStyle}>
+                <div ref='inner' className='sticky-inner-wrapper' style={innerStyle}>
                     {self.props.children}
                 </div>
             </div>
