@@ -145,13 +145,13 @@ class Sticky extends React.Component {
     updateInitialDimension () {
         var self = this;
 
-        self.timer = +new Date;
         var outer = self.refs.outer;
         var inner = self.refs.inner;
         var outerRect = outer.getBoundingClientRect();
+        var innerRect = inner.getBoundingClientRect();
 
-        var width = outerRect.width || outerRect.right - outerRect.left;
-        var height = inner.offsetHeight;
+        var width = innerRect.width || innerRect.right - innerRect.left;
+        var height = innerRect.height || innerRect.bottom - innerRect.top;;
         var outerY = outerRect.top + scrollTop;
 
         self.setState({
