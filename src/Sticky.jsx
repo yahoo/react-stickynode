@@ -23,7 +23,7 @@ var TRANSFORM_PROP = 'transform';
 var doc;
 var docBody;
 var docEl;
-var enableTransforms = true; // Use transform by default, so no Sticky on lower-end browser when no Modernizr
+var canEnableTransforms = true; // Use transform by default, so no Sticky on lower-end browser when no Modernizr
 var M;
 var scrollDelta = 0;
 var scrollTop = -1;
@@ -40,7 +40,7 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
     M = window.Modernizr;
     // No Sticky on lower-end browser when no Modernizr
     if (M) {
-        enableTransforms = M.csstransforms3d;
+        canEnableTransforms = M.csstransforms3d;
         TRANSFORM_PROP = M.prefixed('transform');
     }
 }
@@ -284,6 +284,7 @@ class Sticky extends React.Component {
     }
 
     translate (style, pos) {
+        var enableTransforms = canEnableTransforms && this.props.enableTransforms
         if (enableTransforms && this.state.activated) {
             style[TRANSFORM_PROP] = 'translate3d(0,' + pos + 'px,0)';
         } else {
@@ -324,7 +325,8 @@ class Sticky extends React.Component {
 Sticky.defaultProps = {
     enabled: true,
     top: 0,
-    bottomBoundary: 0
+    bottomBoundary: 0,
+    enableTransforms: true
 };
 
 /**
@@ -344,7 +346,8 @@ Sticky.propTypes = {
         propTypes.object,  // TODO, may remove
         propTypes.string,
         propTypes.number
-    ])
+    ]),
+    enableTransforms: propTypes.bool
 };
 
 module.exports = Sticky;

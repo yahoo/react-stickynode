@@ -51,6 +51,7 @@ var Sticky = require('react-stickynode');
 - `enabled {Boolean}` - The switch to enable or disable Sticky (true by default).
 - `top {Number/String}` - The offset from the top of window where the top of the element will be when sticky state is triggered (0 by default). If it is a selector to a target (via `querySelector()`), the offset will be the height of the target.
 - `bottomBoundary {Number/String}` - The offset from the top of document which release state will be triggered when the bottom of the element reaches at. If it is a selector to a target (via `querySelector()`), the offset will be the bottom of the target.
+- `enableTransforms {Boolean}` - Enable the use of CSS3 transforms (true by default)
 
 ## Install & Development
 
