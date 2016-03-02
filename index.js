@@ -1,1 +1,1 @@
-module.exports = require('./dist/Sticky.js');
+module.exports = require('./dist/Sticky');

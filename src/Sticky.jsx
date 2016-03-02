@@ -6,12 +6,11 @@
 
 'use strict';
 
-var React = require('react');
+import React, { Component, PropTypes } from 'react';
 
-var classNames = require('classnames');
-var propTypes = React.PropTypes;
-var shallowCompare = require('react-addons-shallow-compare');
-var subscribe = require('subscribe-ui-event').subscribe;
+import classNames from 'classnames';
+import shallowCompare from 'react-addons-shallow-compare';
+import { subscribe } from 'subscribe-ui-event';
 
 // constants
 var STATUS_ORIGINAL = 0; // The default status, locating at the original position.
@@ -45,7 +44,7 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
     }
 }
 
-class Sticky extends React.Component {
+class Sticky extends Component {
     constructor (props, context) {
         super(props, context);
         this.handleResize = this.handleResize.bind(this);
@@ -337,17 +336,17 @@ Sticky.defaultProps = {
  *        Could be a selector representing a node whose bottom should serve as the bottom boudary.
  */
 Sticky.propTypes = {
-    enabled: propTypes.bool,
-    top: propTypes.oneOfType([
-        propTypes.string,
-        propTypes.number
+    enabled: PropTypes.bool,
+    top: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number
     ]),
-    bottomBoundary: propTypes.oneOfType([
-        propTypes.object,  // TODO, may remove
-        propTypes.string,
-        propTypes.number
+    bottomBoundary: PropTypes.oneOfType([
+        PropTypes.object,  // TODO, may remove
+        PropTypes.string,
+        PropTypes.number
     ]),
-    enableTransforms: propTypes.bool
+    enableTransforms: PropTypes.bool
 };
 
 module.exports = Sticky;
