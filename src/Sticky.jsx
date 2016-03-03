@@ -149,7 +149,7 @@ class Sticky extends Component {
         var outerRect = outer.getBoundingClientRect();
         var innerRect = inner.getBoundingClientRect();
 
-        var width = innerRect.width || innerRect.right - innerRect.left;
+        var width = outerRect.width || outerRect.right - outerRect.left;
         var height = innerRect.height || innerRect.bottom - innerRect.top;;
         var outerY = outerRect.top + scrollTop;
 

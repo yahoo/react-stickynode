@@ -63,52 +63,6 @@
     "react": "^0.14.2",
     "xunit-file": "~0.0.9"
   },
-  "eslintConfig": {
-    "rules": {
-      "space-before-function-paren": 2,
-      "valid-jsdoc": [
-        2,
-        {
-          "requireReturn": false,
-          "requireReturnDescription": false
-        }
-      ],
-      "no-else-return": 2,
-      "no-extra-bind": 2,
-      "no-multi-spaces": 2,
-      "no-useless-call": 2,
-      "radix": 2,
-      "handle-callback-err": [
-        2,
-        "^(err|error)$"
-      ],
-      "array-bracket-spacing": 2,
-      "block-spacing": 2,
-      "comma-spacing": 2,
-      "jsx-quotes": [
-        2,
-        "prefer-single"
-      ],
-      "no-multiple-empty-lines": 2,
-      "no-trailing-spaces": 2,
-      "sort-vars": 2,
-      "space-after-keywords": 2,
-      "space-before-blocks": 2,
-      "space-infix-ops": 2,
-      "space-return-throw-case": 2,
-      "wrap-regex": 2,
-      "new-cap": 0
-    },
-    "plugins": [
-      "react"
-    ],
-    "ecmaFeatures": {
-      "jsx": true
-    },
-    "env": {
-      "es6": true
-    }
-  },
   "peerDependencies": {
     "react": "^0.14.2",
     "react-dom": "^0.14.2"
