@@ -1,0 +1,13 @@
+---
+plugins:
+  - "react"
+env: {
+    es6: true
+}
+ecmaFeatures: {
+    modules: true,
+    jsx: true
+}
+rules:
+  valid-jsdoc: [2, { "requireReturn": false }]
+  'react/jsx-uses-react': [1]
