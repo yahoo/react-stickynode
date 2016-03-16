@@ -312,7 +312,7 @@ class Sticky extends Component {
         }
 
         return (
-            <div ref='outer' className={classNames('sticky-outer-wrapper', self.props.className)} style={outerStyle}>
+            <div ref='outer' className={classNames('sticky-outer-wrapper', self.props.className, {[self.props.activeClass]: self.state.status === STATUS_FIXED})} style={outerStyle}>
                 <div ref='inner' className='sticky-inner-wrapper' style={innerStyle}>
                     {self.props.children}
                 </div>
@@ -325,7 +325,8 @@ Sticky.defaultProps = {
     enabled: true,
     top: 0,
     bottomBoundary: 0,
-    enableTransforms: true
+    enableTransforms: true,
+    activeClass: 'active'
 };
 
 /**
@@ -346,7 +347,8 @@ Sticky.propTypes = {
         PropTypes.string,
         PropTypes.number
     ]),
-    enableTransforms: PropTypes.bool
+    enableTransforms: PropTypes.bool,
+    activeClass: PropTypes.string
 };
 
 module.exports = Sticky;
