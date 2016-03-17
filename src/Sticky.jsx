@@ -200,8 +200,11 @@ class Sticky extends Component {
      */
     update () {
         var self = this;
+        var disabled = !self.props.enabled ||
+            self.state.bottomBoundary - self.state.topBoundary <= self.state.height ||
+            (self.state.width === 0 && self.state.height === 0);
 
-        if (self.state.bottomBoundary - self.state.topBoundary <= self.state.height || !self.props.enabled) {
+        if (disabled) {
             if (self.state.status !== STATUS_ORIGINAL) {
                 self.reset();
             }
