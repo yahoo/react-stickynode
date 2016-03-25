@@ -316,5 +316,44 @@ describe('Sticky', function () {
         window.resizeTo(0, 900);
         shouldBeFixedAt(inner, 0);
         expect(outer.className).to.contain('active');
+
+        // Resize back
+        window.resizeTo(0, 768);
+    });
+
+    it('should release when height gets changed (long Sticky)', function () {
+        STICKY_HEIGHT = 1200;
+        sticky = jsx.renderComponent(Sticky);
+        outer = ReactDOM.findDOMNode(sticky);
+        inner = outer.firstChild;
+
+        // regular case
+        expect(outer.className).to.contain('sticky-outer-wrapper');
+        expect(inner.className).to.contain('sticky-inner-wrapper');
+        // should always have translate3d
+        checkTransform3d(inner);
+
+        // Scroll down to 10px, and Sticky should stay as it was
+        window.scrollTo(0, 10);
+        shouldBeReleasedAt(inner, 0);
+        expect(outer.className).to.not.contain('active');
+
+        // Scroll down to 1500px, and Sticky should fix to the bottom
+        window.scrollTo(0, 1500);
+        shouldBeFixedAt(inner, -432);
+        expect(outer.className).to.contain('active');
+
+        // Change Sticky's height
+        STICKY_HEIGHT = 1300;
+
+        // Scroll up to 1550px, and Sticky should release and stay where it was
+        window.scrollTo(0, 1550);
+        shouldBeReleasedAt(inner, 1068);
+        expect(outer.className).to.not.contain('active');
+
+        // Scroll down to 1650px, and Sticky should release as it was
+        window.scrollTo(0, 1650);
+        shouldBeFixedAt(inner, -532);
+        expect(outer.className).to.contain('active');
     });
 });
