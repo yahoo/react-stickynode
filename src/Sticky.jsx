@@ -272,7 +272,8 @@ class Sticky extends Component {
     }
 
     componentWillReceiveProps () {
-        this.forceUpdate();
+        this.updateInitialDimension();
+        this.update();
     }
 
     componentWillUnmount () {
