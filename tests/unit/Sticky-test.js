@@ -143,6 +143,9 @@ describe('Sticky', function () {
         window.scrollTo(0, 0);
         shouldBeReset(inner);
         expect(outer.className).to.not.contain('active');
+
+        // Increase coverage
+        sticky.componentWillReceiveProps();
     });
 
     it('should work as expected (long Sticky)', function () {
