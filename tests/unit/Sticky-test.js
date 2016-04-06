@@ -12,6 +12,7 @@ var jsx = require('jsx-test').jsxTranspile(process.env.COVERAGE);
 var ae;
 var ee = require('subscribe-ui-event/dist/globalVars').EE;
 var expect = require('expect.js');
+var sinon = require('sinon');
 var inner;
 var outer;
 var ReactDOM = require('react-dom');
@@ -146,6 +147,26 @@ describe('Sticky', function () {
 
         // Increase coverage
         sticky.componentWillReceiveProps();
+    });
+
+    it('should call the callback on state change', function () {
+        var callback = sinon.spy();
+        sticky = jsx.renderComponent(Sticky, {
+            onStateChange: callback
+        });
+        outer = ReactDOM.findDOMNode(sticky);
+        inner = outer.firstChild;
+
+        sinon.assert.notCalled(callback);
+
+        // Scroll down to 10px, and status should change to FIXED
+        window.scrollTo(0, 10);
+        sinon.assert.calledWith(callback, {status: Sticky.STATUS_FIXED});
+
+        // Scroll up to 0px, and Sticky should reset
+        window.scrollTo(0, 0);
+        sinon.assert.calledTwice(callback);
+        sinon.assert.calledWith(callback.secondCall, {status: Sticky.STATUS_ORIGINAL});
     });
 
     it('should work as expected (long Sticky)', function () {

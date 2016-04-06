@@ -13,9 +13,10 @@ import shallowCompare from 'react-addons-shallow-compare';
 import { subscribe } from 'subscribe-ui-event';
 
 // constants
-var STATUS_ORIGINAL = 0; // The default status, locating at the original position.
-var STATUS_RELEASED = 1; // The released status, locating at somewhere on document but not default one.
-var STATUS_FIXED = 2; // The sticky status, locating fixed to the top or the bottom of screen.
+const STATUS_ORIGINAL = 0; // The default status, locating at the original position.
+const STATUS_RELEASED = 1; // The released status, locating at somewhere on document but not default one.
+const STATUS_FIXED = 2; // The sticky status, locating fixed to the top or the bottom of screen.
+
 var TRANSFORM_PROP = 'transform';
 
 // global variable for all instances
@@ -276,6 +277,12 @@ class Sticky extends Component {
         this.update();
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.status !== this.state.status && this.props.onStateChange) {
+            this.props.onStateChange({status: this.state.status});
+        }
+    }
+
     componentWillUnmount () {
         var subscribers = this.subscribers || [];
         for (var i = subscribers.length - 1; i >= 0; i--) {
@@ -344,7 +351,8 @@ Sticky.defaultProps = {
     top: 0,
     bottomBoundary: 0,
     enableTransforms: true,
-    activeClass: 'active'
+    activeClass: 'active',
+    onStateChange: null
 };
 
 /**
@@ -366,7 +374,12 @@ Sticky.propTypes = {
         PropTypes.number
     ]),
     enableTransforms: PropTypes.bool,
-    activeClass: PropTypes.string
+    activeClass: PropTypes.string,
+    onStateChange: PropTypes.func
 };
+
+Sticky.STATUS_ORIGINAL = STATUS_ORIGINAL;
+Sticky.STATUS_RELEASED = STATUS_RELEASED;
+Sticky.STATUS_FIXED = STATUS_FIXED;
 
 module.exports = Sticky;

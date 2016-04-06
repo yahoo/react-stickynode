@@ -53,6 +53,30 @@ var Sticky = require('react-stickynode');
 - `bottomBoundary {Number/String}` - The offset from the top of document which release state will be triggered when the bottom of the element reaches at. If it is a selector to a target (via `querySelector()`), the offset will be the bottom of the target.
 - `enableTransforms {Boolean}` - Enable the use of CSS3 transforms (true by default).
 - `activeClass {String}` - Class name to be applied to the element when the sticky state is active (`active` by default).
+- `onStateChange {Function}` - Callback for when the sticky state changes. See below.
+
+### Handling State Change
+
+You can be notified when the state of the sticky component changes by passing a callback to the `onStateChange` prop. The callback will receive an object in the format `{status: CURRENT_STATUS}`, with `CURRENT_STATUS` being an integer representing the status: 
+
+- 0 (STATUS_ORIGINAL) - The default status, located at the original position.
+- 1 (STATUS_RELEASED) - The released status, located at somewhere on document, but not default one.
+- 2 (STATUS_FIXED) - The sticky status, located fixed to the top or the bottom of screen.
+
+You can access the statuses as static constants to use for comparison.
+```js
+var Sticky = require('react-stickynode');
+
+const handleStateChange = (status) => {
+    if (status.status === Sticky.STATUS_FIXED) {
+        console.log('the component is sticky');
+    }
+}
+
+<Sticky onStateChange={handleStateChange}>
+    <YourComponent/>
+</Sticky>
+```
 
 ## Install & Development
 
