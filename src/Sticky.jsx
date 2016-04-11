@@ -6,11 +6,11 @@
 
 'use strict';
 
-import React, { Component, PropTypes } from 'react';
+import React, {Component, PropTypes} from 'react';
 
+import {subscribe} from 'subscribe-ui-event';
 import classNames from 'classnames';
-import shallowCompare from 'react-addons-shallow-compare';
-import { subscribe } from 'subscribe-ui-event';
+import isEqual from 'is-equal-shallow';
 
 // constants
 const STATUS_ORIGINAL = 0; // The default status, locating at the original position.
@@ -145,8 +145,8 @@ class Sticky extends Component {
     updateInitialDimension () {
         var self = this;
 
-        var outer = self.refs.outer;
-        var inner = self.refs.inner;
+        var {outer, inner} = self.refs;
+
         var outerRect = outer.getBoundingClientRect();
         var innerRect = inner.getBoundingClientRect();
 
@@ -317,7 +317,7 @@ class Sticky extends Component {
     }
 
     shouldComponentUpdate (nextProps, nextState) {
-        return shallowCompare(this, nextProps, nextState);
+        return !isEqual(this.props, nextProps) || !isEqual(this.state, nextState);
     }
 
     render () {

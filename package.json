@@ -30,7 +30,7 @@
   ],
   "dependencies": {
     "classnames": "^2.0.0",
-    "react-addons-shallow-compare": "^0.14.2",
+    "is-equal-shallow": "^0.1.0",
     "subscribe-ui-event": "^1.0.0"
   },
   "devDependencies": {
@@ -53,20 +53,19 @@
     "grunt-webpack": "^1.0.8",
     "istanbul": "^0.4.0",
     "jsdom": "^8.0.0",
-    "jsx-loader": "^0.13.2",
-    "jsx-test": "^0.8.0",
+    "jsx-test": "^1.0.0",
     "minimist": "^1.2.0",
     "mocha": "^2.0",
     "mockery": "^1.4.0",
     "pre-commit": "^1.0.0",
-    "react": "^0.14.2",
-    "react-dom": "^0.14.2",
+    "react": "^0.14.2 || ^15.0.0",
+    "react-dom": "^0.14.2 || ^15.0.0",
     "sinon": "^1.17.3",
     "xunit-file": "~0.0.9"
   },
   "peerDependencies": {
-    "react": "^0.14.2",
-    "react-dom": "^0.14.2"
+    "react": "^0.14.2 || ^15.0.0",
+    "react-dom": "^0.14.2 || ^15.0.0"
   },
   "precommit": [
     "lint",
