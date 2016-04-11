@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "babel": "^5.0.0",
+    "babel-loader": "^5.0.0",
     "coveralls": "^2.11.1",
     "es5-shim": "^4.0.0",
     "eslint": "^2.4.0",

@@ -312,7 +312,7 @@ class Sticky extends Component {
         if (enableTransforms && this.state.activated) {
             style[TRANSFORM_PROP] = 'translate3d(0,' + pos + 'px,0)';
         } else {
-            style.top = pos;
+            style.top = pos + 'px';
         }
     }
 
@@ -325,15 +325,15 @@ class Sticky extends Component {
         // TODO, "overflow: auto" prevents collapse, need a good way to get children height
         var innerStyle = {
             position: self.state.status === STATUS_FIXED ? 'fixed' : 'relative',
-            top: self.state.status === STATUS_FIXED ? '0' : ''
+            top: self.state.status === STATUS_FIXED ? '0px' : ''
         };
         var outerStyle = {};
 
         // always use translate3d to enhance the performance
         self.translate(innerStyle, self.state.pos);
         if (self.state.status !== STATUS_ORIGINAL) {
-            innerStyle.width = self.state.width;
-            outerStyle.height = self.state.height;
+            innerStyle.width = self.state.width + 'px';
+            outerStyle.height = self.state.height + 'px';
         }
 
         return (
