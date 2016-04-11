@@ -162,7 +162,6 @@ module.exports = function (grunt) {
                 module: {
                     loaders: [
                         { test: /\.css$/, loader: 'style!css' },
-                        { test: /\.jsx$/, loader: 'jsx-loader' },
                         { test: /\.json$/, loader: 'json-loader'}
                     ]
                 }

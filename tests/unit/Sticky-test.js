@@ -83,30 +83,30 @@ window.resizeTo = function (x, y) {
 };
 
 function shouldBeFixedAt (t, pos) {
-    var style = t._reactInternalComponent._currentElement.props.style;
-    expect(style.width).to.be(100);
+    var style = t._style;
+    expect(style.width).to.be('100px');
     expect(style.transform).to.be('translate3d(0,' + pos + 'px,0)');
     expect(style.position).to.be('fixed');
-    expect(style.top).to.be('0');
+    expect(style.top).to.be('0px');
 }
 
 function shouldBeReleasedAt (t, pos) {
-    var style = t._reactInternalComponent._currentElement.props.style;
-    expect(style.width).to.be(100);
+    var style = t._style;
+    expect(style.width).to.be('100px');
     expect(style.transform).to.be('translate3d(0,' + pos + 'px,0)');
     expect(style.position).to.be('relative');
     expect(style.top).to.be('');
 }
 
 function shouldBeReset (t) {
-    var style = t._reactInternalComponent._currentElement.props.style;
+    var style = t._style;
     expect(style.transform).to.be('translate3d(0,0px,0)');
     expect(style.position).to.be('relative');
     expect(style.top).to.be('');
 }
 
 function checkTransform3d (inner) {
-    var style = inner._reactInternalComponent._currentElement.props.style;
+    var style = inner._style;
     expect(style.transform).to.contain('translate3d');
 }
 
