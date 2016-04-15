@@ -278,8 +278,22 @@ class Sticky extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevState.status !== this.state.status && this.props.onStateChange) {
-            this.props.onStateChange({status: this.state.status});
+        var self = this;
+        if (prevState.status !== self.state.status && self.props.onStateChange) {
+            self.props.onStateChange({status: self.state.status});
+        }
+        // if the props for enabling are toggled, then trigger the update or reset depending on the current props
+        if (prevProps.enabled !== self.props.enabled) {
+            if (self.props.enabled) {
+                this.setState({activated: true}, function(){
+                    self.updateInitialDimension();
+                    self.update();
+                });
+            } else {
+                this.setState({activated: false}, function(){
+                    self.reset();
+                });
+            }
         }
     }
 
@@ -299,12 +313,13 @@ class Sticky extends Component {
             self.setState({activated: true});
             self.updateInitialDimension();
             this.update();
-            self.subscribers = [
-                subscribe('scrollStart', self.handleScrollStart.bind(self), {useRAF: true}),
-                subscribe('scroll', self.handleScroll.bind(self), {useRAF: true, enableScrollInfo: true}),
-                subscribe('resize', self.handleResize.bind(self), {enableResizeInfo: true})
-            ];
         }
+        // bind the listeners regardless if initially enabled - allows the component to toggle sticky functionality
+        self.subscribers = [
+            subscribe('scrollStart', self.handleScrollStart.bind(self), {useRAF: true}),
+            subscribe('scroll', self.handleScroll.bind(self), {useRAF: true, enableScrollInfo: true}),
+            subscribe('resize', self.handleResize.bind(self), {enableResizeInfo: true})
+        ];
     }
 
     translate (style, pos) {
