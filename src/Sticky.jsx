@@ -222,7 +222,9 @@ class Sticky extends Component {
                         self.release(self.state.y);
                         self.stickyTop = self.state.y;
                         self.stickyBottom = self.stickyTop + self.state.height;
-                        break;
+                        // Commentting out "break" is on purpose, because there is a chance to transit to FIXED
+                        // from ORIGINAL when calling window.scrollTo().
+                        // break;
                     case STATUS_RELEASED:
                         // If "top" and "bottom" are inbetween stickyTop and stickyBottom, then Sticky is in
                         // RELEASE status. Otherwise, it changes to FIXED status, and its bottom sticks to
