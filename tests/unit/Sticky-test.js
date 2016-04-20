@@ -380,4 +380,29 @@ describe('Sticky', function () {
         shouldBeFixedAt(inner, -532);
         expect(outer.className).to.contain('active');
     });
+
+    it('should allow the sticky functionality to be toggled off', function () {
+        var ReactTestUtils = require('react-addons-test-utils');
+        var React = require('react');
+        // setup a wrapper to simulate the controlling of the sticky prop
+        var ParentComponent = React.createFactory(React.createClass({
+            getInitialState() {
+                return { enabled: true };
+            },
+            render() {
+                return <Sticky ref="sticky" enabled={this.state.enabled} />
+            }
+        }));
+
+        var parent = ReactTestUtils.renderIntoDocument(ParentComponent());
+        // toggle the enabled prop off
+        parent.setState({enabled: false});
+        // assert that the toggle of the props and state
+        expect(parent.refs.sticky.props.enabled).to.eql(false);
+        expect(parent.refs.sticky.state.activated).to.eql(false);
+        // toggle the enabled prop on
+        parent.setState({enabled: true});
+        expect(parent.refs.sticky.props.enabled).to.eql(true);
+        expect(parent.refs.sticky.state.activated).to.eql(true);
+    });
 });
