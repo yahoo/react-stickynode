@@ -287,12 +287,12 @@ class Sticky extends Component {
         // if the props for enabling are toggled, then trigger the update or reset depending on the current props
         if (prevProps.enabled !== self.props.enabled) {
             if (self.props.enabled) {
-                this.setState({activated: true}, function(){
+                this.setState({activated: true}, () => {
                     self.updateInitialDimension();
                     self.update();
                 });
             } else {
-                this.setState({activated: false}, function(){
+                this.setState({activated: false}, () => {
                     self.reset();
                 });
             }
