@@ -78,10 +78,11 @@ class Sticky extends Component {
         return target && target.offsetHeight || 0;
     }
 
-    getTopPosition () {
+    getTopPosition (top) {
         var self = this;
         // TODO, topTarget is for current layout, may remove
-        var top = self.props.top || self.props.topTarget || 0;
+        // a top argument can be provided to override reading from the props
+        top = top || self.props.top || self.props.topTarget || 0;
         if (typeof top === 'string') {
             if (!self.topTarget) {
                 self.topTarget = doc.querySelector(top);
@@ -99,10 +100,10 @@ class Sticky extends Component {
         return scrollTop + rect.bottom;
     }
 
-    getBottomBoundary () {
+    getBottomBoundary (bottomBoundary) {
         var self = this;
-
-        var boundary = self.props.bottomBoundary;
+        // a bottomBoundary can be provided to avoid reading from the props
+        var boundary = bottomBoundary || self.props.bottomBoundary;
 
         // TODO, bottomBoundary was an object, depricate it later.
         if (typeof boundary === 'object') {
@@ -141,8 +142,10 @@ class Sticky extends Component {
 
     /**
      * Update the initial position, width, and height. It should update whenever children change.
+     * @param {Object} options optional top and bottomBoundary new values
      */
-    updateInitialDimension () {
+    updateInitialDimension (options) {
+        options = options || {}
         var self = this;
 
         var {outer, inner} = self.refs;
@@ -155,13 +158,13 @@ class Sticky extends Component {
         var outerY = outerRect.top + scrollTop;
 
         self.setState({
-            top: self.getTopPosition(),
+            top: self.getTopPosition(options.top),
             bottom: Math.min(self.state.top + height, winHeight),
             width: width,
             height: height,
             x: outerRect.left,
             y: outerY,
-            bottomBoundary: self.getBottomBoundary(),
+            bottomBoundary: self.getBottomBoundary(options.bottomBoundary),
             topBoundary: outerY
         });
     }
@@ -274,8 +277,8 @@ class Sticky extends Component {
         self.delta = delta;
     }
 
-    componentWillReceiveProps () {
-        this.updateInitialDimension();
+    componentWillReceiveProps (nextProps) {
+        this.updateInitialDimension(nextProps);
         this.update();
     }
 
