@@ -366,6 +366,8 @@ class Sticky extends Component {
     }
 }
 
+Sticky.displayName = 'Sticky';
+
 Sticky.defaultProps = {
     enabled: true,
     top: 0,
