@@ -54,6 +54,7 @@ var Sticky = require('react-stickynode');
 - `enableTransforms {Boolean}` - Enable the use of CSS3 transforms (true by default).
 - `activeClass {String}` - Class name to be applied to the element when the sticky state is active (`active` by default).
 - `onStateChange {Function}` - Callback for when the sticky state changes. See below.
+- `shouldFreeze {Function}` - Callback to indicate when the sticky plugin should freeze position and ignore scroll/resize events. See below.
 
 ### Handling State Change
 
@@ -77,6 +78,10 @@ const handleStateChange = (status) => {
     <YourComponent/>
 </Sticky>
 ```
+
+### Freezing 
+
+You can provide a function in the `shouldFreeze` prop which will tell the component to temporarily stop updating during prop and state changes, as well as ignore scroll and resize events. This function should return a boolean indicating whether the component should currently be frozen. 
 
 ## Install & Development
 
