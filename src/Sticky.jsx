@@ -10,7 +10,7 @@ import React, {Component, PropTypes} from 'react';
 
 import {subscribe} from 'subscribe-ui-event';
 import classNames from 'classnames';
-import isEqual from 'deep-equal';
+import isEqual from 'is-equal-shallow';
 
 // constants
 const STATUS_ORIGINAL = 0; // The default status, locating at the original position.
