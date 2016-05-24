@@ -54,6 +54,7 @@ class Sticky extends Component {
         this.delta = 0;
         this.stickyTop = 0;
         this.stickyBottom = 0;
+        this.frozen = false;
 
         this.bottomBoundaryTarget;
         this.topTarget;
@@ -170,17 +171,31 @@ class Sticky extends Component {
     }
 
     handleResize (e, ae) {
+        if (this.props.shouldFreeze()) {
+            return;
+        }
+
         winHeight = ae.resize.height;
         this.updateInitialDimension();
         this.update();
     }
 
     handleScrollStart (e, ae) {
+        this.frozen = this.props.shouldFreeze();
+
+        if (this.frozen) {
+            return;
+        }
+        
         scrollTop = ae.scroll.top;
         this.updateInitialDimension();
     }
 
     handleScroll (e, ae) {
+        if (this.frozen) { 
+            return;
+        }
+
         scrollDelta = ae.scroll.delta;
         scrollTop = ae.scroll.top;
         this.update();
@@ -337,7 +352,7 @@ class Sticky extends Component {
     }
 
     shouldComponentUpdate (nextProps, nextState) {
-        return !isEqual(this.props, nextProps) || !isEqual(this.state, nextState);
+        return !this.props.shouldFreeze() && (!isEqual(this.props, nextProps) || !isEqual(this.state, nextState));
     }
 
     render () {
@@ -369,6 +384,7 @@ class Sticky extends Component {
 Sticky.displayName = 'Sticky';
 
 Sticky.defaultProps = {
+    shouldFreeze: function () { return false; },
     enabled: true,
     top: 0,
     bottomBoundary: 0,
@@ -397,7 +413,8 @@ Sticky.propTypes = {
     ]),
     enableTransforms: PropTypes.bool,
     activeClass: PropTypes.string,
-    onStateChange: PropTypes.func
+    onStateChange: PropTypes.func,
+    shouldFreeze: PropTypes.func
 };
 
 Sticky.STATUS_ORIGINAL = STATUS_ORIGINAL;
