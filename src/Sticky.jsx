@@ -54,6 +54,7 @@ class Sticky extends Component {
         this.delta = 0;
         this.stickyTop = 0;
         this.stickyBottom = 0;
+        this.frozen = false;
 
         this.bottomBoundaryTarget;
         this.topTarget;
@@ -170,7 +171,9 @@ class Sticky extends Component {
     }
 
     handleResize (e, ae) {
-        if (this.props.shouldFreeze()) { return; }
+        if (this.props.shouldFreeze()) {
+            return;
+        }
 
         winHeight = ae.resize.height;
         this.updateInitialDimension();
@@ -178,14 +181,20 @@ class Sticky extends Component {
     }
 
     handleScrollStart (e, ae) {
-        if (this.props.shouldFreeze()) { return; }
+        this.frozen = this.props.shouldFreeze();
+
+        if (this.frozen) {
+            return;
+        }
         
         scrollTop = ae.scroll.top;
         this.updateInitialDimension();
     }
 
     handleScroll (e, ae) {
-        if (this.props.shouldFreeze()) { return; }
+        if (this.frozen) { 
+            return;
+        }
 
         scrollDelta = ae.scroll.delta;
         scrollTop = ae.scroll.top;
