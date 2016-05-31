@@ -15,8 +15,6 @@ This behavior gives the content in a tall sticky target more chance to be shown.
 
 Another highlight is that `react-stickynode` can handle the case where a sticky target uses percentage as its width unit. For a responsive designed page, it is especially useful.
 
-This is also inspired by [Steve Carlson](https://github.com/src-code).
-
 ## Features
 
 - Retrieve scrollTop only once for all sticky components.
