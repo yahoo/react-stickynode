@@ -247,6 +247,7 @@ class Sticky extends Component {
                         // If "top" and "bottom" are inbetween stickyTop and stickyBottom, then Sticky is in
                         // RELEASE status. Otherwise, it changes to FIXED status, and its bottom sticks to
                         // viewport bottom when scrolling down, or its top sticks to viewport top when scrolling up.
+                        self.stickyBottom = self.stickyTop + self.state.height;
                         if (delta > 0 && bottom > self.stickyBottom) {
                             self.fix(self.state.bottom - self.state.height);
                         } else if (delta < 0 && top < self.stickyTop) {
