@@ -370,12 +370,12 @@ describe('Sticky', function () {
         // Change Sticky's height
         STICKY_HEIGHT = 1300;
 
-        // Scroll up to 1550px, and Sticky should release and stay where it was
+        // Scroll down to 1550px, and Sticky should release and stay where it was
         window.scrollTo(0, 1550);
         shouldBeReleasedAt(inner, 1068);
         expect(outer.className).to.not.contain('active');
 
-        // Scroll down to 1650px, and Sticky should release as it was
+        // Scroll down to 1650px, and Sticky should become fixed again
         window.scrollTo(0, 1650);
         shouldBeFixedAt(inner, -532);
         expect(outer.className).to.contain('active');
