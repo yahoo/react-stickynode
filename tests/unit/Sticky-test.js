@@ -369,9 +369,15 @@ describe('Sticky', function () {
 
         // Change Sticky's height
         STICKY_HEIGHT = 1300;
+        // After changing height, force a recalculation and Sticky should 
+        // release and stay where it was.
+        // Normally a prop change would accomplish this, but this test
+        // is only faking a height change without changing content
+        window.scrollTo(0, 1500);
+        shouldBeReleasedAt(inner, 1068);
 
-        // Scroll up to 1550px, and Sticky should release and stay where it was
-        window.scrollTo(0, 1550);
+        // Scroll up to 1450px, and Sticky should still be released
+        window.scrollTo(0, 1450);
         shouldBeReleasedAt(inner, 1068);
         expect(outer.className).to.not.contain('active');
 

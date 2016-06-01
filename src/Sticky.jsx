@@ -273,7 +273,7 @@ class Sticky extends Component {
                             // its height gets changed. Sticky should be in RELEASE status and update its
                             // sticky bottom by calculating how much height it changed.
                             var deltaHeight = (pos + height - self.state.bottom);
-                            self.stickyBottom = bottom - delta + deltaHeight;
+                            self.stickyBottom = bottom + deltaHeight;
                             self.stickyTop = self.stickyBottom - height;
                         } else {
                             toRelease = false;
