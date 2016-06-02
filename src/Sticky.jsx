@@ -26,7 +26,6 @@ var docEl;
 var canEnableTransforms = true; // Use transform by default, so no Sticky on lower-end browser when no Modernizr
 var M;
 var scrollDelta = 0;
-var scrollTop = -1;
 var win;
 var winHeight = -1;
 
@@ -35,7 +34,6 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
     doc = document;
     docEl = doc.documentElement;
     docBody = doc.body;
-    scrollTop = docBody.scrollTop + docEl.scrollTop;
     winHeight = win.innerHeight || docEl.clientHeight;
     M = window.Modernizr;
     // No Sticky on lower-end browser when no Modernizr
@@ -55,6 +53,8 @@ class Sticky extends Component {
         this.stickyTop = 0;
         this.stickyBottom = 0;
         this.frozen = false;
+        this.skipNextScrollEvent = false;
+        this.scrollTop = -1;
 
         this.bottomBoundaryTarget;
         this.topTarget;
@@ -98,7 +98,7 @@ class Sticky extends Component {
             return -1;
         }
         var rect = target.getBoundingClientRect();
-        return scrollTop + rect.bottom;
+        return this.scrollTop + rect.bottom;
     }
 
     getBottomBoundary (bottomBoundary) {
@@ -156,7 +156,7 @@ class Sticky extends Component {
 
         var width = outerRect.width || outerRect.right - outerRect.left;
         var height = innerRect.height || innerRect.bottom - innerRect.top;;
-        var outerY = outerRect.top + scrollTop;
+        var outerY = outerRect.top + this.scrollTop;
 
         self.setState({
             top: self.getTopPosition(options.top),
@@ -187,17 +187,25 @@ class Sticky extends Component {
             return;
         }
         
-        scrollTop = ae.scroll.top;
-        this.updateInitialDimension();
+        if (this.scrollTop === ae.scroll.top) {
+            // Scroll position hasn't changed,
+            // do nothing
+            this.skipNextScrollEvent = true;
+        } else {
+            this.scrollTop = ae.scroll.top;
+            this.updateInitialDimension();
+        }
     }
 
     handleScroll (e, ae) {
-        if (this.frozen) { 
+        // Scroll doesn't need to be handled
+        if (this.skipNextScrollEvent) {
+            this.skipNextScrollEvent = false;
             return;
         }
 
         scrollDelta = ae.scroll.delta;
-        scrollTop = ae.scroll.top;
+        this.scrollTop = ae.scroll.top;
         this.update();
     }
 
@@ -220,8 +228,8 @@ class Sticky extends Component {
         var delta = scrollDelta;
         // "top" and "bottom" are the positions that self.state.top and self.state.bottom project
         // on document from viewport.
-        var top = scrollTop + self.state.top;
-        var bottom = scrollTop + self.state.bottom;
+        var top = this.scrollTop + self.state.top;
+        var bottom = this.scrollTop + self.state.bottom;
 
         // There are 2 principles to make sure Sticky won't get wrong so much:
         // 1. Reset Sticky to the original postion when "top" <= topBoundary
@@ -328,7 +336,7 @@ class Sticky extends Component {
     componentDidMount () {
         var self = this;
         // when mount, the scrollTop is not necessary on the top
-        scrollTop = docBody.scrollTop + docEl.scrollTop;
+        this.scrollTop = docBody.scrollTop + docEl.scrollTop;
 
         if (self.props.enabled) {
             self.setState({activated: true});
