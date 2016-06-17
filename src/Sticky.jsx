@@ -369,7 +369,8 @@ class Sticky extends Component {
         // TODO, "overflow: auto" prevents collapse, need a good way to get children height
         var innerStyle = {
             position: self.state.status === STATUS_FIXED ? 'fixed' : 'relative',
-            top: self.state.status === STATUS_FIXED ? '0px' : ''
+            top: self.state.status === STATUS_FIXED ? '0px' : '',
+            zIndex: self.props.innerZ
         };
         var outerStyle = {};
 
@@ -423,7 +424,11 @@ Sticky.propTypes = {
     enableTransforms: PropTypes.bool,
     activeClass: PropTypes.string,
     onStateChange: PropTypes.func,
-    shouldFreeze: PropTypes.func
+    shouldFreeze: PropTypes.func,
+    innerZ: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number
+    ])
 };
 
 Sticky.STATUS_ORIGINAL = STATUS_ORIGINAL;
