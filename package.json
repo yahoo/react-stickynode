@@ -30,7 +30,7 @@
   ],
   "dependencies": {
     "classnames": "^2.0.0",
-    "is-equal-shallow": "^0.1.0",
+    "react-addons-shallow-compare": "^0.14.2 || ^15.0.0",
     "subscribe-ui-event": "^1.0.0"
   },
   "devDependencies": {
