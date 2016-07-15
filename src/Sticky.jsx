@@ -29,20 +29,6 @@ var scrollDelta = 0;
 var win;
 var winHeight = -1;
 
-if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-    win = window;
-    doc = document;
-    docEl = doc.documentElement;
-    docBody = doc.body;
-    winHeight = win.innerHeight || docEl.clientHeight;
-    M = window.Modernizr;
-    // No Sticky on lower-end browser when no Modernizr
-    if (M) {
-        canEnableTransforms = M.csstransforms3d;
-        TRANSFORM_PROP = M.prefixed('transform');
-    }
-}
-
 class Sticky extends Component {
     constructor (props, context) {
         super(props, context);
@@ -329,6 +315,22 @@ class Sticky extends Component {
     }
 
     componentDidMount () {
+        // Only initialize the globals if this is the first 
+        // time this component type has been mounted
+        if (!win) {
+            win = window;
+            doc = document;
+            docEl = doc.documentElement;
+            docBody = doc.body;
+            winHeight = win.innerHeight || docEl.clientHeight;
+            M = window.Modernizr;
+            // No Sticky on lower-end browser when no Modernizr
+            if (M) {
+                canEnableTransforms = M.csstransforms3d;
+                TRANSFORM_PROP = M.prefixed('transform');
+            }
+        }
+
         // when mount, the scrollTop is not necessary on the top
         this.scrollTop = docBody.scrollTop + docEl.scrollTop;
 
