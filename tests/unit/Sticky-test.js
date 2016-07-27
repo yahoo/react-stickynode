@@ -139,11 +139,13 @@ describe('Sticky', function () {
         window.scrollTo(0, 10);
         shouldBeFixedAt(inner, 0);
         expect(outer.className).to.contain('active');
+        expect(outer.className).to.not.contain('released');
 
         // Scroll up to 0px, and Sticky should reset
         window.scrollTo(0, 0);
         shouldBeReset(inner);
         expect(outer.className).to.not.contain('active');
+        expect(outer.className).to.not.contain('released');
 
         // Increase coverage
         sticky.componentWillReceiveProps();
@@ -190,26 +192,31 @@ describe('Sticky', function () {
         window.scrollTo(0, 1500);
         shouldBeFixedAt(inner, -432);
         expect(outer.className).to.contain('active');
+        expect(outer.className).to.not.contain('released');
 
         // Scroll up to 1300px, and Sticky should release
         window.scrollTo(0, 1300);
         shouldBeReleasedAt(inner, 1068);
         expect(outer.className).to.not.contain('active');
+        expect(outer.className).to.contain('released');
 
         // Scroll down to 1350px, and Sticky should release as it was
         window.scrollTo(0, 1350);
         shouldBeReleasedAt(inner, 1068);
         expect(outer.className).to.not.contain('active');
+        expect(outer.className).to.contain('released');
 
         // Scroll up to 10px, and Sticky should fix
         window.scrollTo(0, 10);
         shouldBeFixedAt(inner, 0);
         expect(outer.className).to.contain('active');
+        expect(outer.className).not.to.contain('released');
 
         // Scroll down to 20px, and Sticky should release
         window.scrollTo(0, 20);
         shouldBeReleasedAt(inner, 10);
         expect(outer.className).to.not.contain('active');
+        expect(outer.className).to.contain('released');
     });
 
     it('should work as expected with original postion 20px from top (short Sticky)', function () {
@@ -228,11 +235,13 @@ describe('Sticky', function () {
         window.scrollTo(0, 10);
         shouldBeReset(inner);
         expect(outer.className).to.not.contain('active');
+        expect(outer.className).to.not.contain('released');
 
         // Scroll down to 50px, and Sticky should fix
         window.scrollTo(0, 50);
         shouldBeFixedAt(inner, 0);
         expect(outer.className).to.contain('active');
+        expect(outer.className).to.not.contain('released');
     });
 
     it('should work as expected with original top 20px and 400px bottom boundary (short Sticky)', function () {
@@ -253,16 +262,19 @@ describe('Sticky', function () {
         window.scrollTo(0, 10);
         shouldBeReset(inner);
         expect(outer.className).to.not.contain('active');
+        expect(outer.className).to.not.contain('released');
 
         // Scroll down to 50px, and Sticky should fix
         window.scrollTo(0, 50);
         shouldBeFixedAt(inner, 0);
         expect(outer.className).to.contain('active');
+        expect(outer.className).to.not.contain('released');
 
         // Scroll down to 150px, and Sticky should release
         window.scrollTo(0, 150);
         shouldBeReleasedAt(inner, 80);
         expect(outer.className).to.not.contain('active');
+        expect(outer.className).to.contain('released');
     });
 
     it('should not be sticky if bottom boundary is shorter then its height (short Sticky)', function () {
@@ -282,12 +294,14 @@ describe('Sticky', function () {
         window.scrollTo(0, 10);
         shouldBeReset(inner);
         expect(outer.className).to.not.contain('active');
+        expect(outer.className).to.not.contain('released');
 
         // Micic status was not 0 (STATUS_ORIGINAL), scroll down to 20px, and Sticky should stay
         sticky.state.status = 2; // STATUS_FIXED;
         window.scrollTo(0, 20);
         shouldBeReset(inner);
         expect(outer.className).to.not.contain('active');
+        expect(outer.className).to.not.contain('released');
     });
 
     it('should work as expected with selector bottom boundary (short Sticky)', function () {
@@ -308,16 +322,19 @@ describe('Sticky', function () {
         window.scrollTo(0, 10);
         shouldBeFixedAt(inner, 20);
         expect(outer.className).to.contain('active');
+        expect(outer.className).to.not.contain('released');
 
         // Scroll down to 50px, and Sticky should fix
         window.scrollTo(0, 50);
         shouldBeFixedAt(inner, 20);
         expect(outer.className).to.contain('active');
+        expect(outer.className).to.not.contain('released');
 
         // Scroll down to 150px, and Sticky should release
         window.scrollTo(0, 150);
         shouldBeReleasedAt(inner, 100);
         expect(outer.className).to.not.contain('active');
+        expect(outer.className).to.contain('released');
     });
 
     it('should stick to the top when window resizes larger then Sticky (long Sticky)', function () {
@@ -336,10 +353,12 @@ describe('Sticky', function () {
         window.scrollTo(0, 10);
         shouldBeReleasedAt(inner, 0);
         expect(outer.className).to.not.contain('active');
+        expect(outer.className).to.contain('released');
 
         window.resizeTo(0, 900);
         shouldBeFixedAt(inner, 0);
         expect(outer.className).to.contain('active');
+        expect(outer.className).to.not.contain('released');
 
         // Resize back
         window.resizeTo(0, 768);
@@ -361,11 +380,13 @@ describe('Sticky', function () {
         window.scrollTo(0, 10);
         shouldBeReleasedAt(inner, 0);
         expect(outer.className).to.not.contain('active');
+        expect(outer.className).to.contain('released');
 
         // Scroll down to 1500px, and Sticky should fix to the bottom
         window.scrollTo(0, 1500);
         shouldBeFixedAt(inner, -432);
         expect(outer.className).to.contain('active');
+        expect(outer.className).to.not.contain('released');
 
         // Change Sticky's height
         STICKY_HEIGHT = 1300;
@@ -374,11 +395,13 @@ describe('Sticky', function () {
         window.scrollTo(0, 1550);
         shouldBeReleasedAt(inner, 1068);
         expect(outer.className).to.not.contain('active');
+        expect(outer.className).to.contain('released');
 
         // Scroll down to 1650px, and Sticky should become fixed again
         window.scrollTo(0, 1650);
         shouldBeFixedAt(inner, -532);
         expect(outer.className).to.contain('active');
+        expect(outer.className).to.not.contain('released');
     });
 
     it('should allow the sticky functionality to be toggled off', function () {

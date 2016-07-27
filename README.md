@@ -52,6 +52,7 @@ var Sticky = require('react-stickynode');
 - `innerZ {Number/String}` - z-index of the sticky
 - `enableTransforms {Boolean}` - Enable the use of CSS3 transforms (true by default).
 - `activeClass {String}` - Class name to be applied to the element when the sticky state is active (`active` by default).
+- `releasedClass {String}` - Class name to be applied to the element when the sticky state is released (`released` by default).
 - `onStateChange {Function}` - Callback for when the sticky state changes. See below.
 - `shouldFreeze {Function}` - Callback to indicate when the sticky plugin should freeze position and ignore scroll/resize events. See below.
 
