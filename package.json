@@ -4,7 +4,7 @@
   "description": "A performant and comprehensive React sticky",
   "main": "index.js",
   "scripts": {
-    "build": "grunt react",
+    "build": "grunt dist",
     "devtest": "grunt unit",
     "func": "./tests/functional/saucelabs.sh",
     "lint": "eslint --cache --ext .js,.jsx . --fix",
