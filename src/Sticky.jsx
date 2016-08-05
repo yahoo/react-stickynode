@@ -315,7 +315,7 @@ class Sticky extends Component {
     }
 
     componentDidMount () {
-        // Only initialize the globals if this is the first 
+        // Only initialize the globals if this is the first
         // time this component type has been mounted
         if (!win) {
             win = window;
@@ -376,8 +376,13 @@ class Sticky extends Component {
             outerStyle.height = this.state.height + 'px';
         }
 
+        var outerClasses = classNames('sticky-outer-wrapper', this.props.className, {
+            [this.props.activeClass]: this.state.status === STATUS_FIXED,
+            [this.props.releasedClass]: this.state.status === STATUS_RELEASED
+        })
+
         return (
-            <div ref='outer' className={classNames('sticky-outer-wrapper', this.props.className, {[this.props.activeClass]: this.state.status === STATUS_FIXED})} style={outerStyle}>
+            <div ref='outer' className={outerClasses} style={outerStyle}>
                 <div ref='inner' className='sticky-inner-wrapper' style={innerStyle}>
                     {this.props.children}
                 </div>
@@ -395,6 +400,7 @@ Sticky.defaultProps = {
     bottomBoundary: 0,
     enableTransforms: true,
     activeClass: 'active',
+    releasedClass: 'released',
     onStateChange: null
 };
 
@@ -418,6 +424,7 @@ Sticky.propTypes = {
     ]),
     enableTransforms: PropTypes.bool,
     activeClass: PropTypes.string,
+    releasedClass: PropTypes.string,
     onStateChange: PropTypes.func,
     shouldFreeze: PropTypes.func,
     innerZ: PropTypes.oneOfType([
