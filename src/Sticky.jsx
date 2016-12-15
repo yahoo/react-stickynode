@@ -283,7 +283,21 @@ class Sticky extends Component {
         this.delta = delta;
     }
 
+    updateElements ( nextProps ) {
+        if ( !nextProps ) {
+          return;
+        }
+
+        if ( (typeof nextProps.bottomBoundary === 'string') && (nextProps.bottomBoundary !== this.props.bottomBoundary) ) {
+            this.bottomBoundaryTarget = doc.querySelector(nextProps.bottomBoundary);
+        }
+        if ( (typeof nextProps.top === 'string' ) && (nextProps.top !== this.props.top) ) {
+            this.topTarget = doc.querySelector(nextProps.top);
+        }
+    }
+
     componentWillReceiveProps (nextProps) {
+        this.updateElements(nextProps)
         this.updateInitialDimension(nextProps);
         this.update();
     }
