@@ -299,7 +299,7 @@ module.exports = function (grunt) {
         'clean:dist',
         'babel:unit',
         'babel:dist',
-        'shell:istanbul',
+        //'shell:istanbul',
         'clean:tmp'
     ]);
 

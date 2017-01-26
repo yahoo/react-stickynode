@@ -64,6 +64,8 @@
     "react-addons-test-utils": "^0.14.2 || ^15.0.0",
     "react-dom": "^0.14.2 || ^15.0.0",
     "sinon": "^1.17.3",
+    "webpack": "^1.14.0",
+    "webpack-dev-server": "^1.16.2",
     "xunit-file": "~0.0.9"
   },
   "peerDependencies": {

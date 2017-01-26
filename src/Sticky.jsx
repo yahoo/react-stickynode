@@ -45,7 +45,7 @@ class Sticky extends Component {
         this.bottomBoundaryTarget;
         this.topTarget;
         this.subscribers;
-        
+
         const { width=0, translateX=0 } = props;
 
         this.state = {
