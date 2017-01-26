@@ -45,11 +45,14 @@ class Sticky extends Component {
         this.bottomBoundaryTarget;
         this.topTarget;
         this.subscribers;
+        
+        const { width=0, translateX=0 } = props;
 
         this.state = {
             top: 0, // A top offset from viewport top where Sticky sticks to when scrolling up
             bottom: 0, // A bottom offset from viewport top where Sticky sticks to when scrolling down
-            width: 0, // Sticky width
+            width, // Sticky width defaults to 0 unless specified in props
+            translateX: translateX, // defaults to 0 unless specified in props
             height: 0, // Sticky height
             x: 0, // The original x of Sticky
             y: 0, // The original y of Sticky
@@ -137,7 +140,8 @@ class Sticky extends Component {
         var outerRect = outer.getBoundingClientRect();
         var innerRect = inner.getBoundingClientRect();
 
-        var width = outerRect.width || outerRect.right - outerRect.left;
+        // uses a width if defined in props, defaults to with of outer container
+        var width = this.props.width || outerRect.width || outerRect.right - outerRect.left;
         var height = innerRect.height || innerRect.bottom - innerRect.top;;
         var outerY = outerRect.top + this.scrollTop;
 
@@ -350,7 +354,9 @@ class Sticky extends Component {
     translate (style, pos) {
         var enableTransforms = canEnableTransforms && this.props.enableTransforms
         if (enableTransforms && this.state.activated) {
-            style[TRANSFORM_PROP] = 'translate3d(0,' + pos + 'px,0)';
+            const { translateX } = this.props;
+            let xpos = translateX ? translateX + 'px' : 0;
+            style[TRANSFORM_PROP] = 'translate3d('+xpos+', '+pos+'px,0)';
         } else {
             style.top = pos + 'px';
         }
@@ -430,7 +436,9 @@ Sticky.propTypes = {
     innerZ: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number
-    ])
+    ]),
+    width: PropTypes.number,
+    translateX: PropTypes.number
 };
 
 Sticky.STATUS_ORIGINAL = STATUS_ORIGINAL;
