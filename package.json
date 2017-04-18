@@ -64,7 +64,8 @@
     "react-addons-test-utils": "^0.14.2 || ^15.0.0",
     "react-dom": "^0.14.2 || ^15.0.0",
     "sinon": "^1.17.3",
-    "xunit-file": "~0.0.9"
+    "xunit-file": "~0.0.9",
+    "prop-types": "^15.5.8"
   },
   "peerDependencies": {
     "react": "^0.14.2 || ^15.0.0",
