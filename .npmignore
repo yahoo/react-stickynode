@@ -1,4 +1,6 @@
+.babelrc
 .editorconfig
+.eslint*
 /artifacts/
 /bin/
 /build/
