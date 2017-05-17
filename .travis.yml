@@ -1,7 +1,8 @@
 sudo: false
 language: node_js
 node_js:
-  - "0.12"
+  - 7
+  - 6
 after_success:
   - "npm run func"
   - "cat artifacts/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
