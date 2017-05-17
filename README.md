@@ -1,4 +1,6 @@
 # react-stickynode
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/yahoo/react-stickynode.svg)](https://greenkeeper.io/)
 [![npm version](https://badge.fury.io/js/react-stickynode.svg)](http://badge.fury.io/js/react-stickynode)
 [![Build Status](https://travis-ci.org/yahoo/react-stickynode.svg?branch=master)](https://travis-ci.org/yahoo/react-stickynode)
 [![Coverage Status](https://coveralls.io/repos/yahoo/react-stickynode/badge.svg)](https://coveralls.io/r/yahoo/react-stickynode)
