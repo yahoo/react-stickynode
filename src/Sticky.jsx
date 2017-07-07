@@ -87,9 +87,10 @@ class Sticky extends Component {
         return this.scrollTop + rect.bottom;
     }
 
-    getBottomBoundary (bottomBoundary) {
+    getBottomBoundary (bottomBoundary, bottomBoundaryOffset) {
         // a bottomBoundary can be provided to avoid reading from the props
         var boundary = bottomBoundary || this.props.bottomBoundary;
+        var boundaryOffset = bottomBoundaryOffset || this.props.bottomBoundaryOffset || 0;
 
         // TODO, bottomBoundary was an object, depricate it later.
         if (typeof boundary === 'object') {
@@ -102,7 +103,7 @@ class Sticky extends Component {
             }
             boundary = this.getTargetBottom(this.bottomBoundaryTarget);
         }
-        return boundary && boundary > 0 ? boundary : Infinity;
+        return boundary && (boundary + boundaryOffset) > 0 ? (boundary + boundaryOffset) : Infinity;
     }
 
     reset () {
@@ -149,7 +150,7 @@ class Sticky extends Component {
             height: height,
             x: outerRect.left,
             y: outerY,
-            bottomBoundary: this.getBottomBoundary(options.bottomBoundary),
+            bottomBoundary: this.getBottomBoundary(options.bottomBoundary, options.bottomBoundaryOffset),
             topBoundary: outerY
         });
     }
@@ -423,6 +424,7 @@ Sticky.propTypes = {
         PropTypes.string,
         PropTypes.number
     ]),
+    bottomBoundaryOffset: PropTypes.number,
     enableTransforms: PropTypes.bool,
     activeClass: PropTypes.string,
     releasedClass: PropTypes.string,
