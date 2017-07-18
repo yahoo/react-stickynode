@@ -129,10 +129,10 @@ class Sticky extends Component {
     /**
      * Update the initial position, width, and height. It should update whenever children change.
      * @param {Object} options optional top and bottomBoundary new values
-     * @returns {Object} computed dimensions in case we need to bypass setState
+     * @param {Function} [callback] optional callback function after setState is performed
      */
-    updateInitialDimension (options) {
-        options = options || {}
+    updateInitialDimension (options, callback) {
+        options = options || {};
 
         var {outer, inner} = this.refs;
 
@@ -140,7 +140,7 @@ class Sticky extends Component {
         var innerRect = inner.getBoundingClientRect();
 
         var width = outerRect.width || outerRect.right - outerRect.left;
-        var height = innerRect.height || innerRect.bottom - innerRect.top;;
+        var height = innerRect.height || innerRect.bottom - innerRect.top;
         var outerY = outerRect.top + this.scrollTop;
 
         var result = {
@@ -154,8 +154,7 @@ class Sticky extends Component {
             topBoundary: outerY
         };
 
-        this.setState(result);
-        return result;
+        this.setState(result, callback);
     }
 
     handleResize (e, ae) {
@@ -164,8 +163,7 @@ class Sticky extends Component {
         }
 
         winHeight = ae.resize.height;
-        this.updateInitialDimension();
-        this.update();
+        this.updateInitialDimension({}, this.update);
     }
 
     handleScrollStart (e, ae) {
@@ -199,78 +197,75 @@ class Sticky extends Component {
 
     /**
      * Update Sticky position.
-     * @param {Object} state optional value for this.state in case setState hasn't landed yet
      */
-    update (state) {
-        state = state || this.state;
-
+    update () {
         var disabled = !this.props.enabled ||
-            state.bottomBoundary - state.topBoundary <= state.height ||
-            (state.width === 0 && state.height === 0);
+            this.state.bottomBoundary - this.state.topBoundary <= this.state.height ||
+            (this.state.width === 0 && this.state.height === 0);
 
         if (disabled) {
-            if (state.status !== STATUS_ORIGINAL) {
+            if (this.state.status !== STATUS_ORIGINAL) {
                 this.reset();
             }
             return;
         }
 
         var delta = scrollDelta;
-        // "top" and "bottom" are the positions that state.top and state.bottom project
+        // "top" and "bottom" are the positions that this.state.top and this.state.bottom project
         // on document from viewport.
-        var top = this.scrollTop + state.top;
-        var bottom = this.scrollTop + state.bottom;
+        var top = this.scrollTop + this.state.top;
+        var bottom = this.scrollTop + this.state.bottom;
 
         // There are 2 principles to make sure Sticky won't get wrong so much:
-        // 1. Reset Sticky to the original postion when "top" <= topBoundary
+        // 1. Reset Sticky to the original position when "top" <= topBoundary
         // 2. Release Sticky to the bottom boundary when "bottom" >= bottomBoundary
-        if (top <= state.topBoundary) { // #1
+        if (top <= this.state.topBoundary) { // #1
             this.reset();
-        } else if (bottom >= state.bottomBoundary) { // #2
-            this.stickyBottom = state.bottomBoundary;
-            this.stickyTop = this.stickyBottom - state.height;
+        } else if (bottom >= this.state.bottomBoundary) { // #2
+            this.stickyBottom = this.state.bottomBoundary;
+            this.stickyTop = this.stickyBottom - this.state.height;
             this.release(this.stickyTop);
         } else {
-            if (state.height > winHeight - state.top) {
+            if (this.state.height > winHeight - this.state.top) {
                 // In this case, Sticky is higher then viewport minus top offset
-                switch (state.status) {
+                switch (this.state.status) {
                     case STATUS_ORIGINAL:
-                        this.release(state.y);
-                        this.stickyTop = state.y;
-                        this.stickyBottom = this.stickyTop + state.height;
-                        // Commentting out "break" is on purpose, because there is a chance to transit to FIXED
+                        this.release(this.state.y);
+                        this.stickyTop = this.state.y;
+                        this.stickyBottom = this.stickyTop + this.state.height;
+                        // Commenting out "break" is on purpose, because there is a chance to transit to FIXED
                         // from ORIGINAL when calling window.scrollTo().
                         // break;
                     case STATUS_RELEASED:
-                        // If "top" and "bottom" are inbetween stickyTop and stickyBottom, then Sticky is in
+                        // If "top" and "bottom" are in between stickyTop and stickyBottom, then Sticky is in
                         // RELEASE status. Otherwise, it changes to FIXED status, and its bottom sticks to
                         // viewport bottom when scrolling down, or its top sticks to viewport top when scrolling up.
-                        this.stickyBottom = this.stickyTop + state.height;
+                        this.stickyBottom = this.stickyTop + this.state.height;
                         if (delta > 0 && bottom > this.stickyBottom) {
-                            this.fix(state.bottom - state.height);
+                            this.fix(this.state.bottom - this.state.height);
                         } else if (delta < 0 && top < this.stickyTop) {
-                            this.fix(state.top);
+                            this.fix(this.state.top);
                         }
                         break;
                     case STATUS_FIXED:
                         var toRelease = true;
-                        var pos = state.pos;
-                        var height = state.height;
+                        var pos = this.state.pos;
+                        var height = this.state.height;
                         // In regular cases, when Sticky is in FIXED status,
                         // 1. it's top will stick to the screen top,
                         // 2. it's bottom will stick to the screen bottom,
                         // 3. if not the cases above, then it's height gets changed
-                        if (delta > 0 && pos === state.top) { // case 1, and scrolling down
+                        if (delta > 0 && pos === this.state.top) { // case 1, and scrolling down
                             this.stickyTop = top - delta;
                             this.stickyBottom = this.stickyTop + height;
-                        } else if (delta < 0 && pos === state.bottom - height) { // case 2, and scrolling up
+                        } else if (delta < 0 && pos === this.state.bottom - height) { // case 2, and scrolling up
                             this.stickyBottom = bottom - delta;
                             this.stickyTop = this.stickyBottom - height;
-                        } else if (pos !== state.bottom - height && pos !== state.top) { // case 3
+                        } else if (pos !== this.state.bottom - height && pos !== this.state.top) { // case 3
                             // This case only happens when Sticky's bottom sticks to the screen bottom and
                             // its height gets changed. Sticky should be in RELEASE status and update its
                             // sticky bottom by calculating how much height it changed.
-                            var deltaHeight = (pos + height - state.bottom);
+                            var deltaHeight = (pos + height - this.state.bottom);
                             this.stickyBottom = bottom - delta + deltaHeight;
                             this.stickyTop = this.stickyBottom - height;
                         } else {
@@ -285,15 +280,14 @@ class Sticky extends Component {
             } else {
                 // In this case, Sticky is shorter then viewport minus top offset
                 // and will always fix to the top offset of viewport
-                this.fix(state.top);
+                this.fix(this.state.top);
             }
         }
         this.delta = delta;
     }
 
     componentWillReceiveProps (nextProps) {
-        var newState = this.updateInitialDimension(nextProps);
-        this.update(newState);
+        this.updateInitialDimension(nextProps, this.update);
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -304,8 +298,7 @@ class Sticky extends Component {
         if (prevProps.enabled !== this.props.enabled) {
             if (this.props.enabled) {
                 this.setState({activated: true}, () => {
-                    this.updateInitialDimension();
-                    this.update();
+                    this.updateInitialDimension({}, this.update);
                 });
             } else {
                 this.setState({activated: false}, () => {
@@ -344,8 +337,7 @@ class Sticky extends Component {
 
         if (this.props.enabled) {
             this.setState({activated: true});
-            this.updateInitialDimension();
-            this.update();
+            this.updateInitialDimension({}, this.update);
         }
         // bind the listeners regardless if initially enabled - allows the component to toggle sticky functionality
         this.subscribers = [
