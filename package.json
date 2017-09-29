@@ -61,15 +61,15 @@
     "mocha": "^2.0",
     "mockery": "^1.4.0",
     "pre-commit": "^1.0.0",
-    "react": "^0.14.2 || ^15.0.0",
-    "react-addons-test-utils": "^0.14.2 || ^15.0.0",
-    "react-dom": "^0.14.2 || ^15.0.0",
+    "react": "^16.0.0",
+    "react-addons-test-utils": "^15.6.2",
+    "react-dom": "^16.0.0",
     "sinon": "^1.17.3",
     "xunit-file": "~0.0.9"
   },
   "peerDependencies": {
-    "react": "^0.14.2 || ^15.0.0",
-    "react-dom": "^0.14.2 || ^15.0.0"
+    "react": "^0.14.2 || ^15.0.0 || ^16.0.0",
+    "react-dom": "^0.14.2 || ^15.0.0 || ^16.0.0"
   },
   "precommit": [
     "lint",
