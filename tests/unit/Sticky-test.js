@@ -405,7 +405,7 @@ describe('Sticky', function () {
     });
 
     it('should allow the sticky functionality to be toggled off', function () {
-        var ReactTestUtils = require('react-addons-test-utils');
+        var ReactTestUtils = require('react-dom/test-utils');
         var React = require('react');
         // setup a wrapper to simulate the controlling of the sticky prop
         var ParentComponent = React.createFactory(React.createClass({
