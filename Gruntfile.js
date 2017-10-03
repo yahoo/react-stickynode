@@ -142,7 +142,7 @@ module.exports = function (grunt) {
                         env: env
                     }
                 },
-                command: 'node node_modules/istanbul/lib/cli.js cover --dir <%= project.coverage_dir %> ' +
+                command: 'node tests/helpers/rAF.js node_modules/istanbul/lib/cli.js cover --dir <%= project.coverage_dir %> ' +
                     '-- ./node_modules/mocha/bin/_mocha <%= project.tmp %>/<%= project.unit %> ' +
                     '--recursive --reporter xunit-file'
             },
