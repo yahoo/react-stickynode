@@ -326,7 +326,7 @@ class Sticky extends Component {
             winHeight = win.innerHeight || docEl.clientHeight;
             M = window.Modernizr;
             // No Sticky on lower-end browser when no Modernizr
-            if (M && M.prefixed) {
+            if (M) {
                 canEnableTransforms = M.csstransforms3d;
                 TRANSFORM_PROP = M.prefixed('transform');
             }
