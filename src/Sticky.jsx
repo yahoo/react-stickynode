@@ -133,10 +133,8 @@ class Sticky extends Component {
     updateInitialDimension (options) {
         options = options || {}
 
-        var {outer, inner} = this.refs;
-
-        var outerRect = outer.getBoundingClientRect();
-        var innerRect = inner.getBoundingClientRect();
+        var outerRect = this.outerElement.getBoundingClientRect();
+        var innerRect = this.innerElement.getBoundingClientRect();
 
         var width = outerRect.width || outerRect.right - outerRect.left;
         var height = innerRect.height || innerRect.bottom - innerRect.top;;
@@ -383,8 +381,8 @@ class Sticky extends Component {
         })
 
         return (
-            <div ref='outer' className={outerClasses} style={outerStyle}>
-                <div ref='inner' className='sticky-inner-wrapper' style={innerStyle}>
+            <div ref={(outer) => { this.outerElement = outer; }} className={outerClasses} style={outerStyle}>
+                <div ref={(inner) => { this.innerElement = inner; }} className='sticky-inner-wrapper' style={innerStyle}>
                     {this.props.children}
                 </div>
             </div>
