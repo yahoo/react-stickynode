@@ -44,6 +44,15 @@ var Sticky = require('react-stickynode');
 </Sticky>
 ```
 
+You can also import it using the ES6 style.
+
+```js
+import Sticky from 'react-stickynode';
+<Sticky enabled={true} top={50} bottomBoundary={1200}>
+    <YourComponent/>
+</Sticky>
+```
+
 ### Props
 
 - `enabled {Boolean}` - The switch to enable or disable Sticky (true by default).
