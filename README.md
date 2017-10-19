@@ -31,14 +31,16 @@ The sticky uses Modernizr `csstransforms3d` and `prefixed` features to detect IE
 http://modernizr.com/download/?-csstransforms3d-prefixed
 
 ```js
-var Sticky = require('react-stickynode');
+import Sticky from 'react-stickynode';
+
 <Sticky enabled={true} top={50} bottomBoundary={1200}>
     <YourComponent/>
 </Sticky>
 ```
 
 ```js
-var Sticky = require('react-stickynode');
+import Sticky from 'react-stickynode';
+
 <Sticky top='#header' bottomBoundary='#content'>
     <YourComponent/>
 </Sticky>
@@ -66,7 +68,7 @@ You can be notified when the state of the sticky component changes by passing a 
 
 You can access the statuses as static constants to use for comparison.
 ```js
-var Sticky = require('react-stickynode');
+import Sticky from 'react-stickynode';
 
 const handleStateChange = (status) => {
     if (status.status === Sticky.STATUS_FIXED) {
