@@ -6,12 +6,11 @@
 
 'use strict';
 
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types'
 
 import {subscribe} from 'subscribe-ui-event';
 import classNames from 'classnames';
-import shallowCompare from 'react-addons-shallow-compare';
 
 // constants
 const STATUS_ORIGINAL = 0; // The default status, locating at the original position.
@@ -30,7 +29,7 @@ var scrollDelta = 0;
 var win;
 var winHeight = -1;
 
-class Sticky extends Component {
+class Sticky extends PureComponent {
     constructor (props, context) {
         super(props, context);
         this.handleResize = this.handleResize.bind(this);
@@ -358,7 +357,7 @@ class Sticky extends Component {
     }
 
     shouldComponentUpdate (nextProps, nextState) {
-        return !this.props.shouldFreeze() && shallowCompare(this, nextProps, nextState);
+        return !this.props.shouldFreeze();
     }
 
     render () {
