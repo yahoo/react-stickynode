@@ -1,6 +1,7 @@
 {
-  "name": "react-stickynode",
-  "version": "1.4.0",
+  "name": "@appearhere/react-stickynode",
+  "parentVersion": "1.4.0",
+  "version": "1.0.0",
   "description": "A performant and comprehensive React sticky",
   "main": "index.js",
   "scripts": {
@@ -18,16 +19,6 @@
   "keywords": [
     "Sticky",
     "React"
-  ],
-  "author": {
-    "name": "Hank Hsiao",
-    "email": "hankxiao@yahoo-inc.com"
-  },
-  "contributors": [
-    {
-      "name": "Steve Carlson",
-      "email": "yasteve@yahoo-inc.com"
-    }
   ],
   "dependencies": {
     "classnames": "^2.0.0",
