@@ -351,7 +351,7 @@ class Sticky extends Component {
     translate (style, pos) {
         var enableTransforms = canEnableTransforms && this.props.enableTransforms
         if (enableTransforms && this.state.activated) {
-            style[TRANSFORM_PROP] = 'translate3d(0,' + pos + 'px,0)';
+            style[TRANSFORM_PROP] = 'translate3d(0,' + Math.round(pos) + 'px,0)';
         } else {
             style.top = pos + 'px';
         }
