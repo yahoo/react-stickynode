@@ -428,4 +428,100 @@ describe('Sticky', function () {
         expect(parent.refs.sticky.props.enabled).to.eql(true);
         expect(parent.refs.sticky.state.activated).to.eql(true);
     });
+
+    it('should work as expected with original top 20px, 400px bottom boundary, and -20px bottom boundary offset (short Sticky)', function () {
+        STICKY_TOP = 20;
+        sticky = jsx.renderComponent(Sticky, {
+            bottomBoundary: 400,
+            bottomBoundaryOffset: -20
+        });
+        outer = ReactDOM.findDOMNode(sticky);
+        inner = outer.firstChild;
+
+        // regular case
+        expect(outer.className).to.contain('sticky-outer-wrapper');
+        expect(inner.className).to.contain('sticky-inner-wrapper');
+        // should always have translate3d
+        checkTransform3d(inner);
+
+        // Scroll down to 10px, and Sticky should stay
+        window.scrollTo(0, 10);
+        shouldBeReset(inner);
+        expect(outer.className).to.not.contain('active');
+        expect(outer.className).to.not.contain('released');
+
+        // Scroll down to 50px, and Sticky should fix
+        window.scrollTo(0, 50);
+        shouldBeFixedAt(inner, 0);
+        expect(outer.className).to.contain('active');
+        expect(outer.className).to.not.contain('released');
+
+        // Scroll down to 150px, and Sticky should release
+        window.scrollTo(0, 150);
+        shouldBeReleasedAt(inner, 60); // 20 + 300 + 60 = (400 + -20)
+        expect(outer.className).to.not.contain('active');
+        expect(outer.className).to.contain('released');
+    });
+
+    it('should not be sticky if bottom boundary + bottom boundary offset is shorter then its height (short Sticky)', function () {
+        sticky = jsx.renderComponent(Sticky, {
+            bottomBoundary: 400,
+            bottomBoundaryOffset: -101
+        });
+        outer = ReactDOM.findDOMNode(sticky);
+        inner = outer.firstChild;
+
+        // regular case
+        expect(outer.className).to.contain('sticky-outer-wrapper');
+        expect(inner.className).to.contain('sticky-inner-wrapper');
+        // should always have translate3d
+        checkTransform3d(inner);
+
+        // Scroll down to 10px, and Sticky should stay
+        window.scrollTo(0, 10);
+        shouldBeReset(inner);
+        expect(outer.className).to.not.contain('active');
+        expect(outer.className).to.not.contain('released');
+
+        // Micic status was not 0 (STATUS_ORIGINAL), scroll down to 20px, and Sticky should stay
+        sticky.state.status = 2; // STATUS_FIXED;
+        window.scrollTo(0, 20);
+        shouldBeReset(inner);
+        expect(outer.className).to.not.contain('active');
+        expect(outer.className).to.not.contain('released');
+    });
+
+    it('should work as expected with selector bottom boundary + bottom boundary offset (short Sticky)', function () {
+        sticky = jsx.renderComponent(Sticky, {
+            top: '#test',
+            bottomBoundary: '#test',
+            bottomBoundaryOffset: -20
+        });
+        outer = ReactDOM.findDOMNode(sticky);
+        inner = outer.firstChild;
+
+        // regular case
+        expect(outer.className).to.contain('sticky-outer-wrapper');
+        expect(inner.className).to.contain('sticky-inner-wrapper');
+        // should always have translate3d
+        checkTransform3d(inner);
+
+        // Scroll down to 10px, and Sticky should fix
+        window.scrollTo(0, 10);
+        shouldBeFixedAt(inner, 20);
+        expect(outer.className).to.contain('active');
+        expect(outer.className).to.not.contain('released');
+
+        // Scroll down to 50px, and Sticky should fix
+        window.scrollTo(0, 50);
+        shouldBeFixedAt(inner, 20);
+        expect(outer.className).to.contain('active');
+        expect(outer.className).to.not.contain('released');
+
+        // Scroll down to 150px, and Sticky should release
+        window.scrollTo(0, 150);
+        shouldBeReleasedAt(inner, 80); // 400 - 300 + (-20)
+        expect(outer.className).to.not.contain('active');
+        expect(outer.className).to.contain('released');
+    });
 });
