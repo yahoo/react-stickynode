@@ -7,9 +7,9 @@
 
 A performant and comprehensive React sticky component.
 
-A sticky component wraps a sticky target and remains the target in viewport as an user scrolls the page. Most sticky components handle the case where the sticky target is shorter then viewport, but not the case where a sticky target taller then viewport. The reason is the behavior expectation and implementation is much more complicated.
+A sticky component wraps a sticky target and keeps the target in the viewport as the user scrolls the page. Most sticky components handle the case where the sticky target is shorter than the viewport, but not the case where a sticky target js taller than the viewport. The reason is that the expected behavior and implementation is much more complicated.
 
-`react-stickynode` handles not only regular case but the long sticky target case in a natural way. In regular case, when scrolling page down, `react-stickynode` will stick to the top of viewport. But in the case of taller sticky target, it will scroll along with the page until its bottom reaches the bottom of viewport. In other words, it looks like the bottom of viewport pulls the bottom of a sticky target down when scrolling page down. On the other hand, when scrolling page up, the top of viewport pulls the top of a sticky target up.
+`react-stickynode` handles not only regular case but the long sticky target case in a natural way. In the regular case, when scrolling the page down, `react-stickynode` will stick to the top of the viewport. But in the case of a taller sticky target, it will scroll along with the page until its bottom reaches the bottom of the viewport. In other words, it looks like the bottom of viewport pulls the bottom of a sticky target down when scrolling the page down. On the other hand, when scrolling the page up, the top of viewport pulls the top of a sticky target up.
 
 This behavior gives the content in a tall sticky target more chance to be shown. This is especially good for the case where many ADs are in the right rail.
 
@@ -17,7 +17,7 @@ Another highlight is that `react-stickynode` can handle the case where a sticky 
 
 ## Features
 
-- Retrieve scrollTop only once for all sticky components.
+- Retrieve `scrollTop` only once for all sticky components.
 - Listen to throttled scrolling to have better performance.
 - Use rAF to update sticky status to have better performance.
 - Support top offset from the top of screen.
@@ -26,9 +26,7 @@ Another highlight is that `react-stickynode` can handle the case where a sticky 
 
 ## Usage
 
-The sticky uses Modernizr `csstransforms3d` and `prefixed` features to detect IE8/9, so it can downgrade not to use transform3d.
-
-http://modernizr.com/download/?-csstransforms3d-prefixed
+The sticky uses Modernizr `csstransforms3d` and `prefixed` ([link](http://modernizr.com/download/?-csstransforms3d-prefixed)) features to detect IE8/9, so it can downgrade not to use transform3d.
 
 ```js
 import Sticky from 'react-stickynode';
@@ -48,23 +46,27 @@ import Sticky from 'react-stickynode';
 
 ### Props
 
-- `enabled {Boolean}` - The switch to enable or disable Sticky (true by default).
-- `top {Number/String}` - The offset from the top of window where the top of the element will be when sticky state is triggered (0 by default). If it is a selector to a target (via `querySelector()`), the offset will be the height of the target.
-- `bottomBoundary {Number/String}` - The offset from the top of document which release state will be triggered when the bottom of the element reaches at. If it is a selector to a target (via `querySelector()`), the offset will be the bottom of the target.
-- `innerZ {Number/String}` - z-index of the sticky
-- `enableTransforms {Boolean}` - Enable the use of CSS3 transforms (true by default).
-- `activeClass {String}` - Class name to be applied to the element when the sticky state is active (`active` by default).
-- `releasedClass {String}` - Class name to be applied to the element when the sticky state is released (`released` by default).
-- `onStateChange {Function}` - Callback for when the sticky state changes. See below.
-- `shouldFreeze {Function}` - Callback to indicate when the sticky plugin should freeze position and ignore scroll/resize events. See below.
+|Name| Type| Note|
+|-----|-----|-----|
+| `enabled` | Boolean| The switch to enable or disable Sticky (true by default). |
+| `top` | Boolean/String | The offset from the top of window where the top of the element will be when sticky state is triggered (0 by default). If it is a selector to a target (via `querySelector()`), the offset will be the height of the target. |
+| `bottomBoundary` | Number/String | The offset from the top of document which release state will be triggered when the bottom of the element reaches at. If it is a selector to a target (via `querySelector()`), the offset will be the bottom of the target. |
+| `innerZ` | Number/String | z-index of the sticky. |
+| `enableTransforms` | Boolean | Enable the use of CSS3 transforms (true by default). |
+| `activeClass` | String | Class name to be applied to the element when the sticky state is active (`active` by default). |
+| `releasedClass` | String | Class name to be applied to the element when the sticky state is released (`released` by default). |
+| `onStateChange` | Function | Callback for when the sticky state changes. See below. |
+| `shouldFreeze` | Function | Callback to indicate when the sticky plugin should freeze position and ignore scroll/resize events. See below. |
 
 ### Handling State Change
 
 You can be notified when the state of the sticky component changes by passing a callback to the `onStateChange` prop. The callback will receive an object in the format `{status: CURRENT_STATUS}`, with `CURRENT_STATUS` being an integer representing the status: 
 
-- 0 (STATUS_ORIGINAL) - The default status, located at the original position.
-- 1 (STATUS_RELEASED) - The released status, located at somewhere on document, but not default one.
-- 2 (STATUS_FIXED) - The sticky status, located fixed to the top or the bottom of screen.
+| Value | Name | Note|
+|-----|-----|-----|
+| `0` | `STATUS_ORIGINAL` | The default status, located at the original position.|
+| `1` | `STATUS_RELEASED` | The released status, located at somewhere on document, but not default one.|
+| `2` | `STATUS_FIXED` | The sticky status, located fixed to the top or the bottom of screen.|
 
 You can access the statuses as static constants to use for comparison.
 ```js
