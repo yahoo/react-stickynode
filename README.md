@@ -7,7 +7,7 @@
 
 A performant and comprehensive React sticky component.
 
-A sticky component wraps a sticky target and keeps the target in the viewport as the user scrolls the page. Most sticky components handle the case where the sticky target is shorter than the viewport, but not the case where a sticky target js taller than the viewport. The reason is that the expected behavior and implementation is much more complicated.
+A sticky component wraps a sticky target and keeps the target in the viewport as the user scrolls the page. Most sticky components handle the case where the sticky target is shorter than the viewport, but not the case where a sticky target is taller than the viewport. The reason is that the expected behavior and implementation is much more complicated.
 
 `react-stickynode` handles not only regular case but the long sticky target case in a natural way. In the regular case, when scrolling the page down, `react-stickynode` will stick to the top of the viewport. But in the case of a taller sticky target, it will scroll along with the page until its bottom reaches the bottom of the viewport. In other words, it looks like the bottom of viewport pulls the bottom of a sticky target down when scrolling the page down. On the other hand, when scrolling the page up, the top of viewport pulls the top of a sticky target up.
 
