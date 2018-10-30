@@ -380,10 +380,12 @@ class Sticky extends Component {
             [this.props.releasedClass]: this.state.status === STATUS_RELEASED
         })
 
+        var children = this.props.children;
+
         return (
             <div ref={(outer) => { this.outerElement = outer; }} className={outerClasses} style={outerStyle}>
                 <div ref={(inner) => { this.innerElement = inner; }} className='sticky-inner-wrapper' style={innerStyle}>
-                    {this.props.children}
+                    {typeof children === 'function' ? children({ status: this.state.status }) : children}
                 </div>
             </div>
         );

@@ -60,7 +60,7 @@ import Sticky from 'react-stickynode';
 
 ### Handling State Change
 
-You can be notified when the state of the sticky component changes by passing a callback to the `onStateChange` prop. The callback will receive an object in the format `{status: CURRENT_STATUS}`, with `CURRENT_STATUS` being an integer representing the status: 
+You can be notified when the state of the sticky component changes by passing a callback to the `onStateChange` prop. The callback will receive an object in the format `{status: CURRENT_STATUS}`, with `CURRENT_STATUS` being an integer representing the status:
 
 | Value | Name | Note|
 |-----|-----|-----|
@@ -83,9 +83,27 @@ const handleStateChange = (status) => {
 </Sticky>
 ```
 
-### Freezing 
+Also `Sticky` supports children functions:
 
-You can provide a function in the `shouldFreeze` prop which will tell the component to temporarily stop updating during prop and state changes, as well as ignore scroll and resize events. This function should return a boolean indicating whether the component should currently be frozen. 
+```js
+import Sticky from 'react-stickynode';
+
+<Sticky>
+  {status => {
+    if (status.status === Sticky.STATUS_FIXED) {
+      return 'the component is sticky';
+    }
+    if (status.status === Sticky.STATUS_ORIGINAL) {
+      return 'the component in the original position';
+    }
+    return 'the component is released'
+  }}
+</Sticky>
+```
+
+### Freezing
+
+You can provide a function in the `shouldFreeze` prop which will tell the component to temporarily stop updating during prop and state changes, as well as ignore scroll and resize events. This function should return a boolean indicating whether the component should currently be frozen.
 
 ## Install & Development
 
