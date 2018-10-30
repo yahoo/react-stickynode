@@ -86,12 +86,6 @@ Also `Sticky` supports children functions:
 ```js
 import Sticky from 'react-stickynode';
 
-const handleStateChange = (status) => {
-    if (status.status === Sticky.STATUS_FIXED) {
-        console.log('the component is sticky');
-    }
-}
-
 <Sticky>
   {status => {
     if (status.status === Sticky.STATUS_FIXED) {

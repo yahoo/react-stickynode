@@ -171,6 +171,22 @@ describe('Sticky', function () {
         sinon.assert.calledWith(callback.secondCall, {status: Sticky.STATUS_ORIGINAL});
     });
 
+    it('should call the children function on state change', function () {
+        var childrenStub = sinon.stub().returns(null);
+        jsx.renderComponent(Sticky, { children: childrenStub });
+
+        sinon.assert.notCalled(childrenStub);
+
+        // Scroll down to 10px, and status should change to FIXED
+        window.scrollTo(0, 10);
+        sinon.assert.calledWith(childrenStub, {status: Sticky.STATUS_FIXED});
+
+        // Scroll up to 0px, and Sticky should reset
+        window.scrollTo(0, 0);
+        sinon.assert.calledTwice(childrenStub);
+        sinon.assert.calledWith(childrenStub.secondCall, {status: Sticky.STATUS_ORIGINAL});
+    });
+
     it('should work as expected (long Sticky)', function () {
         STICKY_HEIGHT = 1200;
         sticky = jsx.renderComponent(Sticky);
