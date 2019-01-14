@@ -11,7 +11,7 @@ import PropTypes from 'prop-types'
 
 import {subscribe} from 'subscribe-ui-event';
 import classNames from 'classnames';
-import shallowCompare from 'react-addons-shallow-compare';
+import shallowEqual from 'shallowequal';
 
 // constants
 const STATUS_ORIGINAL = 0; // The default status, locating at the original position.
@@ -356,7 +356,7 @@ class Sticky extends Component {
     }
 
     shouldComponentUpdate (nextProps, nextState) {
-        return !this.props.shouldFreeze() && shallowCompare(this, nextProps, nextState);
+        return !this.props.shouldFreeze() && (!shallowequal(this.props, nextProps) || !shallowequal(this.state, nextState));
     }
 
     render () {
