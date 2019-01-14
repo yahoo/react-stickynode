@@ -356,7 +356,7 @@ class Sticky extends Component {
     }
 
     shouldComponentUpdate (nextProps, nextState) {
-        return !this.props.shouldFreeze() && (!shallowequal(this.props, nextProps) || !shallowequal(this.state, nextState));
+        return !this.props.shouldFreeze() && !(shallowEqual(this.props, nextProps) && shallowEqual(this.state, nextState));
     }
 
     render () {
