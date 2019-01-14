@@ -32,7 +32,7 @@
   "dependencies": {
     "classnames": "^2.0.0",
     "prop-types": "^15.6.0",
-    "shallow-equal": "^1.0.0",
+    "shallowequal": "^1.0.0",
     "subscribe-ui-event": "^2.0.0"
   },
   "devDependencies": {
