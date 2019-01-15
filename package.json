@@ -1,6 +1,6 @@
 {
   "name": "react-stickynode",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "A performant and comprehensive React sticky",
   "main": "index.js",
   "scripts": {
@@ -32,7 +32,7 @@
   "dependencies": {
     "classnames": "^2.0.0",
     "prop-types": "^15.6.0",
-    "react-addons-shallow-compare": "^0.14.2 || ^15.0.0",
+    "shallowequal": "^1.0.0",
     "subscribe-ui-event": "^2.0.0"
   },
   "devDependencies": {
