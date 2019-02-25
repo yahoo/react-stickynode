@@ -67,9 +67,8 @@ class Sticky extends Component {
     }
 
     getTopPosition (top) {
-        // TODO, topTarget is for current layout, may remove
         // a top argument can be provided to override reading from the props
-        top = top || this.props.top || this.props.topTarget || 0;
+        top = top || this.props.top || 0;
         if (typeof top === 'string') {
             if (!this.topTarget) {
                 this.topTarget = doc.querySelector(top);
@@ -282,26 +281,27 @@ class Sticky extends Component {
         this.delta = delta;
     }
 
-    componentWillReceiveProps (nextProps) {
-        this.updateInitialDimension(nextProps);
-        this.update();
-    }
-
     componentDidUpdate(prevProps, prevState) {
         if (prevState.status !== this.state.status && this.props.onStateChange) {
             this.props.onStateChange({status: this.state.status});
         }
-        // if the props for enabling are toggled, then trigger the update or reset depending on the current props
-        if (prevProps.enabled !== this.props.enabled) {
-            if (this.props.enabled) {
-                this.setState({activated: true}, () => {
-                    this.updateInitialDimension();
-                    this.update();
-                });
-            } else {
-                this.setState({activated: false}, () => {
-                    this.reset();
-                });
+        const arePropsChanged = !shallowEqual(this.props, prevProps);
+        if (arePropsChanged) {
+            // if the props for enabling are toggled, then trigger the update or reset depending on the current props
+            if (prevProps.enabled !== this.props.enabled) {
+                if (this.props.enabled) {
+                    this.setState({ activated: true }, () => {
+                        this.updateInitialDimension();
+                        this.update();
+                    });
+                } else {
+                    this.setState({ activated: false }, () => {
+                        this.reset();
+                    });
+                }
+            } else if (prevProps.top !== this.props.top || prevProps.bottomBoundary !== this.props.bottomBoundary) {
+                this.updateInitialDimension();
+                this.update();
             }
         }
     }
