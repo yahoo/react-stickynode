@@ -299,7 +299,9 @@ class Sticky extends Component {
                         this.reset();
                     });
                 }
-            } else if (prevProps.top !== this.props.top || prevProps.bottomBoundary !== this.props.bottomBoundary) {
+            } 
+            // if the top or bottomBoundary props were changed, then trigger the update
+            else if (prevProps.top !== this.props.top || prevProps.bottomBoundary !== this.props.bottomBoundary) {
                 this.updateInitialDimension();
                 this.update();
             }
