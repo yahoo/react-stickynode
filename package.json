@@ -50,9 +50,9 @@
     "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-connect": "^1.0.0",
     "grunt-contrib-watch": "^1.0.0",
-    "grunt-saucelabs": "^8.3.2",
+    "grunt-saucelabs": "^9.0.1",
     "grunt-shell": "^1.1.2",
-    "grunt-webpack": "^1.0.8",
+    "grunt-webpack": "^3.1.3",
     "istanbul": "^0.4.0",
     "jsdom": "^8.0.0",
     "jsx-test": "^2.1.0",
@@ -63,8 +63,8 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "sinon": "^1.17.3",
-    "webpack": "^1.15.0",
-    "webpack-dev-server": "^1.16.5",
+    "webpack": "^4.43.0",
+    "webpack-dev-server": "^3.10.3",
     "xunit-file": "~0.0.9"
   },
   "peerDependencies": {
