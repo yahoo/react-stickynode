@@ -11,7 +11,6 @@ module.exports = function (grunt) {
         'grunt-atomizer',
         'grunt-contrib-clean',
         'grunt-contrib-connect',
-        'grunt-contrib-jshint',
         'grunt-contrib-watch',
         'grunt-babel',
         'grunt-shell',
