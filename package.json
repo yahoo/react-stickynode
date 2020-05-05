@@ -33,7 +33,7 @@
     "classnames": "^2.0.0",
     "prop-types": "^15.6.0",
     "shallowequal": "^1.0.0",
-    "subscribe-ui-event": "^2.0.0"
+    "subscribe-ui-event": "^2.0.6"
   },
   "devDependencies": {
     "babel": "^5.0.0",
