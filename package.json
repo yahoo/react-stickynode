@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "build": "grunt dist",
-    "devtest": "grunt unit",
-    "func": "./tests/functional/saucelabs.sh",
+    "ci": "./tests/functional/saucelabs.sh",
     "lint": "eslint --cache --ext .js,.jsx . --fix",
     "prepublish": "grunt dist",
-    "test": "grunt cover"
+    "test": "grunt test",
+    "test:unit": "grunt unit",
+    "test:func": "grunt func"
   },
   "repository": {
     "type": "git",

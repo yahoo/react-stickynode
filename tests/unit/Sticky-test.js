@@ -83,7 +83,7 @@ window.resizeTo = function (x, y) {
 };
 
 function shouldBeFixedAt (t, pos) {
-    var style = t._style;
+    var style = t._style || t.style;
     expect(style.width).to.be('100px');
     expect(style.transform).to.be('translate3d(0,' + pos + 'px,0)');
     expect(style.position).to.be('fixed');
@@ -91,7 +91,7 @@ function shouldBeFixedAt (t, pos) {
 }
 
 function shouldBeReleasedAt (t, pos) {
-    var style = t._style;
+    var style = t._style || t.style;
     expect(style.width).to.be('100px');
     expect(style.transform).to.be('translate3d(0,' + pos + 'px,0)');
     expect(style.position).to.be('relative');
@@ -99,14 +99,14 @@ function shouldBeReleasedAt (t, pos) {
 }
 
 function shouldBeReset (t) {
-    var style = t._style;
+    var style = t._style || t.style;
     expect(style.transform).to.be('translate3d(0,0px,0)');
     expect(style.position).to.be('relative');
     expect(style.top).to.be('');
 }
 
 function checkTransform3d (inner) {
-    var style = inner._style;
+    var style = inner._style || inner.style;
     expect(style.transform).to.contain('translate3d');
 }
 
@@ -146,9 +146,6 @@ describe('Sticky', function () {
         shouldBeReset(inner);
         expect(outer.className).to.not.contain('active');
         expect(outer.className).to.not.contain('released');
-
-        // Increase coverage
-        sticky.componentWillReceiveProps();
     });
 
     it('should call the callback on state change', function () {
@@ -173,18 +170,17 @@ describe('Sticky', function () {
 
     it('should call the children function on state change', function () {
         var childrenStub = sinon.stub().returns(null);
-        jsx.renderComponent(Sticky, { children: childrenStub });
-
         sinon.assert.notCalled(childrenStub);
+
+        jsx.renderComponent(Sticky, { children: childrenStub });        
 
         // Scroll down to 10px, and status should change to FIXED
         window.scrollTo(0, 10);
-        sinon.assert.calledWith(childrenStub, {status: Sticky.STATUS_FIXED});
+        sinon.assert.calledWith(childrenStub.lastCall, {status: Sticky.STATUS_FIXED});
 
         // Scroll up to 0px, and Sticky should reset
         window.scrollTo(0, 0);
-        sinon.assert.calledTwice(childrenStub);
-        sinon.assert.calledWith(childrenStub.secondCall, {status: Sticky.STATUS_ORIGINAL});
+        sinon.assert.calledWith(childrenStub.lastCall, {status: Sticky.STATUS_ORIGINAL});
     });
 
     it('should work as expected (long Sticky)', function () {
@@ -423,17 +419,26 @@ describe('Sticky', function () {
     it('should allow the sticky functionality to be toggled off', function () {
         var ReactTestUtils = require('react-dom/test-utils');
         var React = require('react');
+
         // setup a wrapper to simulate the controlling of the sticky prop
-        var ParentComponent = React.createFactory(React.createClass({
-            getInitialState() {
-                return { enabled: true };
-            },
+        class TestComponent extends React.Component {
+            constructor(props) {
+                super(props);
+
+                this.sticky = null;
+                this.setTextInputRef = element => {
+                    this.sticky = element;
+                };
+
+                this.state = { enabled: true }; 
+            }
+
             render() {
                 return <Sticky ref="sticky" enabled={this.state.enabled} />
             }
-        }));
+        }
 
-        var parent = ReactTestUtils.renderIntoDocument(ParentComponent());
+        var parent = ReactTestUtils.renderIntoDocument(React.createElement(TestComponent, {}));
         // toggle the enabled prop off
         parent.setState({enabled: false});
         // assert that the toggle of the props and state

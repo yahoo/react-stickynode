@@ -37,7 +37,6 @@ module.exports = function (grunt) {
         tmp: 'tmp',
         unit: 'tests/unit',
         functional: 'tests/functional',
-        spec: 'tests/spec',
         coverage_dir: grunt.option('coverage_dir') || 'artifacts',
         test_results_dir: grunt.option('test_results_dir') || 'artifacts'
     };
@@ -313,8 +312,18 @@ module.exports = function (grunt) {
     // dist
     // 1. clean dist/
     // 2. compile jsx to js in dist/
-    grunt.registerTask('dist', ['clean:dist', 'babel:dist']);
-    grunt.registerTask('test', ['clean:dist', 'babel:dist', 'clean:tmp', 'babel:unit']);
+    grunt.registerTask('dist', [
+        'clean:dist',
+        'babel:dist'
+    ]);
+
+    grunt.registerTask('test', [
+        'clean:dist',
+        'babel:dist',
+        'clean:tmp',
+        'babel:unit',
+        'shell:mocha'
+    ]);
 
     // default
     grunt.registerTask('default', ['dist']);
