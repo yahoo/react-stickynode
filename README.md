@@ -115,7 +115,12 @@ npm install react-stickynode
 
 **Unit Test**
 ```bash
-grunt unit
+npm run test
+```
+
+**Linting**
+```bash
+npm run lint
 ```
 
 ## License
