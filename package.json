@@ -63,7 +63,7 @@
     "pre-commit": "^1.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "sinon": "^1.17.3",
+    "sinon": "^9.0.2",
     "webpack": "^4.43.0",
     "webpack-dev-server": "^3.10.3",
     "xunit-file": "~1.0.0"
