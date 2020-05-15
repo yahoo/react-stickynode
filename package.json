@@ -59,7 +59,7 @@
     "jsx-test": "^2.1.0",
     "minimist": "^1.2.5",
     "mocha": "^7.1.2",
-    "mockery": "^1.4.0",
+    "mockery": "^2.1.0",
     "pre-commit": "^1.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
