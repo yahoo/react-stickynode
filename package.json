@@ -37,7 +37,7 @@
     "subscribe-ui-event": "^2.0.6"
   },
   "devDependencies": {
-    "babel": "^5.0.0",
+    "babel": "^6.23.0",
     "babel-loader": "^5.0.0",
     "coveralls": "^3.1.0",
     "es5-shim": "^4.5.14",
