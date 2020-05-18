@@ -46,7 +46,7 @@
     "expect.js": "^0.3.1",
     "grunt": "^1.1.0",
     "grunt-atomizer": "^3.0.0",
-    "grunt-babel": "^5.0.0",
+    "grunt-babel": "^6.0.0",
     "grunt-cli": "^1.1.0",
     "grunt-contrib-clean": "^2.0.0",
     "grunt-contrib-connect": "^2.1.0",
