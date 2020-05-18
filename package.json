@@ -1,15 +1,14 @@
 {
   "name": "react-stickynode",
   "version": "3.0.2",
-  "description": "A performant and comprehensive React sticky",
+  "description": "A performant and comprehensive React sticky component",
   "main": "index.js",
   "scripts": {
-    "build": "grunt dist",
+    "build": "babel src --out-dir dist",
     "ci": "./tests/functional/saucelabs.sh",
     "lint": "eslint --cache --ext .js,.jsx . --fix",
-    "prepublish": "grunt dist",
-    "test": "grunt test",
-    "test:unit": "grunt unit",
+    "prepublish": "npm run build",
+    "test": "jest --coverage tests/unit",
     "test:func": "grunt func"
   },
   "repository": {
@@ -32,13 +31,19 @@
   ],
   "dependencies": {
     "classnames": "^2.0.0",
+    "core-js": "^3.6.5",
     "prop-types": "^15.6.0",
     "shallowequal": "^1.0.0",
     "subscribe-ui-event": "^2.0.6"
   },
   "devDependencies": {
-    "babel": "^5.0.0",
-    "babel-loader": "^5.0.0",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-react": "^7.9.4",
+    "@babel/register": "^7.9.0",
+    "@testing-library/react": "^10.0.4",
+    "babel-jest": "^26.0.1",
     "coveralls": "^3.1.0",
     "es5-shim": "^4.5.14",
     "eslint": "^7.0.0",
@@ -46,27 +51,22 @@
     "expect.js": "^0.3.1",
     "grunt": "^1.1.0",
     "grunt-atomizer": "^3.0.0",
-    "grunt-babel": "^5.0.0",
     "grunt-cli": "^1.1.0",
     "grunt-contrib-clean": "^2.0.0",
     "grunt-contrib-connect": "^2.1.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-saucelabs": "^9.0.1",
-    "grunt-shell": "^3.0.1",
     "grunt-webpack": "^3.1.3",
-    "istanbul": "^0.4.0",
+    "jest": "^26.0.1",
     "jsdom": "^16.2.2",
-    "jsx-test": "^2.1.0",
     "minimist": "^1.2.5",
     "mocha": "^7.1.2",
-    "mockery": "^2.1.0",
     "pre-commit": "^1.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "sinon": "^9.0.2",
+    "react-test-renderer": "^16.13.1",
     "webpack": "^4.43.0",
-    "webpack-dev-server": "^3.10.3",
-    "xunit-file": "~1.0.0"
+    "webpack-dev-server": "^3.10.3"
   },
   "peerDependencies": {
     "react": "^0.14.2 || ^15.0.0 || ^16.0.0",
@@ -76,5 +76,11 @@
     "lint",
     "test"
   ],
-  "license": "BSD-3-Clause"
+  "license": "BSD-3-Clause",
+  "browserslist": [
+    "last 2 versions",
+    "ie >= 11",
+    "iOS >= 12",
+    "Android >= 6"
+  ]
 }

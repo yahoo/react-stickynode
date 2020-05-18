@@ -12,7 +12,6 @@ module.exports = function (grunt) {
         'grunt-contrib-clean',
         'grunt-contrib-connect',
         'grunt-contrib-watch',
-        'grunt-babel',
         'grunt-shell',
         'grunt-webpack'
     ].forEach(function (packageName) {
@@ -86,69 +85,6 @@ module.exports = function (grunt) {
                 }]
             }
         },
-        // react
-        // compiles jsx to js
-        babel: {
-            dist: {
-                options: {
-                    sourceMap: false
-                },
-                files: [
-                    {
-                        expand: true,
-                        cwd: '<%= project.src %>',
-                        src: ['**/*.*'],
-                        dest: '<%= project.dist %>/',
-                        extDot: 'last',
-                        ext: '.js'
-                    }
-                ]
-            },
-            functional: {
-                options: {
-                    sourceMap: false
-                },
-                files: [
-                    {
-                        expand: true,
-                        src: ['<%= project.functional %>/**/*.jsx'],
-                        extDot: 'last',
-                        ext: '.js'
-                    }
-                ]
-            },
-            unit: {
-                files: [
-                    {
-                        expand: true,
-                        src: [
-                            '<%= project.unit %>/**/*.*'
-                        ],
-                        dest: '<%= project.tmp %>',
-                        extDot: 'last',
-                        ext: '.js'
-                    }
-                ]
-            }
-        },
-        // shell
-        // shell commands to run protractor and istanbul
-        shell: {
-            istanbul: {
-                options: {
-                    execOptions: {
-                        env: env
-                    }
-                },
-                command: 'node tests/helpers/rAF.js node_modules/istanbul/lib/cli.js cover --dir <%= project.coverage_dir %> ' +
-                    '-- ./node_modules/mocha/bin/_mocha <%= project.tmp %>/<%= project.unit %> ' +
-                    '--recursive --reporter xunit-file'
-            },
-            mocha: {
-                command: './node_modules/mocha/bin/mocha <%= project.tmp %>/<%= project.unit %> ' +
-                    '--recursive --reporter spec'
-            }
-        },
         // webpack
         // create js rollup with webpack module loader for functional tests
         webpack: {
@@ -160,7 +96,7 @@ module.exports = function (grunt) {
                 module: {
                     loaders: [
                         { test: /\.css$/, loader: 'style!css' },
-                        { test: /\.jsx$/, loader: require.resolve('babel-loader') },
+                        // { test: /\.jsx$/, loader: require.resolve('babel-loader') },
                         { test: /\.json$/, loader: 'json-loader'}
                     ]
                 }
@@ -198,7 +134,7 @@ module.exports = function (grunt) {
         'saucelabs-mocha': {
             all: {
                 options: {
-                    testname: 'react-i13n func test',
+                    testname: 'react-stickynode func test',
                     urls: [
                         'http://127.0.0.1:9999/tests/functional/page.html'
                     ],
@@ -211,11 +147,6 @@ module.exports = function (grunt) {
                     },
                     throttled: 3,
                     browsers: [
-                        {
-                            browserName: 'internet explorer',
-                            platform: 'Windows 7',
-                            version: '9'
-                        },
                         {
                             browserName: 'internet explorer',
                             platform: 'Windows 8',
@@ -287,44 +218,6 @@ module.exports = function (grunt) {
         'watch:functional'
     ]);
 
-    // cover
-    // 1. clean tmp/
-    // 2. compile jsx to js in tmp/
-    // 3. run istanbul cover in tmp/ using mocha command
-    // 4. clean tmp/
-    grunt.registerTask('cover', [
-        'clean:tmp',
-        'clean:dist',
-        'babel:unit',
-        'babel:dist',
-        'shell:istanbul',
-        'clean:tmp'
-    ]);
-
-    grunt.registerTask('unit', [
-        'clean:tmp',
-        'clean:dist',
-        'babel:unit',
-        'babel:dist',
-        'shell:mocha'
-    ]);
-
-    // dist
-    // 1. clean dist/
-    // 2. compile jsx to js in dist/
-    grunt.registerTask('dist', [
-        'clean:dist',
-        'babel:dist'
-    ]);
-
-    grunt.registerTask('test', [
-        'clean:dist',
-        'babel:dist',
-        'clean:tmp',
-        'babel:unit',
-        'shell:mocha'
-    ]);
-
     // default
-    grunt.registerTask('default', ['dist']);
+    grunt.registerTask('default', ['functional']);
 };
