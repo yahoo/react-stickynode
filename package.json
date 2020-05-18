@@ -4,11 +4,12 @@
   "description": "A performant and comprehensive React sticky",
   "main": "index.js",
   "scripts": {
-    "build": "grunt dist",
+    "build": "babel src --out-dir dist",
     "ci": "./tests/functional/saucelabs.sh",
     "lint": "eslint --cache --ext .js,.jsx . --fix",
-    "prepublish": "grunt dist",
-    "test": "grunt test",
+    "prepublish": "npm run build",
+    "pretest": "npm run build",
+    "test": "mocha tests/unit --require @babel/register --recursive --reporter spec",
     "test:unit": "grunt unit",
     "test:func": "grunt func"
   },
@@ -32,13 +33,17 @@
   ],
   "dependencies": {
     "classnames": "^2.0.0",
+    "core-js": "^3.6.5",
     "prop-types": "^15.6.0",
     "shallowequal": "^1.0.0",
     "subscribe-ui-event": "^2.0.6"
   },
   "devDependencies": {
-    "babel": "^5.0.0",
-    "babel-loader": "^5.0.0",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-react": "^7.9.4",
+    "@babel/register": "^7.9.0",
     "coveralls": "^3.1.0",
     "es5-shim": "^4.5.14",
     "eslint": "^7.0.0",
@@ -46,7 +51,6 @@
     "expect.js": "^0.3.1",
     "grunt": "^1.1.0",
     "grunt-atomizer": "^3.0.0",
-    "grunt-babel": "^5.0.0",
     "grunt-cli": "^1.1.0",
     "grunt-contrib-clean": "^2.0.0",
     "grunt-contrib-connect": "^2.1.0",
@@ -76,5 +80,11 @@
     "lint",
     "test"
   ],
-  "license": "BSD-3-Clause"
+  "license": "BSD-3-Clause",
+  "browserslist": [
+    "last 2 versions",
+    "ie >= 11",
+    "iOS >= 12",
+    "Android >= 6"
+  ]
 }

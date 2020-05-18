@@ -12,7 +12,6 @@ module.exports = function (grunt) {
         'grunt-contrib-clean',
         'grunt-contrib-connect',
         'grunt-contrib-watch',
-        'grunt-babel',
         'grunt-shell',
         'grunt-webpack'
     ].forEach(function (packageName) {
@@ -88,49 +87,49 @@ module.exports = function (grunt) {
         },
         // react
         // compiles jsx to js
-        babel: {
-            dist: {
-                options: {
-                    sourceMap: false
-                },
-                files: [
-                    {
-                        expand: true,
-                        cwd: '<%= project.src %>',
-                        src: ['**/*.*'],
-                        dest: '<%= project.dist %>/',
-                        extDot: 'last',
-                        ext: '.js'
-                    }
-                ]
-            },
-            functional: {
-                options: {
-                    sourceMap: false
-                },
-                files: [
-                    {
-                        expand: true,
-                        src: ['<%= project.functional %>/**/*.jsx'],
-                        extDot: 'last',
-                        ext: '.js'
-                    }
-                ]
-            },
-            unit: {
-                files: [
-                    {
-                        expand: true,
-                        src: [
-                            '<%= project.unit %>/**/*.*'
-                        ],
-                        dest: '<%= project.tmp %>',
-                        extDot: 'last',
-                        ext: '.js'
-                    }
-                ]
-            }
-        },
+        // babel: {
+        //     dist: {
+        //         options: {
+        //             sourceMap: false
+        //         },
+        //         files: [
+        //             {
+        //                 expand: true,
+        //                 cwd: '<%= project.src %>',
+        //                 src: ['**/*.*'],
+        //                 dest: '<%= project.dist %>/',
+        //                 extDot: 'last',
+        //                 ext: '.js'
+        //             }
+        //         ]
+        //     },
+        //     functional: {
+        //         options: {
+        //             sourceMap: false
+        //         },
+        //         files: [
+        //             {
+        //                 expand: true,
+        //                 src: ['<%= project.functional %>/**/*.jsx'],
+        //                 extDot: 'last',
+        //                 ext: '.js'
+        //             }
+        //         ]
+        //     },
+        //     unit: {
+        //         files: [
+        //             {
+        //                 expand: true,
+        //                 src: [
+        //                     '<%= project.unit %>/**/*.*'
+        //                 ],
+        //                 dest: '<%= project.tmp %>',
+        //                 extDot: 'last',
+        //                 ext: '.js'
+        //             }
+        //         ]
+        //     }
+        // },
         // shell
         // shell commands to run protractor and istanbul
         shell: {
@@ -160,7 +159,7 @@ module.exports = function (grunt) {
                 module: {
                     loaders: [
                         { test: /\.css$/, loader: 'style!css' },
-                        { test: /\.jsx$/, loader: require.resolve('babel-loader') },
+                        // { test: /\.jsx$/, loader: require.resolve('babel-loader') },
                         { test: /\.json$/, loader: 'json-loader'}
                     ]
                 }
