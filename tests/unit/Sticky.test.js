@@ -465,19 +465,42 @@ describe('Sticky', () => {
                     this.sticky = element;
                 };
 
-                this.state = { enabled: true }; 
+                this.state = { boundary: '', enabled: true, name: 'JOE' }; 
             }
 
             render() {
-                return <Sticky ref="sticky" enabled={this.state.enabled} />
+                return (
+                    <Sticky
+                        ref="sticky"
+                        bottomBoundary={`#boundary{this.state.boundary}`}
+                        enabled={this.state.enabled}
+                    >
+                        {this.state.name}
+                        {this.state.enabled && <div id="boundary"/>}
+                    </Sticky>
+                )
             }
         }
 
         var parent = ReactTestUtils.renderIntoDocument(React.createElement(TestComponent, {}));
+
         // toggle the enabled prop off
         parent.setState({enabled: false});
         expect(parent.refs.sticky.props.enabled).toEqual(false);
         expect(parent.refs.sticky.state.activated).toEqual(false);
+        expect(parent.refs.sticky.props.children).toContain('JOE');
+
+        // should not error while not enabled & other props changed
+        parent.setState({name: 'JENKINS'});
+        expect(parent.refs.sticky.props.enabled).toEqual(false);
+        expect(parent.refs.sticky.props.children).toContain('JENKINS');
+
+        // should not error while not enabled & boundary changes
+        parent.setState({boundary: '-not-present'});
+        expect(parent.refs.sticky.props.enabled).toEqual(false);
+        expect(parent.refs.sticky.props.children).toContain('JENKINS');
+        parent.setState({boundary: ''});
+
         // toggle the enabled prop on
         parent.setState({enabled: true});
         expect(parent.refs.sticky.props.enabled).toEqual(true);
