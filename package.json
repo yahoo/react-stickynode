@@ -9,7 +9,8 @@
     "lint": "eslint --cache --ext .js,.jsx . --fix",
     "prepublish": "npm run build",
     "test": "jest --coverage tests/unit",
-    "test:func": "grunt func"
+    "test:func": "grunt func",
+    "test:watch": "jest --watch"
   },
   "repository": {
     "type": "git",
