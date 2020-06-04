@@ -132,6 +132,10 @@ class Sticky extends Component {
     updateInitialDimension (options) {
         options = options || {}
 
+        if (!this.outerElement || !this.innerElement) {
+            return;
+        }
+
         var outerRect = this.outerElement.getBoundingClientRect();
         var innerRect = this.innerElement.getBoundingClientRect();
 
