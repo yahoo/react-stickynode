@@ -43,7 +43,7 @@
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-react": "^7.9.4",
     "@babel/register": "^7.9.0",
-    "@testing-library/react": "^10.0.4",
+    "@testing-library/react": "^11.0.1",
     "babel-jest": "^26.0.1",
     "coveralls": "^3.1.0",
     "es5-shim": "^4.5.14",
