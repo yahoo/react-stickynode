@@ -434,6 +434,7 @@ Sticky.propTypes = {
     activeClass: PropTypes.string,
     releasedClass: PropTypes.string,
     innerClass: PropTypes.string,
+    className: PropTypes.string,
     onStateChange: PropTypes.func,
     shouldFreeze: PropTypes.func,
     innerZ: PropTypes.oneOfType([
