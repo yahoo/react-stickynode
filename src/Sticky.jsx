@@ -127,10 +127,11 @@ class Sticky extends Component {
 
     /**
      * Update the initial position, width, and height. It should update whenever children change.
-     * @param {Object} options optional top and bottomBoundary new values
+     * @param {Object} options optional top and bottomBoundary new values.
+     * Set updateAfterInitialDimension to false to disable update after dimensions retrieval
      */
     updateInitialDimension (options) {
-        options = options || {}
+        options = options || { updateAfterInitialDimension: true }
 
         if (!this.outerElement || !this.innerElement) {
             return;
@@ -152,6 +153,10 @@ class Sticky extends Component {
             y: outerY,
             bottomBoundary: this.getBottomBoundary(options.bottomBoundary),
             topBoundary: outerY
+        },() => {
+            if(options.updateAfterInitialDimension) {
+                this.update()
+            }
         });
     }
 
@@ -162,7 +167,6 @@ class Sticky extends Component {
 
         winHeight = ae.resize.height;
         this.updateInitialDimension();
-        this.update();
     }
 
     handleScrollStart (e, ae) {
@@ -178,7 +182,7 @@ class Sticky extends Component {
             this.skipNextScrollEvent = true;
         } else {
             this.scrollTop = ae.scroll.top;
-            this.updateInitialDimension();
+            this.updateInitialDimension({});
         }
     }
 
@@ -296,7 +300,6 @@ class Sticky extends Component {
                 if (this.props.enabled) {
                     this.setState({ activated: true }, () => {
                         this.updateInitialDimension();
-                        this.update();
                     });
                 } else {
                     this.setState({ activated: false }, () => {
@@ -307,7 +310,6 @@ class Sticky extends Component {
             // if the top or bottomBoundary props were changed, then trigger the update
             else if (prevProps.top !== this.props.top || prevProps.bottomBoundary !== this.props.bottomBoundary) {
                 this.updateInitialDimension();
-                this.update();
             }
         }
     }
@@ -342,7 +344,6 @@ class Sticky extends Component {
         if (this.props.enabled) {
             this.setState({activated: true});
             this.updateInitialDimension();
-            this.update();
         }
         // bind the listeners regardless if initially enabled - allows the component to toggle sticky functionality
         this.subscribers = [
