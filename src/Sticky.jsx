@@ -289,6 +289,13 @@ class Sticky extends Component {
         if (prevState.status !== this.state.status && this.props.onStateChange) {
             this.props.onStateChange({status: this.state.status});
         }
+
+        // check if we are up-to-date, is triggered in case of scroll restoration
+        if (this.props.top !== prevState.top) {
+          this.updateInitialDimension();
+          this.update();
+        }
+
         const arePropsChanged = !shallowEqual(this.props, prevProps);
         if (arePropsChanged) {
             // if the props for enabling are toggled, then trigger the update or reset depending on the current props
@@ -303,7 +310,7 @@ class Sticky extends Component {
                         this.reset();
                     });
                 }
-            } 
+            }
             // if the top or bottomBoundary props were changed, then trigger the update
             else if (prevProps.top !== this.props.top || prevProps.bottomBoundary !== this.props.bottomBoundary) {
                 this.updateInitialDimension();
