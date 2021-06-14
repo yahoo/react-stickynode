@@ -506,4 +506,44 @@ describe('Sticky', () => {
         expect(parent.refs.sticky.props.enabled).toEqual(true);
         expect(parent.refs.sticky.state.activated).toEqual(true);
     });
+
+    test('should apply custom class props', () => {
+        const { container } = render(
+            <Sticky
+                bottomBoundary={400}
+                activeClass='custom-active'
+                innerActiveClass='custom-inner-active'
+                innerClass='custom-inner'
+                className='custom'
+                releasedClass='custom-released'
+            />
+        );
+
+        outer = container.querySelector(`.${STICKY_CLASS_OUTER}`);
+        inner = container.querySelector(`.${STICKY_CLASS_INNER}`);
+        
+        expect(outer.className).toContain('custom');
+        expect(inner.className).toContain('custom-inner');
+
+        // Scroll down to 10px, and Sticky should fix
+        window.scrollTo(0, 10);
+        shouldBeFixedAt(inner, 0);
+        expect(outer.className).toContain('custom-active');
+        expect(outer.className).not.toContain('custom-released');
+        expect(inner.className).toContain('custom-inner-active');
+        
+        // Scroll up to 0px, and Sticky should reset
+        window.scrollTo(0, 0);
+        shouldBeReset(inner);
+        expect(outer.className).not.toContain('custom-active');
+        expect(outer.className).not.toContain('custom-released');
+        expect(inner.className).not.toContain('custom-inner-active');
+
+        // Scroll down to 150px, and Sticky should release
+        window.scrollTo(0, 150);
+        shouldBeReleasedAt(inner, 100);
+        expect(outer.className).not.toContain('custom-active');
+        expect(outer.className).toContain('custom-released');
+        expect(inner.className).not.toContain('custom-inner-active');
+    });
 });

@@ -386,11 +386,15 @@ class Sticky extends Component {
             [this.props.releasedClass]: this.state.status === STATUS_RELEASED
         })
 
+        var innerClasses = classNames('sticky-inner-wrapper', this.props.innerClass, {
+            [this.props.innerActiveClass]: this.state.status === STATUS_FIXED
+        })
+
         var children = this.props.children;
 
         return (
             <div ref={(outer) => { this.outerElement = outer; }} className={outerClasses} style={outerStyle}>
-                <div ref={(inner) => { this.innerElement = inner; }} className={['sticky-inner-wrapper', this.props.innerClass].join(' ')} style={innerStyle}>
+                <div ref={(inner) => { this.innerElement = inner; }} className={innerClasses} style={innerStyle}>
                     {typeof children === 'function' ? children({ status: this.state.status }) : children}
                 </div>
             </div>
@@ -410,6 +414,7 @@ Sticky.defaultProps = {
     releasedClass: 'released',
     onStateChange: null,
     innerClass: '',
+    innerActiveClass: '',
 };
 
 /**
@@ -434,6 +439,7 @@ Sticky.propTypes = {
     activeClass: PropTypes.string,
     releasedClass: PropTypes.string,
     innerClass: PropTypes.string,
+    innerActiveClass: PropTypes.string,
     className: PropTypes.string,
     onStateChange: PropTypes.func,
     shouldFreeze: PropTypes.func,
