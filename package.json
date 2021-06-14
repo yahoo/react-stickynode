@@ -1,6 +1,6 @@
 {
   "name": "react-stickynode",
-  "version": "3.0.5",
+  "version": "3.1.0",
   "description": "A performant and comprehensive React sticky component",
   "main": "dist/Sticky.js",
   "scripts": {
@@ -61,7 +61,7 @@
     "jest": "^26.0.1",
     "jsdom": "^16.2.2",
     "minimist": "^1.2.5",
-    "mocha": "^8.0.1",
+    "mocha": "^9.0.0",
     "pre-commit": "^1.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
