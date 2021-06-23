@@ -58,7 +58,7 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-saucelabs": "^9.0.1",
     "grunt-webpack": "^4.0.2",
-    "jest": "^26.0.1",
+    "jest": "^27.0.5",
     "jsdom": "^16.2.2",
     "minimist": "^1.2.5",
     "mocha": "^9.0.0",
