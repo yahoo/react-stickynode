@@ -1,10 +1,8 @@
-/* global require, React */
+const classNames = require('classnames');
+const Sticky = require('../../../dist/Sticky');
 
-var classNames = require('classnames');
-var content = [];
-var Sticky = require('../../dist/Sticky');
-
-for (var i = 0; i < 10; i++) {
+let content = [];
+for (let i = 0; i < 10; i++) {
     content.push(
         '<p>',
         'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ' +
@@ -17,43 +15,38 @@ for (var i = 0; i < 10; i++) {
         '</p>'
     );
 }
-
 content = content.join('');
 
-var TestText = React.createClass({
-    render: function () {
-        return (
-            <div id={this.props.id} className={classNames('test-text Ov(h)', this.props.className)}
-                 dangerouslySetInnerHTML={{__html: content}}/>
-        );
-    }
-});
+const TestText = ({ className, id }) => {
+    return (
+        <div id={id} className={classNames('test-text Ov(h)', className)}
+                dangerouslySetInnerHTML={{__html: content}}/>
+    );
+}
 
-var StickyDemo = React.createClass({
-    render: function () {
-        return (
-            <div className='H(1800px)'>
-                <div className='IbBox W(1/4)'>
-                    <Sticky>
-                        <TestText id='sticky-1' className='H(300px) Bgc(#defd35)'/>
-                    </Sticky>
-                </div>
-                <div className='IbBox W(1/4)'>
-                    <Sticky bottomBoundary='#ref'>
-                        <TestText id='sticky-2' className='H(1200px) Bgc(#defd35)'/>
-                    </Sticky>
-                </div>
-                <div className='IbBox W(1/4)'>
-                    <Sticky>
-                        <TestText id='sticky-2' className='H(1200px) Bgc(#defd35)'/>
-                    </Sticky>
-                </div>
-                <div id='ref' className='IbBox W(1/4)'>
-                    <TestText className='H(1500px) Bgc(#defd35)'/>
-                </div>
+const StickyDemo = () => {
+    return (
+        <div className='H(1800px)'>
+            <div className='IbBox W(1/4)'>
+                <Sticky>
+                    <TestText id='sticky-1' className='H(300px) Bgc(#defd35)'/>
+                </Sticky>
             </div>
-        );
-    }
-});
+            <div className='IbBox W(1/4)'>
+                <Sticky bottomBoundary='#ref'>
+                    <TestText id='sticky-2' className='H(1200px) Bgc(#defd35)'/>
+                </Sticky>
+            </div>
+            <div className='IbBox W(1/4)'>
+                <Sticky>
+                    <TestText id='sticky-2' className='H(1200px) Bgc(#defd35)'/>
+                </Sticky>
+            </div>
+            <div id='ref' className='IbBox W(1/4)'>
+                <TestText className='H(1500px) Bgc(#defd35)'/>
+            </div>
+        </div>
+    );
+}
 
 module.exports = StickyDemo;

@@ -2,7 +2,6 @@
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
-/* global window, document */
 
 'use strict';
 
@@ -140,7 +139,7 @@ class Sticky extends Component {
         var innerRect = this.innerElement.getBoundingClientRect();
 
         var width = outerRect.width || outerRect.right - outerRect.left;
-        var height = innerRect.height || innerRect.bottom - innerRect.top;;
+        var height = innerRect.height || innerRect.bottom - innerRect.top;
         var outerY = outerRect.top + this.scrollTop;
 
         this.setState({
