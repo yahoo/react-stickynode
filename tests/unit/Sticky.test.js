@@ -2,23 +2,20 @@
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
-/* global window, document, describe, it, beforeEach, afterEach */
 
 'use strict';
 
 process.env.NODE_ENV = 'development';
 
 const ee = require('subscribe-ui-event/dist/globalVars').EE;
-const { cleanup, fireEvent, render } = require('@testing-library/react');
+const { render } = require('@testing-library/react');
 const React = require('react');
-const ReactDOM = require('react-dom');
 const Sticky = require('../../dist/Sticky');
 
 const STICKY_CLASS_OUTER = 'sticky-outer-wrapper';
 const STICKY_CLASS_INNER = 'sticky-inner-wrapper';
 
 let ae;
-let sticky;
 let inner;
 let outer;
 
@@ -154,7 +151,7 @@ describe('Sticky', () => {
 
     test('should call the callback on state change', () => {
         const callback = jest.fn();
-        const { container } = render(
+        render(
           <Sticky onStateChange={callback} />
         );
 
@@ -174,7 +171,7 @@ describe('Sticky', () => {
         const childrenStub = jest.fn().mockReturnValue(null);
         expect(childrenStub).not.toHaveBeenCalled();
 
-        const { container } = render(
+        render(
           <Sticky>
             {childrenStub}
           </Sticky>

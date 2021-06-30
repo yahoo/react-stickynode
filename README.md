@@ -1,7 +1,7 @@
 # react-stickynode
+
 [![npm version](https://badge.fury.io/js/react-stickynode.svg)](http://badge.fury.io/js/react-stickynode)
-![example workflow](https://github.com/yahoo/react-stickynode/actions/workflows/node.js.yml/badge.svg)
-[![Coverage Status](https://coveralls.io/repos/yahoo/react-stickynode/badge.svg)](https://coveralls.io/r/yahoo/react-stickynode)
+![Build Status](https://github.com/yahoo/react-stickynode/actions/workflows/test.yml/badge.svg)
 
 A performant and comprehensive React sticky component.
 
@@ -24,6 +24,10 @@ Another highlight is that `react-stickynode` can handle the case where a sticky 
 
 ## Usage
 
+```bash
+npm install react-stickynode
+```
+
 The sticky uses Modernizr `csstransforms3d` and `prefixed` ([link](http://modernizr.com/download/?-csstransforms3d-prefixed)) features to detect IE8/9, so it can downgrade not to use transform3d.
 
 ```js
@@ -44,8 +48,8 @@ import Sticky from 'react-stickynode';
 
 ### Props
 
-|Name| Type| Note|
-|-----|-----|-----|
+| Name | Type | Note |
+| ---- | ---- | ---- |
 | `enabled` | Boolean| The switch to enable or disable Sticky (true by default). |
 | `top` | Number/String | The offset from the top of window where the top of the element will be when sticky state is triggered (0 by default). If it is a selector to a target (via `querySelector()`), the offset will be the height of the target. |
 | `bottomBoundary` | Number/String | The offset from the top of document which release state will be triggered when the bottom of the element reaches at. If it is a selector to a target (via `querySelector()`), the offset will be the bottom of the target. |
@@ -70,7 +74,8 @@ You can be notified when the state of the sticky component changes by passing a 
 | `2` | `STATUS_FIXED` | The sticky status, located fixed to the top or the bottom of screen.|
 
 You can access the statuses as static constants to use for comparison.
-```js
+
+```jsx
 import Sticky from 'react-stickynode';
 
 const handleStateChange = (status) => {
@@ -86,7 +91,7 @@ const handleStateChange = (status) => {
 
 Also `Sticky` supports children functions:
 
-```js
+```jsx
 import Sticky from 'react-stickynode';
 
 <Sticky>
@@ -106,21 +111,24 @@ import Sticky from 'react-stickynode';
 
 You can provide a function in the `shouldFreeze` prop which will tell the component to temporarily stop updating during prop and state changes, as well as ignore scroll and resize events. This function should return a boolean indicating whether the component should currently be frozen.
 
-## Install & Development
+## Development
 
-**Install**
-```bash
-npm install react-stickynode
-```
+### Linting
 
-**Unit Test**
-```bash
-npm run test
-```
-
-**Linting**
 ```bash
 npm run lint
+```
+
+### Unit Test
+
+```bash
+npm test
+```
+
+### Functional Test
+
+```bash
+npm run func:local
 ```
 
 ## License
