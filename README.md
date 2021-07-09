@@ -15,12 +15,12 @@ Another highlight is that `react-stickynode` can handle the case where a sticky 
 
 ## Features
 
-- Retrieve `scrollTop` only once for all sticky components.
-- Listen to throttled scrolling to have better performance.
-- Use rAF to update sticky status to have better performance.
-- Support top offset from the top of screen.
-- Support bottom boundary to stop sticky status.
-- Support any sticky target with various width units.
+-   Retrieve `scrollTop` only once for all sticky components.
+-   Listen to throttled scrolling to have better performance.
+-   Use rAF to update sticky status to have better performance.
+-   Support top offset from the top of screen.
+-   Support bottom boundary to stop sticky status.
+-   Support any sticky target with various width units.
 
 ## Usage
 
@@ -34,44 +34,44 @@ The sticky uses Modernizr `csstransforms3d` and `prefixed` ([link](http://modern
 import Sticky from 'react-stickynode';
 
 <Sticky enabled={true} top={50} bottomBoundary={1200}>
-    <YourComponent/>
-</Sticky>
+    <YourComponent />
+</Sticky>;
 ```
 
 ```js
 import Sticky from 'react-stickynode';
 
-<Sticky top='#header' bottomBoundary='#content'>
-    <YourComponent/>
-</Sticky>
+<Sticky top="#header" bottomBoundary="#content">
+    <YourComponent />
+</Sticky>;
 ```
 
 ### Props
 
-| Name | Type | Note |
-| ---- | ---- | ---- |
-| `enabled` | Boolean| The switch to enable or disable Sticky (true by default). |
-| `top` | Number/String | The offset from the top of window where the top of the element will be when sticky state is triggered (0 by default). If it is a selector to a target (via `querySelector()`), the offset will be the height of the target. |
-| `bottomBoundary` | Number/String | The offset from the top of document which release state will be triggered when the bottom of the element reaches at. If it is a selector to a target (via `querySelector()`), the offset will be the bottom of the target. |
-| `innerZ` | Number/String | z-index of the sticky. |
-| `enableTransforms` | Boolean | Enable the use of CSS3 transforms (true by default). |
-| `activeClass` | String | Class name to be applied to the element when the sticky state is active (`active` by default). |
-| `innerClass` | String | Class name to be applied to the inner element (`''` by default). |
-| `innerActiveClass` | String | Class name to be applied to the inner element when the sticky state is active (`''` by default). |
-| `className` | String | Class name to be applied to the element independent of the sticky state. |
-| `releasedClass` | String | Class name to be applied to the element when the sticky state is released (`released` by default). |
-| `onStateChange` | Function | Callback for when the sticky state changes. See below. |
-| `shouldFreeze` | Function | Callback to indicate when the sticky plugin should freeze position and ignore scroll/resize events. See below. |
+| Name               | Type          | Note                                                                                                                                                                                                                        |
+| ------------------ | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `enabled`          | Boolean       | The switch to enable or disable Sticky (true by default).                                                                                                                                                                   |
+| `top`              | Number/String | The offset from the top of window where the top of the element will be when sticky state is triggered (0 by default). If it is a selector to a target (via `querySelector()`), the offset will be the height of the target. |
+| `bottomBoundary`   | Number/String | The offset from the top of document which release state will be triggered when the bottom of the element reaches at. If it is a selector to a target (via `querySelector()`), the offset will be the bottom of the target.  |
+| `innerZ`           | Number/String | z-index of the sticky.                                                                                                                                                                                                      |
+| `enableTransforms` | Boolean       | Enable the use of CSS3 transforms (true by default).                                                                                                                                                                        |
+| `activeClass`      | String        | Class name to be applied to the element when the sticky state is active (`active` by default).                                                                                                                              |
+| `innerClass`       | String        | Class name to be applied to the inner element (`''` by default).                                                                                                                                                            |
+| `innerActiveClass` | String        | Class name to be applied to the inner element when the sticky state is active (`''` by default).                                                                                                                            |
+| `className`        | String        | Class name to be applied to the element independent of the sticky state.                                                                                                                                                    |
+| `releasedClass`    | String        | Class name to be applied to the element when the sticky state is released (`released` by default).                                                                                                                          |
+| `onStateChange`    | Function      | Callback for when the sticky state changes. See below.                                                                                                                                                                      |
+| `shouldFreeze`     | Function      | Callback to indicate when the sticky plugin should freeze position and ignore scroll/resize events. See below.                                                                                                              |
 
 ### Handling State Change
 
 You can be notified when the state of the sticky component changes by passing a callback to the `onStateChange` prop. The callback will receive an object in the format `{status: CURRENT_STATUS}`, with `CURRENT_STATUS` being an integer representing the status:
 
-| Value | Name | Note|
-|-----|-----|-----|
-| `0` | `STATUS_ORIGINAL` | The default status, located at the original position.|
-| `1` | `STATUS_RELEASED` | The released status, located at somewhere on document, but not default one.|
-| `2` | `STATUS_FIXED` | The sticky status, located fixed to the top or the bottom of screen.|
+| Value | Name              | Note                                                                        |
+| ----- | ----------------- | --------------------------------------------------------------------------- |
+| `0`   | `STATUS_ORIGINAL` | The default status, located at the original position.                       |
+| `1`   | `STATUS_RELEASED` | The released status, located at somewhere on document, but not default one. |
+| `2`   | `STATUS_FIXED`    | The sticky status, located fixed to the top or the bottom of screen.        |
 
 You can access the statuses as static constants to use for comparison.
 
@@ -82,11 +82,11 @@ const handleStateChange = (status) => {
     if (status.status === Sticky.STATUS_FIXED) {
         console.log('the component is sticky');
     }
-}
+};
 
 <Sticky onStateChange={handleStateChange}>
-    <YourComponent/>
-</Sticky>
+    <YourComponent />
+</Sticky>;
 ```
 
 Also `Sticky` supports children functions:
@@ -95,16 +95,16 @@ Also `Sticky` supports children functions:
 import Sticky from 'react-stickynode';
 
 <Sticky>
-  {status => {
-    if (status.status === Sticky.STATUS_FIXED) {
-      return 'the component is sticky';
-    }
-    if (status.status === Sticky.STATUS_ORIGINAL) {
-      return 'the component in the original position';
-    }
-    return 'the component is released'
-  }}
-</Sticky>
+    {(status) => {
+        if (status.status === Sticky.STATUS_FIXED) {
+            return 'the component is sticky';
+        }
+        if (status.status === Sticky.STATUS_ORIGINAL) {
+            return 'the component in the original position';
+        }
+        return 'the component is released';
+    }}
+</Sticky>;
 ```
 
 ### Freezing

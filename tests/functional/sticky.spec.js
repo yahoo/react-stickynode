@@ -4,12 +4,13 @@ const { FUNC_PATH } = process.env;
 const innerHeight = () => browser.execute(() => window.innerHeight);
 const scrollTo = (x, y) => browser.execute(`window.scrollTo(${x}, ${y});`);
 // wdio workaround https://github.com/webdriverio/webdriverio/issues/3608
-const getRect = async (selector) => browser.execute((el) => el.getBoundingClientRect(), (await $(selector)));
+const getRect = async (selector) =>
+    browser.execute((el) => el.getBoundingClientRect(), await $(selector));
 
 describe('Sticky', () => {
     beforeEach(async () => {
         // FUNC_PATH set by CI to test github pages
-        const url = FUNC_PATH ? `/react-stickynode/${FUNC_PATH}` : '/'; 
+        const url = FUNC_PATH ? `/react-stickynode/${FUNC_PATH}` : '/';
         await browser.url(url);
     });
 
@@ -23,6 +24,9 @@ describe('Sticky', () => {
         expect((await getRect('#sticky-2')).top).toBeLessThan(0, 'sticky-2');
 
         await scrollTo(0, 1200);
-        expect((await getRect('#sticky-2')).bottom).toBeLessThan((await innerHeight()), 'sticky-2');
+        expect((await getRect('#sticky-2')).bottom).toBeLessThan(
+            await innerHeight(),
+            'sticky-2'
+        );
     });
 });

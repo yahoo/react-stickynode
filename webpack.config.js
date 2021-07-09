@@ -5,12 +5,12 @@ module.exports = {
     mode: 'development',
     entry: path.join(funcDir, 'bootstrap.js'),
     output: {
-        path: funcDir
+        path: funcDir,
     },
     module: {
         rules: [
-            { test: /\.css$/, use: [ { loader: 'style' }, { loader: 'css' } ] },
-            { test: /\.json$/, loader: 'json-loader'}
-        ]
-    }
+            { test: /\.css$/, use: [{ loader: 'style' }, { loader: 'css' }] },
+            { test: /\.json$/, loader: 'json-loader' },
+        ],
+    },
 };

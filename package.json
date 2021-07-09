@@ -9,10 +9,12 @@
     "build:copy": "cp tests/functional/*.html tests/functional/dist/",
     "build:css": "atomizer -o tests/functional/dist/atomic.css ./tests/functional/dist/*-functional.js",
     "build:webpack": "webpack",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "func": "wdio",
     "func:build": "rm -rf tests/functional/dist && npm run build:babel && npm run build:css && npm run build:copy && npm run build:webpack",
     "func:local": "npm run func:build && wdio",
-    "lint": "eslint --ext .js,.jsx . --fix",
+    "lint": "eslint --ext .js,.jsx . --fix && npm run format:check",
     "prepublish": "npm run build",
     "prestart": "npm run prefunc",
     "test": "jest --coverage tests/unit"
@@ -64,6 +66,7 @@
     "jest": "^26.0.1",
     "mocha": "^9.0.0",
     "pre-commit": "^1.0.0",
+    "prettier": "^2.3.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-test-renderer": "^17.0.1",
@@ -86,5 +89,9 @@
     "ie >= 11",
     "iOS >= 12",
     "Android >= 6"
-  ]
+  ],
+  "prettier": {
+    "singleQuote": true,
+    "tabWidth": 4
+  }
 }
