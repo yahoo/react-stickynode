@@ -89,5 +89,9 @@
     "ie >= 11",
     "iOS >= 12",
     "Android >= 6"
-  ]
+  ],
+  "prettier": {
+    "singleQuote": true,
+    "tabWidth": 4
+  }
 }
