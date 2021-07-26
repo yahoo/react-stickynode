@@ -59,7 +59,7 @@
     "@wdio/static-server-service": "^7.7.3",
     "atomizer": "^3.9.1",
     "babel-jest": "^27.0.2",
-    "chromedriver": "^91.0.1",
+    "chromedriver": "^92.0.0",
     "eslint": "^7.0.0",
     "eslint-plugin-react": "^7.19.0",
     "gh-pages": "^3.2.3",
