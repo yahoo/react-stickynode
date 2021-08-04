@@ -1,5 +1,3 @@
-const { FUNC_PATH } = process.env;
-
 // utils
 const innerHeight = () => browser.execute(() => window.innerHeight);
 const scrollTo = (x, y) => browser.execute(`window.scrollTo(${x}, ${y});`);
@@ -9,9 +7,7 @@ const getRect = async (selector) =>
 
 describe('Sticky', () => {
     beforeEach(async () => {
-        // FUNC_PATH set by CI to test github pages
-        const url = FUNC_PATH ? `/react-stickynode/${FUNC_PATH}` : '/';
-        await browser.url(url);
+        await browser.url('/');
     });
 
     it('Sticky 1 should stick to the top', async () => {

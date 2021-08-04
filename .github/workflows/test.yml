@@ -27,14 +27,20 @@ jobs:
             - run: npm run lint
             - run: npm test
             - run: |
-                  git remote set-url origin https://git:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
                   npm run func:build
-                  npx gh-pages -d tests/functional/dist -e ${FUNC_PATH} -u "github-actions-bot <support+actions@github.com>"
-                  npm run func -- --baseUrl http://yahoo.github.io/
-                  # clean up files by replacing fixtures with readme
-                  npx gh-pages -d . -s README.md -u "github-actions-bot <support+actions@github.com>"
+                  npm run func
               env:
-                  FUNC_PATH: 'dist/${GITHUB_WORKFLOW}/${GITHUB_JOB}/${GITHUB_RUN_NUMBER}'
-                  GH_TOKEN: ${{ secrets.GH_TOKEN }}
                   SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
                   SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+            # - run: |
+            #       git remote set-url origin https://git:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+            #       npm run func:build
+            #       npx gh-pages -d tests/functional/dist -e ${FUNC_PATH} -u "github-actions-bot <support+actions@github.com>"
+            #       npm run func -- --baseUrl http://yahoo.github.io/
+            #       # clean up files by replacing fixtures with readme
+            #       npx gh-pages -d . -s README.md -u "github-actions-bot <support+actions@github.com>"
+            #   env:
+            #       FUNC_PATH: 'dist/${GITHUB_WORKFLOW}/${GITHUB_JOB}/${GITHUB_RUN_NUMBER}'
+            #       GH_TOKEN: ${{ secrets.GH_TOKEN }}
+            #       SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+            #       SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}

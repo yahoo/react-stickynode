@@ -16,7 +16,7 @@ const config = {
 
 if (process.env.CI) {
     // Saucelabs configuration
-    (config.capabilities = [
+    config.capabilities = [
         {
             acceptInsecureCerts: true,
             browserName: 'chrome',
@@ -24,13 +24,21 @@ if (process.env.CI) {
             maxInstances: 5,
             platformName: 'Windows 10',
         },
-    ]),
-        (config.key = process.env.SAUCE_ACCESS_KEY);
+    ];
+    config.key = process.env.SAUCE_ACCESS_KEY;
+    config.runner = 'local';
     config.services = [
         [
             'sauce',
             {
                 sauceConnect: true,
+            },
+        ],
+        [
+            'static-server',
+            {
+                folders: [{ mount: '/', path: './tests/functional/dist' }],
+                port: 5000,
             },
         ],
     ];
