@@ -1,6 +1,8 @@
 .babelrc
 .editorconfig
 .eslint*
+.github/
+.prettierignore
 /artifacts/
 /bin/
 /build/
@@ -10,6 +12,7 @@
 /src/
 /tests/
 /tmp/
+*.conf*.js*
 lcov-*
 xunit*
 TEST_*
