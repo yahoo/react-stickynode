@@ -29,10 +29,11 @@ jobs:
             - name: Build fixture
               run: npm run func:build
             - name: Deploy
-              uses: peaceiris/actions-gh-pages@v3
+              uses: peaceiris/actions-gh-pages@v3.8.0
               with:
                   deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
                   destination_dir: ${{ env.FUNC_PATH }}
+                  keep_files: false
                   publish_dir: ./tests/functional/dist
               env:
                   FUNC_PATH: 'dist/${{ env.GITHUB_WORKFLOW }}/${{ env.GITHUB_JOB }}/${{ env.GITHUB_RUN_NUMBER }}'
