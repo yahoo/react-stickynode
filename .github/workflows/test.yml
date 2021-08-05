@@ -32,7 +32,7 @@ jobs:
               uses: peaceiris/actions-gh-pages@v3.8.0
               with:
                   deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-                  destination_dir: ${{ FUNC_PATH }}
+                  destination_dir: ${{ env.FUNC_PATH }}
                   keep_files: true
                   publish_dir: ./tests/functional/dist
               env:
