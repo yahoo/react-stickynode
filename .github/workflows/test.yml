@@ -43,6 +43,13 @@ jobs:
               env:
                   SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
                   SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+            - name: Cleanup gh-pages
+              uses: peaceiris/actions-gh-pages@v3.8.0
+              with:
+                  deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+                  destination_dir: ./
+                  keep_files: false
+                  publish_dir: ./dists
 
             # - run: |
             #       git remote set-url origin https://git:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
