@@ -32,7 +32,7 @@ jobs:
               uses: peaceiris/actions-gh-pages@v3.8.0
               with:
                   deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-                  destination_dir: ./dist/${{ env.GITHUB_WORKFLOW }}/${{ env.GITHUB_JOB }}/${{ env.GITHUB_RUN_NUMBER }}
+                  destination_dir: ./dist/${{ GITHUB_WORKFLOW }}/${{ GITHUB_JOB }}/${{ GITHUB_RUN_NUMBER }}
                   publish_dir: ./tests/functional/dist
             # - run: |
             #       git remote set-url origin https://git:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
