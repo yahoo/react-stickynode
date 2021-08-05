@@ -49,7 +49,7 @@ jobs:
                   deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
                   destination_dir: ./
                   keep_files: false
-                  publish_dir: ./dists
+                  publish_dir: ./dist
 
             # - run: |
             #       git remote set-url origin https://git:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
