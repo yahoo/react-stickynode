@@ -33,7 +33,7 @@ jobs:
               with:
                   deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
                   destination_dir: ${{ env.FUNC_PATH }}
-                  keep_files: false
+                  keep_files: true
                   publish_dir: ./tests/functional/dist
               env:
                   FUNC_PATH: 'dist/${{ env.GITHUB_WORKFLOW }}/${{ env.GITHUB_JOB }}/${{ env.GITHUB_RUN_NUMBER }}'
