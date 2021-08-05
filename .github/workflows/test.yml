@@ -29,10 +29,10 @@ jobs:
             - name: Build fixture
               run: npm run func:build
             - name: Set envs
-                run: |
-                    echo "GH_WORKFLOW=${GITHUB_WORKFLOW}" >> ${GITHUB_ENV}
-                    echo "GH_JOB=${GITHUB_JOB}" >> ${GITHUB_ENV}
-                    echo "GH_RUN_NUMBER=${GITHUB_RUN_NUMBER}" >> ${GITHUB_ENV}
+              run: |
+                  echo "GH_WORKFLOW=${GITHUB_WORKFLOW}" >> ${GITHUB_ENV}
+                  echo "GH_JOB=${GITHUB_JOB}" >> ${GITHUB_ENV}
+                  echo "GH_RUN_NUMBER=${GITHUB_RUN_NUMBER}" >> ${GITHUB_ENV}
             - name: Deploy
               uses: peaceiris/actions-gh-pages@v3.8.0
               with:
