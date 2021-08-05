@@ -32,7 +32,7 @@ jobs:
               uses: peaceiris/actions-gh-pages@v3
               with:
                   deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-                  destination_dir: '${{ env.FUNC_PATH }}'
+                  destination_dir: ${{ env.FUNC_PATH }}
                   publish_dir: ./tests/functional/dist
               env:
                   FUNC_PATH: 'dist/${{ env.GITHUB_WORKFLOW }}/${{ env.GITHUB_JOB }}/${{ env.GITHUB_RUN_NUMBER }}'
