@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html id="atomic">
+    <head>
+        <title>Sticky Functional Test</title>
+        <script>
+            (function (html) {
+                var c = html.className;
+                c += ' JsEnabled';
+                c = c.replace('NoJs', '');
+                html.className = c;
+            })(document.documentElement);
+        </script>
+        <link href="atomic.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div id="container"></div>
+
+        <script src="main.js"></script>
+        <script type="text/javascript">
+            var container = document.getElementById('container');
+            ReactDOM.render(React.createElement(StickyDemo, null), container);
+        </script>
+    </body>
+</html>

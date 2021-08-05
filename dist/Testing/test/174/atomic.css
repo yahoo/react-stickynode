@@ -1,0 +1,27 @@
+.Bgc\(\#defd35\) {
+  background-color: #defd35;
+}
+.H\(1200px\) {
+  height: 1200px;
+}
+.H\(1500px\) {
+  height: 1500px;
+}
+.H\(1800px\) {
+  height: 1800px;
+}
+.H\(300px\) {
+  height: 300px;
+}
+.Ov\(h\) {
+  overflow: hidden;
+}
+.W\(1\/4\) {
+  width: 25%;
+}
+.IbBox {
+  display: inline-block;
+  *display: inline;
+  zoom: 1;
+  vertical-align: top;
+}
