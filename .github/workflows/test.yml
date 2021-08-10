@@ -26,20 +26,20 @@ jobs:
             - run: npm ci
             - run: npm run lint
             - run: npm test
-            - name: Build fixture
-              run: npm run func:build
-            - name: Set envs
-              run: |
-                  echo "FUNC_PATH=dist/${GITHUB_WORKFLOW}/${GITHUB_JOB}/${GITHUB_RUN_NUMBER}" >> ${GITHUB_ENV}
-            - name: Deploy to gh-pages
-              uses: peaceiris/actions-gh-pages@v3.8.0
-              with:
-                  deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-                  destination_dir: ./${{ env.FUNC_PATH }}
-                  keep_files: true
-                  publish_dir: ./tests/functional/dist
-            - name: Func test
-              run: npm run func -- --baseUrl http://yahoo.github.io/
-              env:
-                  SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
-                  SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+            # - name: Build fixture
+            #   run: npm run func:build
+            # - name: Set envs
+            #   run: |
+            #       echo "FUNC_PATH=dist/${GITHUB_WORKFLOW}/${GITHUB_JOB}/${GITHUB_RUN_NUMBER}" >> ${GITHUB_ENV}
+            # - name: Deploy to gh-pages
+            #   uses: peaceiris/actions-gh-pages@v3.8.0
+            #   with:
+            #       deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+            #       destination_dir: ./${{ env.FUNC_PATH }}
+            #       keep_files: true
+            #       publish_dir: ./tests/functional/dist
+            # - name: Func test
+            #   run: npm run func -- --baseUrl http://yahoo.github.io/
+            #   env:
+            #       SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+            #       SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
