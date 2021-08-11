@@ -1,5 +1,5 @@
 const classNames = require('classnames');
-const Sticky = require('../../../dist/Sticky');
+const Sticky = require('../../../dist/cjs/Sticky');
 
 let content = [];
 for (let i = 0; i < 10; i++) {
