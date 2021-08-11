@@ -2,13 +2,17 @@
   "name": "react-stickynode",
   "version": "3.1.1",
   "description": "A performant and comprehensive React sticky component",
-  "main": "dist/Sticky.js",
+  "main": "./dist/cjs/Sticky.js",
+  "module": "./dist/es/Sticky.js",
   "scripts": {
-    "build": "babel src --out-dir dist",
+    "build": "npm run clean && npm run build:commonjs && npm run build:es",
+    "build:commonjs": "babel --env-name commonjs src -d dist/cjs",
+    "build:es": "babel --env-name es src -d dist/es",
     "build:babel": "babel tests/functional --out-dir tests/functional/dist/",
     "build:copy": "cp tests/functional/*.html tests/functional/dist/",
     "build:css": "atomizer -o tests/functional/dist/atomic.css ./tests/functional/dist/*-functional.js",
     "build:webpack": "webpack",
+    "clean": "rm -rf dist",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "func": "wdio",
@@ -59,6 +63,7 @@
     "@wdio/static-server-service": "^7.7.3",
     "atomizer": "^3.9.1",
     "babel-jest": "^27.0.2",
+    "babel-plugin-add-module-exports": "^1.0.4",
     "chromedriver": "^92.0.0",
     "eslint": "^7.0.0",
     "eslint-plugin-react": "^7.19.0",
@@ -88,7 +93,7 @@
     "last 2 versions",
     "ie >= 11",
     "iOS >= 12",
-    "Android >= 6"
+    "Android >= 11"
   ],
   "prettier": {
     "singleQuote": true,

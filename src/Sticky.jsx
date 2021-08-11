@@ -17,17 +17,17 @@ const STATUS_ORIGINAL = 0; // The default status, locating at the original posit
 const STATUS_RELEASED = 1; // The released status, locating at somewhere on document but not default one.
 const STATUS_FIXED = 2; // The sticky status, locating fixed to the top or the bottom of screen.
 
-var TRANSFORM_PROP = 'transform';
+let TRANSFORM_PROP = 'transform';
 
 // global variable for all instances
-var doc;
-var docBody;
-var docEl;
-var canEnableTransforms = true; // Use transform by default, so no Sticky on lower-end browser when no Modernizr
-var M;
-var scrollDelta = 0;
-var win;
-var winHeight = -1;
+let doc;
+let docBody;
+let docEl;
+let canEnableTransforms = true; // Use transform by default, so no Sticky on lower-end browser when no Modernizr
+let M;
+let scrollDelta = 0;
+let win;
+let winHeight = -1;
 
 class Sticky extends Component {
     constructor(props, context) {
@@ -81,13 +81,13 @@ class Sticky extends Component {
         if (!target) {
             return -1;
         }
-        var rect = target.getBoundingClientRect();
+        const rect = target.getBoundingClientRect();
         return this.scrollTop + rect.bottom;
     }
 
     getBottomBoundary(bottomBoundary) {
         // a bottomBoundary can be provided to avoid reading from the props
-        var boundary = bottomBoundary || this.props.bottomBoundary;
+        let boundary = bottomBoundary || this.props.bottomBoundary;
 
         // TODO, bottomBoundary was an object, depricate it later.
         if (typeof boundary === 'object') {
@@ -135,18 +135,18 @@ class Sticky extends Component {
             return;
         }
 
-        var outerRect = this.outerElement.getBoundingClientRect();
-        var innerRect = this.innerElement.getBoundingClientRect();
+        const outerRect = this.outerElement.getBoundingClientRect();
+        const innerRect = this.innerElement.getBoundingClientRect();
 
-        var width = outerRect.width || outerRect.right - outerRect.left;
-        var height = innerRect.height || innerRect.bottom - innerRect.top;
-        var outerY = outerRect.top + this.scrollTop;
+        const width = outerRect.width || outerRect.right - outerRect.left;
+        const height = innerRect.height || innerRect.bottom - innerRect.top;
+        const outerY = outerRect.top + this.scrollTop;
 
         this.setState({
             top: this.getTopPosition(options.top),
             bottom: Math.min(this.state.top + height, winHeight),
-            width: width,
-            height: height,
+            width,
+            height,
             x: outerRect.left,
             y: outerY,
             bottomBoundary: this.getBottomBoundary(options.bottomBoundary),
@@ -276,7 +276,8 @@ class Sticky extends Component {
                             // This case only happens when Sticky's bottom sticks to the screen bottom and
                             // its height gets changed. Sticky should be in RELEASE status and update its
                             // sticky bottom by calculating how much height it changed.
-                            var deltaHeight = pos + height - this.state.bottom;
+                            const deltaHeight =
+                                pos + height - this.state.bottom;
                             this.stickyBottom = bottom - delta + deltaHeight;
                             this.stickyTop = this.stickyBottom - height;
                         } else {
@@ -338,7 +339,7 @@ class Sticky extends Component {
     }
 
     componentWillUnmount() {
-        var subscribers = this.subscribers || [];
+        const subscribers = this.subscribers || [];
         for (var i = subscribers.length - 1; i >= 0; i--) {
             this.subscribers[i].unsubscribe();
         }
@@ -385,7 +386,7 @@ class Sticky extends Component {
     }
 
     translate(style, pos) {
-        var enableTransforms =
+        const enableTransforms =
             canEnableTransforms && this.props.enableTransforms;
         if (enableTransforms && this.state.activated) {
             style[TRANSFORM_PROP] =
@@ -407,12 +408,12 @@ class Sticky extends Component {
 
     render() {
         // TODO, "overflow: auto" prevents collapse, need a good way to get children height
-        var innerStyle = {
+        const innerStyle = {
             position: this.state.status === STATUS_FIXED ? 'fixed' : 'relative',
             top: this.state.status === STATUS_FIXED ? '0px' : '',
             zIndex: this.props.innerZ,
         };
-        var outerStyle = {};
+        const outerStyle = {};
 
         // always use translate3d to enhance the performance
         this.translate(innerStyle, this.state.pos);
@@ -421,7 +422,7 @@ class Sticky extends Component {
             outerStyle.height = this.state.height + 'px';
         }
 
-        var outerClasses = classNames(
+        const outerClasses = classNames(
             'sticky-outer-wrapper',
             this.props.className,
             {
@@ -431,7 +432,7 @@ class Sticky extends Component {
             }
         );
 
-        var innerClasses = classNames(
+        const innerClasses = classNames(
             'sticky-inner-wrapper',
             this.props.innerClass,
             {
@@ -440,7 +441,7 @@ class Sticky extends Component {
             }
         );
 
-        var children = this.props.children;
+        const children = this.props.children;
 
         return (
             <div
@@ -513,4 +514,4 @@ Sticky.STATUS_ORIGINAL = STATUS_ORIGINAL;
 Sticky.STATUS_RELEASED = STATUS_RELEASED;
 Sticky.STATUS_FIXED = STATUS_FIXED;
 
-module.exports = Sticky;
+export default Sticky;

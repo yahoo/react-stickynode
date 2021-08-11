@@ -10,7 +10,7 @@ process.env.NODE_ENV = 'development';
 const ee = require('subscribe-ui-event/dist/globalVars').EE;
 const { render } = require('@testing-library/react');
 const React = require('react');
-const Sticky = require('../../dist/Sticky');
+const Sticky = require('../../dist/cjs/Sticky');
 
 const STICKY_CLASS_OUTER = 'sticky-outer-wrapper';
 const STICKY_CLASS_INNER = 'sticky-inner-wrapper';
