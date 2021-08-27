@@ -3,6 +3,10 @@
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
 
+/**
+ * @jest-environment jsdom
+ */
+
 'use strict';
 
 process.env.NODE_ENV = 'development';
