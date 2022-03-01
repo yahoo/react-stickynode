@@ -11,7 +11,8 @@
                         "useBuiltIns": "usage",
                         "modules": "commonjs"
                     }
-                ]
+                ],
+                "@babel/typescript"
             ]
         },
         "es": {
@@ -23,7 +24,8 @@
                         "useBuiltIns": "usage",
                         "modules": false
                     }
-                ]
+                ],
+                "@babel/typescript"
             ]
         }
     }
