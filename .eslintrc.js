@@ -1,11 +1,12 @@
 module.exports = {
-    extends: ['eslint:recommended', 'plugin:react/recommended'],
-    plugins: ['react'],
+    extends: ['eslint:recommended', 'plugin:react/recommended', 'plugin:@typescript-eslint/recommended'],
+    plugins: ['react', '@typescript-eslint', 'react-hooks'],
     settings: {
         react: {
             version: 'detect',
         },
     },
+    parser: '@typescript-eslint/parser',
     env: {
         browser: true,
         es2021: true,
@@ -32,5 +33,7 @@ module.exports = {
         'react/no-string-refs': 0,
         'react/prop-types': 0,
         'react/react-in-jsx-scope': 0,
+        'react-hooks/rules-of-hooks': 'error',
+        'react-hooks/exhaustive-deps': 'warn',
     },
 };
