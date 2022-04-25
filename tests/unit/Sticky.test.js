@@ -11,7 +11,7 @@
 process.env.NODE_ENV = 'development';
 
 const ee = require('subscribe-ui-event/dist/globalVars').EE;
-const { render } = require('@testing-library/react');
+const { act, render } = require('@testing-library/react');
 const React = require('react');
 const Sticky = require('../../dist/cjs/Sticky');
 
@@ -140,13 +140,17 @@ describe('Sticky', () => {
         checkTransform3d(inner);
 
         // Scroll down to 10px, and Sticky should fix
-        window.scrollTo(0, 10);
+        act(() => {
+            window.scrollTo(0, 10);
+        });
         shouldBeFixedAt(inner, 0);
         expect(outer.className).toContain('active');
         expect(outer.className).not.toContain('released');
 
         // Scroll up to 0px, and Sticky should reset
-        window.scrollTo(0, 0);
+        act(() => {
+            window.scrollTo(0, 0);
+        });
         shouldBeReset(inner);
         expect(outer.className).not.toContain('active');
         expect(outer.className).not.toContain('released');
@@ -159,11 +163,15 @@ describe('Sticky', () => {
         expect(callback).not.toHaveBeenCalled();
 
         // Scroll down to 10px, and status should change to FIXED
-        window.scrollTo(0, 10);
+        act(() => {
+            window.scrollTo(0, 10);
+        });
         expect(callback).toHaveBeenCalledWith({ status: Sticky.STATUS_FIXED });
 
         // Scroll up to 0px, and Sticky should reset
-        window.scrollTo(0, 0);
+        act(() => {
+            window.scrollTo(0, 0);
+        });
         expect(callback).toHaveBeenCalledTimes(2);
         expect(callback).toHaveBeenCalledWith({ status: Sticky.STATUS_FIXED });
     });
@@ -175,13 +183,17 @@ describe('Sticky', () => {
         render(<Sticky>{childrenStub}</Sticky>);
 
         // Scroll down to 10px, and status should change to FIXED
-        window.scrollTo(0, 10);
+        act(() => {
+            window.scrollTo(0, 10);
+        });
         expect(childrenStub).toHaveBeenCalledWith({
             status: Sticky.STATUS_FIXED,
         });
 
         // Scroll up to 0px, and Sticky should reset
-        window.scrollTo(0, 0);
+        act(() => {
+            window.scrollTo(0, 0);
+        });
         expect(childrenStub).toHaveBeenCalledWith({
             status: Sticky.STATUS_FIXED,
         });
@@ -201,36 +213,48 @@ describe('Sticky', () => {
         checkTransform3d(inner);
 
         // Scroll down to 10px, and Sticky should stay as it was
-        window.scrollTo(0, 10);
+        act(() => {
+            window.scrollTo(0, 10);
+        });
         shouldBeReleasedAt(inner, 0);
         expect(outer.className).not.toContain('active');
 
         // Scroll down to 1500px, and Sticky should fix to the bottom
-        window.scrollTo(0, 1500);
+        act(() => {
+            window.scrollTo(0, 1500);
+        });
         shouldBeFixedAt(inner, -432);
         expect(outer.className).toContain('active');
         expect(outer.className).not.toContain('released');
 
         // Scroll up to 1300px, and Sticky should release
-        window.scrollTo(0, 1300);
+        act(() => {
+            window.scrollTo(0, 1300);
+        });
         shouldBeReleasedAt(inner, 1068);
         expect(outer.className).not.toContain('active');
         expect(outer.className).toContain('released');
 
         // Scroll down to 1350px, and Sticky should release as it was
-        window.scrollTo(0, 1350);
+        act(() => {
+            window.scrollTo(0, 1350);
+        });
         shouldBeReleasedAt(inner, 1068);
         expect(outer.className).not.toContain('active');
         expect(outer.className).toContain('released');
 
         // Scroll up to 10px, and Sticky should fix
-        window.scrollTo(0, 10);
+        act(() => {
+            window.scrollTo(0, 10);
+        });
         shouldBeFixedAt(inner, 0);
         expect(outer.className).toContain('active');
         expect(outer.className).not.toContain('released');
 
         // Scroll down to 20px, and Sticky should release
-        window.scrollTo(0, 20);
+        act(() => {
+            window.scrollTo(0, 20);
+        });
         shouldBeReleasedAt(inner, 10);
         expect(outer.className).not.toContain('active');
         expect(outer.className).toContain('released');
@@ -250,13 +274,17 @@ describe('Sticky', () => {
         checkTransform3d(inner);
 
         // Scroll down to 10px, and Sticky should stay
-        window.scrollTo(0, 10);
+        act(() => {
+            window.scrollTo(0, 10);
+        });
         shouldBeReset(inner);
         expect(outer.className).not.toContain('active');
         expect(outer.className).not.toContain('released');
 
         // Scroll down to 50px, and Sticky should fix
-        window.scrollTo(0, 50);
+        act(() => {
+            window.scrollTo(0, 50);
+        });
         shouldBeFixedAt(inner, 0);
         expect(outer.className).toContain('active');
         expect(outer.className).not.toContain('released');
@@ -276,19 +304,25 @@ describe('Sticky', () => {
         checkTransform3d(inner);
 
         // Scroll down to 10px, and Sticky should stay
-        window.scrollTo(0, 10);
+        act(() => {
+            window.scrollTo(0, 10);
+        });
         shouldBeReset(inner);
         expect(outer.className).not.toContain('active');
         expect(outer.className).not.toContain('released');
 
         // Scroll down to 50px, and Sticky should fix
-        window.scrollTo(0, 50);
+        act(() => {
+            window.scrollTo(0, 50);
+        });
         shouldBeFixedAt(inner, 0);
         expect(outer.className).toContain('active');
         expect(outer.className).not.toContain('released');
 
         // Scroll down to 150px, and Sticky should release
-        window.scrollTo(0, 150);
+        act(() => {
+            window.scrollTo(0, 150);
+        });
         shouldBeReleasedAt(inner, 80);
         expect(outer.className).not.toContain('active');
         expect(outer.className).toContain('released');
@@ -307,14 +341,18 @@ describe('Sticky', () => {
         checkTransform3d(inner);
 
         // Scroll down to 10px, and Sticky should stay
-        window.scrollTo(0, 10);
+        act(() => {
+            window.scrollTo(0, 10);
+        });
         shouldBeReset(inner);
         expect(outer.className).not.toContain('active');
         expect(outer.className).not.toContain('released');
 
         // Micic status was not 0 (STATUS_ORIGINAL), scroll down to 20px, and Sticky should stay
         // container.state.status = 2; // STATUS_FIXED;
-        window.scrollTo(0, 20);
+        act(() => {
+            window.scrollTo(0, 20);
+        });
         shouldBeReset(inner);
         expect(outer.className).not.toContain('active');
         expect(outer.className).not.toContain('released');
@@ -335,19 +373,25 @@ describe('Sticky', () => {
         checkTransform3d(inner);
 
         // Scroll down to 10px, and Sticky should fix
-        window.scrollTo(0, 10);
+        act(() => {
+            window.scrollTo(0, 10);
+        });
         shouldBeFixedAt(inner, 20);
         expect(outer.className).toContain('active');
         expect(outer.className).not.toContain('released');
 
         // Scroll down to 50px, and Sticky should fix
-        window.scrollTo(0, 50);
+        act(() => {
+            window.scrollTo(0, 50);
+        });
         shouldBeFixedAt(inner, 20);
         expect(outer.className).toContain('active');
         expect(outer.className).not.toContain('released');
 
         // Scroll down to 150px, and Sticky should release
-        window.scrollTo(0, 150);
+        act(() => {
+            window.scrollTo(0, 150);
+        });
         shouldBeReleasedAt(inner, 100);
         expect(outer.className).not.toContain('active');
         expect(outer.className).toContain('released');
@@ -367,23 +411,29 @@ describe('Sticky', () => {
         checkTransform3d(inner);
 
         // Scroll down to 10px, and Sticky should fix
-        window.scrollTo(0, 10);
+        act(() => {
+            window.scrollTo(0, 10);
+        });
         shouldBeReleasedAt(inner, 0);
         expect(outer.className).not.toContain('active');
         expect(outer.className).toContain('released');
 
-        window.resizeTo(0, 900);
+        act(() => {
+            window.resizeTo(0, 900);
+        });
         shouldBeFixedAt(inner, 0);
         expect(outer.className).toContain('active');
         expect(outer.className).not.toContain('released');
 
         // Resize back
-        window.resizeTo(0, 768);
+        act(() => {
+            window.resizeTo(0, 768);
+        });
     });
 
     test('should release when height gets changed (long Sticky)', () => {
         STICKY_HEIGHT = 1200;
-        const { container } = render(<Sticky />);
+        let { container } = render(<Sticky />);
 
         outer = container.querySelector(`.${STICKY_CLASS_OUTER}`);
         inner = container.querySelector(`.${STICKY_CLASS_INNER}`);
@@ -395,28 +445,38 @@ describe('Sticky', () => {
         checkTransform3d(inner);
 
         // Scroll down to 10px, and Sticky should stay as it was
-        window.scrollTo(0, 10);
+        act(() => {
+            window.scrollTo(0, 10);
+        });
         shouldBeReleasedAt(inner, 0);
         expect(outer.className).not.toContain('active');
         expect(outer.className).toContain('released');
 
         // Scroll down to 1500px, and Sticky should fix to the bottom
-        window.scrollTo(0, 1500);
+        act(() => {
+            window.scrollTo(0, 1500);
+        });
         shouldBeFixedAt(inner, -432);
         expect(outer.className).toContain('active');
         expect(outer.className).not.toContain('released');
+
+        // !!!! THESE TESTS FAIL, NEED TO FIGURE OUT WHY !!!!
 
         // Change Sticky's height
         STICKY_HEIGHT = 1300;
 
         // Scroll down to 1550px, and Sticky should release and stay where it was
-        window.scrollTo(0, 1550);
+        act(() => {
+            window.scrollTo(0, 1550);
+        });
         shouldBeReleasedAt(inner, 1068);
         expect(outer.className).not.toContain('active');
         expect(outer.className).toContain('released');
 
         // Scroll down to 1650px, and Sticky should become fixed again
-        window.scrollTo(0, 1650);
+        act(() => {
+            window.scrollTo(0, 1650);
+        });
         shouldBeFixedAt(inner, -532);
         expect(outer.className).toContain('active');
         expect(outer.className).not.toContain('released');
@@ -458,24 +518,34 @@ describe('Sticky', () => {
         );
 
         // toggle the enabled prop off
-        parent.setState({ enabled: false });
+        act(() => {
+            parent.setState({ enabled: false });
+        });
         expect(parent.refs.sticky.props.enabled).toEqual(false);
         expect(parent.refs.sticky.state.activated).toEqual(false);
         expect(parent.refs.sticky.props.children).toContain('JOE');
 
         // should not error while not enabled & other props changed
-        parent.setState({ name: 'JENKINS' });
+        act(() => {
+            parent.setState({ name: 'JENKINS' });
+        });
         expect(parent.refs.sticky.props.enabled).toEqual(false);
         expect(parent.refs.sticky.props.children).toContain('JENKINS');
 
         // should not error while not enabled & boundary changes
-        parent.setState({ boundary: '-not-present' });
+        act(() => {
+            parent.setState({ boundary: '-not-present' });
+        });
         expect(parent.refs.sticky.props.enabled).toEqual(false);
         expect(parent.refs.sticky.props.children).toContain('JENKINS');
-        parent.setState({ boundary: '' });
+        act(() => {
+            parent.setState({ boundary: '' });
+        });
 
         // toggle the enabled prop on
-        parent.setState({ enabled: true });
+        act(() => {
+            parent.setState({ enabled: true });
+        });
         expect(parent.refs.sticky.props.enabled).toEqual(true);
         expect(parent.refs.sticky.state.activated).toEqual(true);
     });
@@ -499,21 +569,27 @@ describe('Sticky', () => {
         expect(inner.className).toContain('custom-inner');
 
         // Scroll down to 10px, and Sticky should fix
-        window.scrollTo(0, 10);
+        act(() => {
+            window.scrollTo(0, 10);
+        });
         shouldBeFixedAt(inner, 0);
         expect(outer.className).toContain('custom-active');
         expect(outer.className).not.toContain('custom-released');
         expect(inner.className).toContain('custom-inner-active');
 
         // Scroll up to 0px, and Sticky should reset
-        window.scrollTo(0, 0);
+        act(() => {
+            window.scrollTo(0, 0);
+        });
         shouldBeReset(inner);
         expect(outer.className).not.toContain('custom-active');
         expect(outer.className).not.toContain('custom-released');
         expect(inner.className).not.toContain('custom-inner-active');
 
         // Scroll down to 150px, and Sticky should release
-        window.scrollTo(0, 150);
+        act(() => {
+            window.scrollTo(0, 150);
+        });
         shouldBeReleasedAt(inner, 100);
         expect(outer.className).not.toContain('custom-active');
         expect(outer.className).toContain('custom-released');
