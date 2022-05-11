@@ -67,7 +67,7 @@
     "chromedriver": "^101.0.0",
     "eslint": "^8.0.0",
     "eslint-plugin-react": "^7.19.0",
-    "gh-pages": "^3.2.3",
+    "gh-pages": "^4.0.0",
     "jest": "^28.0.0",
     "jest-environment-jsdom": "^28.0.0",
     "mocha": "^10.0.0",
