@@ -78,7 +78,7 @@
     "react-test-renderer": "^18.0.0",
     "wdio-chromedriver-service": "^8.0.0",
     "webpack": "^5.41.1",
-    "webpack-cli": "^4.7.2",
+    "webpack-cli": "^5.0.0",
     "webpack-dev-server": "^4.0.0"
   },
   "peerDependencies": {
