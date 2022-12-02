@@ -60,7 +60,7 @@
     "@wdio/mocha-framework": "^8.0.2",
     "@wdio/sauce-service": "^7.7.4",
     "@wdio/spec-reporter": "^7.7.3",
-    "@wdio/static-server-service": "^7.7.3",
+    "@wdio/static-server-service": "^8.0.0",
     "atomizer": "^3.9.1",
     "babel-jest": "^29.0.0",
     "babel-plugin-add-module-exports": "^1.0.4",
