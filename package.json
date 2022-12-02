@@ -58,7 +58,7 @@
     "@wdio/cli": "^7.7.4",
     "@wdio/local-runner": "^7.7.4",
     "@wdio/mocha-framework": "^8.0.2",
-    "@wdio/sauce-service": "^7.7.4",
+    "@wdio/sauce-service": "^8.0.2",
     "@wdio/spec-reporter": "^8.0.0",
     "@wdio/static-server-service": "^8.0.0",
     "atomizer": "^3.9.1",
