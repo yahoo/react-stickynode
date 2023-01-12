@@ -64,7 +64,7 @@
     "atomizer": "^3.9.1",
     "babel-jest": "^29.0.0",
     "babel-plugin-add-module-exports": "^1.0.4",
-    "chromedriver": "^108.0.0",
+    "chromedriver": "^109.0.0",
     "eslint": "^8.0.0",
     "eslint-plugin-react": "^7.19.0",
     "gh-pages": "^4.0.0",
