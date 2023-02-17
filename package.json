@@ -54,7 +54,7 @@
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-react": "^7.9.4",
     "@babel/register": "^7.9.0",
-    "@testing-library/react": "^13.1.1",
+    "@testing-library/react": "^14.0.0",
     "@wdio/cli": "^8.0.5",
     "@wdio/local-runner": "^8.0.3",
     "@wdio/mocha-framework": "^8.0.2",
