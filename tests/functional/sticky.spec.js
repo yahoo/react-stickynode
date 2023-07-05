@@ -26,7 +26,7 @@ describe('Sticky', () => {
         await scrollTo(0, 1200);
         expect((await getRect('#sticky-2')).bottom).toBeLessThan(
             await innerHeight(),
-            'sticky-2'
+            'sticky-2',
         );
     });
 });

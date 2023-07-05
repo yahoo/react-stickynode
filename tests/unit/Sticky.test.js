@@ -360,7 +360,7 @@ describe('Sticky', () => {
 
     test('should work as expected with selector bottom boundary (short Sticky)', () => {
         const { container } = render(
-            <Sticky top="#test" bottomBoundary="#test" />
+            <Sticky top="#test" bottomBoundary="#test" />,
         );
 
         outer = container.querySelector(`.${STICKY_CLASS_OUTER}`);
@@ -516,7 +516,7 @@ describe('Sticky', () => {
         }
 
         var parent = ReactTestUtils.renderIntoDocument(
-            React.createElement(TestComponent, {})
+            React.createElement(TestComponent, {}),
         );
 
         // toggle the enabled prop off
@@ -561,7 +561,7 @@ describe('Sticky', () => {
                 innerClass="custom-inner"
                 className="custom"
                 releasedClass="custom-released"
-            />
+            />,
         );
 
         outer = container.querySelector(`.${STICKY_CLASS_OUTER}`);

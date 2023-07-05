@@ -429,7 +429,7 @@ class Sticky extends Component {
                 [this.props.activeClass]: this.state.status === STATUS_FIXED,
                 [this.props.releasedClass]:
                     this.state.status === STATUS_RELEASED,
-            }
+            },
         );
 
         const innerClasses = classNames(
@@ -438,7 +438,7 @@ class Sticky extends Component {
             {
                 [this.props.innerActiveClass]:
                     this.state.status === STATUS_FIXED,
-            }
+            },
         );
 
         const children = this.props.children;
