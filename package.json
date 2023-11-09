@@ -41,6 +41,10 @@
       "email": "yasteve@yahoo-inc.com"
     }
   ],
+  "engines": {
+    "node": ">=16",
+    "npm": ">=8.4"
+  },
   "dependencies": {
     "classnames": "^2.0.0",
     "core-js": "^3.6.5",
