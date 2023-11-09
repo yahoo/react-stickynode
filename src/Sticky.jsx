@@ -307,7 +307,7 @@ class Sticky extends Component {
         }
 
         // check if we are up-to-date, is triggered in case of scroll restoration
-        if (this.props.top !== prevState.top) {
+        if (this.state.top !== prevState.top) {
             this.updateInitialDimension();
             this.update();
         }
