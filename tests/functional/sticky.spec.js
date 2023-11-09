@@ -1,51 +1,32 @@
-/* global describe, it, beforeEach, expect, window, document */
+const { FUNC_PATH } = process.env;
 
-function $ (selector) {
-    var node = document.querySelector(selector);
-    var rect = node.getBoundingClientRect();
-    return {
-        getRect: function () {
-            return rect;
-        },
-        getTop: function () {
-            return rect.top;
-        },
-        getBottom: function () {
-            return rect.bottom;
-        }
-    };
-}
+// utils
+const innerHeight = () => browser.execute(() => window.innerHeight);
+const scrollTo = (x, y) => browser.execute(`window.scrollTo(${x}, ${y});`);
+// wdio workaround https://github.com/webdriverio/webdriverio/issues/3608
+const getRect = async (selector) =>
+    browser.execute((el) => el.getBoundingClientRect(), await $(selector));
 
-describe('Sticky', function () {
-    beforeEach(function (done) {
-        window.scrollTo(0, 0);
-        setTimeout(function test () {
-            done();
-        }, 100);
+describe('Sticky', () => {
+    beforeEach(async () => {
+        // FUNC_PATH set by CI to test github pages
+        const url = FUNC_PATH ? `/react-stickynode/${FUNC_PATH}` : '/';
+        await browser.url(url);
     });
 
-    it('Sticky 1 should stick to the top', function (done) {
-        window.scrollTo(0, 500);
-
-        setTimeout(function test () {
-            // console.log($('#sticky-1').getRect());
-            expect($('#sticky-1').getTop()).to.equal(0, 'sticky-1');
-            done();
-        }, 200);
+    it('Sticky 1 should stick to the top', async () => {
+        await scrollTo(0, 500);
+        expect((await getRect('#sticky-1')).top).toEqual(0, 'sticky-1');
     });
 
-    it('Sticky 2 should not stick to the top', function (done) {
-        window.scrollTo(0, 500);
-        setTimeout(function test () {
-            // console.log($('#sticky-2').getRect());
-            expect($('#sticky-2').getTop()).to.below(0, 'sticky-2');
+    it('Sticky 2 should not stick to the top', async () => {
+        await scrollTo(0, 500);
+        expect((await getRect('#sticky-2')).top).toBeLessThan(0, 'sticky-2');
 
-            window.scrollTo(0, 1200);
-            setTimeout(function test () {
-                // console.log($('#sticky-2').getRect());
-                expect($('#sticky-2').getBottom()).to.below(window.innerHeight, 'sticky-2');
-                done();
-            }, 200);
-        }, 200);
+        await scrollTo(0, 1200);
+        expect((await getRect('#sticky-2')).bottom).toBeLessThan(
+            await innerHeight(),
+            'sticky-2',
+        );
     });
 });

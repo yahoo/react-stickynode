@@ -1,12 +1,30 @@
 {
-  "presets": [
-    [
-      "@babel/env",
-      {
-        "useBuiltIns": "usage",
-        "corejs": 3
-      }
-    ],
-    '@babel/preset-react'
-  ]
+    "presets": ["@babel/preset-react"],
+    "env": {
+        "commonjs": {
+            "plugins": ["add-module-exports"],
+            "presets": [
+                [
+                    "@babel/preset-env",
+                    {
+                        "corejs": 3,
+                        "useBuiltIns": "usage",
+                        "modules": "commonjs"
+                    }
+                ]
+            ]
+        },
+        "es": {
+            "presets": [
+                [
+                    "@babel/preset-env",
+                    {
+                        "corejs": 3,
+                        "useBuiltIns": "usage",
+                        "modules": false
+                    }
+                ]
+            ]
+        }
+    }
 }

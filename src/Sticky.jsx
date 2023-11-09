@@ -2,14 +2,13 @@
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
  */
-/* global window, document */
 
 'use strict';
 
-import React, {Component} from 'react';
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import {subscribe} from 'subscribe-ui-event';
+import { subscribe } from 'subscribe-ui-event';
 import classNames from 'classnames';
 import shallowEqual from 'shallowequal';
 
@@ -18,20 +17,20 @@ const STATUS_ORIGINAL = 0; // The default status, locating at the original posit
 const STATUS_RELEASED = 1; // The released status, locating at somewhere on document but not default one.
 const STATUS_FIXED = 2; // The sticky status, locating fixed to the top or the bottom of screen.
 
-var TRANSFORM_PROP = 'transform';
+let TRANSFORM_PROP = 'transform';
 
 // global variable for all instances
-var doc;
-var docBody;
-var docEl;
-var canEnableTransforms = true; // Use transform by default, so no Sticky on lower-end browser when no Modernizr
-var M;
-var scrollDelta = 0;
-var win;
-var winHeight = -1;
+let doc;
+let docBody;
+let docEl;
+let canEnableTransforms = true; // Use transform by default, so no Sticky on lower-end browser when no Modernizr
+let M;
+let scrollDelta = 0;
+let win;
+let winHeight = -1;
 
 class Sticky extends Component {
-    constructor (props, context) {
+    constructor(props, context) {
         super(props, context);
         this.handleResize = this.handleResize.bind(this);
         this.handleScroll = this.handleScroll.bind(this);
@@ -58,15 +57,15 @@ class Sticky extends Component {
             bottomBoundary: Infinity, // The bottom boundary on document
             status: STATUS_ORIGINAL, // The Sticky status
             pos: 0, // Real y-axis offset for rendering position-fixed and position-relative
-            activated: false // once browser info is available after mounted, it becomes true to avoid checksum error
+            activated: false, // once browser info is available after mounted, it becomes true to avoid checksum error
         };
     }
 
-    getTargetHeight (target) {
-        return target && target.offsetHeight || 0;
+    getTargetHeight(target) {
+        return (target && target.offsetHeight) || 0;
     }
 
-    getTopPosition (top) {
+    getTopPosition(top) {
         // a top argument can be provided to override reading from the props
         top = top || this.props.top || 0;
         if (typeof top === 'string') {
@@ -78,17 +77,17 @@ class Sticky extends Component {
         return top;
     }
 
-    getTargetBottom (target) {
+    getTargetBottom(target) {
         if (!target) {
             return -1;
         }
-        var rect = target.getBoundingClientRect();
+        const rect = target.getBoundingClientRect();
         return this.scrollTop + rect.bottom;
     }
 
-    getBottomBoundary (bottomBoundary) {
+    getBottomBoundary(bottomBoundary) {
         // a bottomBoundary can be provided to avoid reading from the props
-        var boundary = bottomBoundary || this.props.bottomBoundary;
+        let boundary = bottomBoundary || this.props.bottomBoundary;
 
         // TODO, bottomBoundary was an object, depricate it later.
         if (typeof boundary === 'object') {
@@ -104,24 +103,24 @@ class Sticky extends Component {
         return boundary && boundary > 0 ? boundary : Infinity;
     }
 
-    reset () {
+    reset() {
         this.setState({
             status: STATUS_ORIGINAL,
-            pos: 0
+            pos: 0,
         });
     }
 
-    release (pos) {
+    release(pos) {
         this.setState({
             status: STATUS_RELEASED,
-            pos: pos - this.state.y
+            pos: pos - this.state.y,
         });
     }
 
-    fix (pos) {
+    fix(pos) {
         this.setState({
             status: STATUS_FIXED,
-            pos: pos
+            pos: pos,
         });
     }
 
@@ -129,33 +128,33 @@ class Sticky extends Component {
      * Update the initial position, width, and height. It should update whenever children change.
      * @param {Object} options optional top and bottomBoundary new values
      */
-    updateInitialDimension (options) {
-        options = options || {}
+    updateInitialDimension(options) {
+        options = options || {};
 
         if (!this.outerElement || !this.innerElement) {
             return;
         }
 
-        var outerRect = this.outerElement.getBoundingClientRect();
-        var innerRect = this.innerElement.getBoundingClientRect();
+        const outerRect = this.outerElement.getBoundingClientRect();
+        const innerRect = this.innerElement.getBoundingClientRect();
 
-        var width = outerRect.width || outerRect.right - outerRect.left;
-        var height = innerRect.height || innerRect.bottom - innerRect.top;;
-        var outerY = outerRect.top + this.scrollTop;
+        const width = outerRect.width || outerRect.right - outerRect.left;
+        const height = innerRect.height || innerRect.bottom - innerRect.top;
+        const outerY = outerRect.top + this.scrollTop;
 
         this.setState({
             top: this.getTopPosition(options.top),
             bottom: Math.min(this.state.top + height, winHeight),
-            width: width,
-            height: height,
+            width,
+            height,
             x: outerRect.left,
             y: outerY,
             bottomBoundary: this.getBottomBoundary(options.bottomBoundary),
-            topBoundary: outerY
+            topBoundary: outerY,
         });
     }
 
-    handleResize (e, ae) {
+    handleResize(e, ae) {
         if (this.props.shouldFreeze()) {
             return;
         }
@@ -165,7 +164,7 @@ class Sticky extends Component {
         this.update();
     }
 
-    handleScrollStart (e, ae) {
+    handleScrollStart(e, ae) {
         this.frozen = this.props.shouldFreeze();
 
         if (this.frozen) {
@@ -182,7 +181,7 @@ class Sticky extends Component {
         }
     }
 
-    handleScroll (e, ae) {
+    handleScroll(e, ae) {
         // Scroll doesn't need to be handled
         if (this.skipNextScrollEvent) {
             this.skipNextScrollEvent = false;
@@ -197,9 +196,11 @@ class Sticky extends Component {
     /**
      * Update Sticky position.
      */
-    update () {
-        var disabled = !this.props.enabled ||
-            this.state.bottomBoundary - this.state.topBoundary <= this.state.height ||
+    update() {
+        var disabled =
+            !this.props.enabled ||
+            this.state.bottomBoundary - this.state.topBoundary <=
+                this.state.height ||
             (this.state.width === 0 && this.state.height === 0);
 
         if (disabled) {
@@ -218,9 +219,11 @@ class Sticky extends Component {
         // There are 2 principles to make sure Sticky won't get wrong so much:
         // 1. Reset Sticky to the original postion when "top" <= topBoundary
         // 2. Release Sticky to the bottom boundary when "bottom" >= bottomBoundary
-        if (top <= this.state.topBoundary) { // #1
+        if (top <= this.state.topBoundary) {
+            // #1
             this.reset();
-        } else if (bottom >= this.state.bottomBoundary) { // #2
+        } else if (bottom >= this.state.bottomBoundary) {
+            // #2
             this.stickyBottom = this.state.bottomBoundary;
             this.stickyTop = this.stickyBottom - this.state.height;
             this.release(this.stickyTop);
@@ -232,9 +235,9 @@ class Sticky extends Component {
                         this.release(this.state.y);
                         this.stickyTop = this.state.y;
                         this.stickyBottom = this.stickyTop + this.state.height;
-                        // Commentting out "break" is on purpose, because there is a chance to transit to FIXED
-                        // from ORIGINAL when calling window.scrollTo().
-                        // break;
+                    // Commentting out "break" is on purpose, because there is a chance to transit to FIXED
+                    // from ORIGINAL when calling window.scrollTo().
+                    // break;
                     case STATUS_RELEASED:
                         // If "top" and "bottom" are inbetween stickyTop and stickyBottom, then Sticky is in
                         // RELEASE status. Otherwise, it changes to FIXED status, and its bottom sticks to
@@ -254,17 +257,27 @@ class Sticky extends Component {
                         // 1. it's top will stick to the screen top,
                         // 2. it's bottom will stick to the screen bottom,
                         // 3. if not the cases above, then it's height gets changed
-                        if (delta > 0 && pos === this.state.top) { // case 1, and scrolling down
+                        if (delta > 0 && pos === this.state.top) {
+                            // case 1, and scrolling down
                             this.stickyTop = top - delta;
                             this.stickyBottom = this.stickyTop + height;
-                        } else if (delta < 0 && pos === this.state.bottom - height) { // case 2, and scrolling up
+                        } else if (
+                            delta < 0 &&
+                            pos === this.state.bottom - height
+                        ) {
+                            // case 2, and scrolling up
                             this.stickyBottom = bottom - delta;
                             this.stickyTop = this.stickyBottom - height;
-                        } else if (pos !== this.state.bottom - height && pos !== this.state.top) { // case 3
+                        } else if (
+                            pos !== this.state.bottom - height &&
+                            pos !== this.state.top
+                        ) {
+                            // case 3
                             // This case only happens when Sticky's bottom sticks to the screen bottom and
                             // its height gets changed. Sticky should be in RELEASE status and update its
                             // sticky bottom by calculating how much height it changed.
-                            var deltaHeight = (pos + height - this.state.bottom);
+                            const deltaHeight =
+                                pos + height - this.state.bottom;
                             this.stickyBottom = bottom - delta + deltaHeight;
                             this.stickyTop = this.stickyBottom - height;
                         } else {
@@ -286,8 +299,11 @@ class Sticky extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevState.status !== this.state.status && this.props.onStateChange) {
-            this.props.onStateChange({status: this.state.status});
+        if (
+            prevState.status !== this.state.status &&
+            this.props.onStateChange
+        ) {
+            this.props.onStateChange({ status: this.state.status });
         }
 
         // check if we are up-to-date, is triggered in case of scroll restoration
@@ -312,21 +328,24 @@ class Sticky extends Component {
                 }
             }
             // if the top or bottomBoundary props were changed, then trigger the update
-            else if (prevProps.top !== this.props.top || prevProps.bottomBoundary !== this.props.bottomBoundary) {
+            else if (
+                prevProps.top !== this.props.top ||
+                prevProps.bottomBoundary !== this.props.bottomBoundary
+            ) {
                 this.updateInitialDimension();
                 this.update();
             }
         }
     }
 
-    componentWillUnmount () {
-        var subscribers = this.subscribers || [];
+    componentWillUnmount() {
+        const subscribers = this.subscribers || [];
         for (var i = subscribers.length - 1; i >= 0; i--) {
             this.subscribers[i].unsubscribe();
         }
     }
 
-    componentDidMount () {
+    componentDidMount() {
         // Only initialize the globals if this is the first
         // time this component type has been mounted
         if (!win) {
@@ -347,39 +366,54 @@ class Sticky extends Component {
         this.scrollTop = docBody.scrollTop + docEl.scrollTop;
 
         if (this.props.enabled) {
-            this.setState({activated: true});
+            this.setState({ activated: true });
             this.updateInitialDimension();
             this.update();
         }
         // bind the listeners regardless if initially enabled - allows the component to toggle sticky functionality
         this.subscribers = [
-            subscribe('scrollStart', this.handleScrollStart.bind(this), {useRAF: true}),
-            subscribe('scroll', this.handleScroll.bind(this), {useRAF: true, enableScrollInfo: true}),
-            subscribe('resize', this.handleResize.bind(this), {enableResizeInfo: true})
+            subscribe('scrollStart', this.handleScrollStart.bind(this), {
+                useRAF: true,
+            }),
+            subscribe('scroll', this.handleScroll.bind(this), {
+                useRAF: true,
+                enableScrollInfo: true,
+            }),
+            subscribe('resize', this.handleResize.bind(this), {
+                enableResizeInfo: true,
+            }),
         ];
     }
 
-    translate (style, pos) {
-        var enableTransforms = canEnableTransforms && this.props.enableTransforms
+    translate(style, pos) {
+        const enableTransforms =
+            canEnableTransforms && this.props.enableTransforms;
         if (enableTransforms && this.state.activated) {
-            style[TRANSFORM_PROP] = 'translate3d(0,' + Math.round(pos) + 'px,0)';
+            style[TRANSFORM_PROP] =
+                'translate3d(0,' + Math.round(pos) + 'px,0)';
         } else {
             style.top = pos + 'px';
         }
     }
 
-    shouldComponentUpdate (nextProps, nextState) {
-        return !this.props.shouldFreeze() && !(shallowEqual(this.props, nextProps) && shallowEqual(this.state, nextState));
+    shouldComponentUpdate(nextProps, nextState) {
+        return (
+            !this.props.shouldFreeze() &&
+            !(
+                shallowEqual(this.props, nextProps) &&
+                shallowEqual(this.state, nextState)
+            )
+        );
     }
 
-    render () {
+    render() {
         // TODO, "overflow: auto" prevents collapse, need a good way to get children height
-        var innerStyle = {
+        const innerStyle = {
             position: this.state.status === STATUS_FIXED ? 'fixed' : 'relative',
             top: this.state.status === STATUS_FIXED ? '0px' : '',
-            zIndex: this.props.innerZ
+            zIndex: this.props.innerZ,
         };
-        var outerStyle = {};
+        const outerStyle = {};
 
         // always use translate3d to enhance the performance
         this.translate(innerStyle, this.state.pos);
@@ -388,17 +422,45 @@ class Sticky extends Component {
             outerStyle.height = this.state.height + 'px';
         }
 
-        var outerClasses = classNames('sticky-outer-wrapper', this.props.className, {
-            [this.props.activeClass]: this.state.status === STATUS_FIXED,
-            [this.props.releasedClass]: this.state.status === STATUS_RELEASED
-        })
+        const outerClasses = classNames(
+            'sticky-outer-wrapper',
+            this.props.className,
+            {
+                [this.props.activeClass]: this.state.status === STATUS_FIXED,
+                [this.props.releasedClass]:
+                    this.state.status === STATUS_RELEASED,
+            },
+        );
 
-        var children = this.props.children;
+        const innerClasses = classNames(
+            'sticky-inner-wrapper',
+            this.props.innerClass,
+            {
+                [this.props.innerActiveClass]:
+                    this.state.status === STATUS_FIXED,
+            },
+        );
+
+        const children = this.props.children;
 
         return (
-            <div ref={(outer) => { this.outerElement = outer; }} className={outerClasses} style={outerStyle}>
-                <div ref={(inner) => { this.innerElement = inner; }} className={['sticky-inner-wrapper', this.props.innerClass].join(' ')} style={innerStyle}>
-                    {typeof children === 'function' ? children({ status: this.state.status }) : children}
+            <div
+                ref={(outer) => {
+                    this.outerElement = outer;
+                }}
+                className={outerClasses}
+                style={outerStyle}
+            >
+                <div
+                    ref={(inner) => {
+                        this.innerElement = inner;
+                    }}
+                    className={innerClasses}
+                    style={innerStyle}
+                >
+                    {typeof children === 'function'
+                        ? children({ status: this.state.status })
+                        : children}
                 </div>
             </div>
         );
@@ -408,7 +470,9 @@ class Sticky extends Component {
 Sticky.displayName = 'Sticky';
 
 Sticky.defaultProps = {
-    shouldFreeze: function () { return false; },
+    shouldFreeze: function () {
+        return false;
+    },
     enabled: true,
     top: 0,
     bottomBoundary: 0,
@@ -417,6 +481,7 @@ Sticky.defaultProps = {
     releasedClass: 'released',
     onStateChange: null,
     innerClass: '',
+    innerActiveClass: '',
 };
 
 /**
@@ -428,30 +493,25 @@ Sticky.defaultProps = {
  */
 Sticky.propTypes = {
     enabled: PropTypes.bool,
-    top: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number
-    ]),
+    top: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     bottomBoundary: PropTypes.oneOfType([
-        PropTypes.object,  // TODO, may remove
+        PropTypes.object, // TODO, may remove
         PropTypes.string,
-        PropTypes.number
+        PropTypes.number,
     ]),
     enableTransforms: PropTypes.bool,
     activeClass: PropTypes.string,
     releasedClass: PropTypes.string,
     innerClass: PropTypes.string,
+    innerActiveClass: PropTypes.string,
     className: PropTypes.string,
     onStateChange: PropTypes.func,
     shouldFreeze: PropTypes.func,
-    innerZ: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number
-    ])
+    innerZ: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 Sticky.STATUS_ORIGINAL = STATUS_ORIGINAL;
 Sticky.STATUS_RELEASED = STATUS_RELEASED;
 Sticky.STATUS_FIXED = STATUS_FIXED;
 
-module.exports = Sticky;
+export default Sticky;

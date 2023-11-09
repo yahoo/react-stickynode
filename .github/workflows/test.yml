@@ -1,0 +1,45 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Testing
+
+on:
+    push:
+        branches: [master]
+    pull_request:
+        branches: [master]
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                node-version: [16.x, 18.x]
+
+        steps:
+            - uses: actions/checkout@v3
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
+            - run: npm i
+            - run: npm run lint
+            - run: npm test
+            # - name: Build fixture
+            #   run: npm run func:build
+            # - name: Set envs
+            #   run: |
+            #       echo "FUNC_PATH=dist/${GITHUB_WORKFLOW}/${GITHUB_JOB}/${GITHUB_RUN_NUMBER}" >> ${GITHUB_ENV}
+            # - name: Deploy to gh-pages
+            #   uses: peaceiris/actions-gh-pages@v3.8.0
+            #   with:
+            #       deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+            #       destination_dir: ./${{ env.FUNC_PATH }}
+            #       keep_files: true
+            #       publish_dir: ./tests/functional/dist
+            # - name: Func test
+            #   run: npm run func -- --baseUrl http://yahoo.github.io/
+            #   env:
+            #       SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+            #       SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}

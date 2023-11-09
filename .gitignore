@@ -10,4 +10,6 @@ dist/
 tests/functional/css/
 tests/functional/bundle.js
 tests/functional/sticky-functional.js
+.DS_Store
 .eslintcache
+package-lock.json
