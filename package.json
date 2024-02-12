@@ -83,7 +83,7 @@
     "wdio-chromedriver-service": "^8.0.0",
     "webpack": "^5.41.1",
     "webpack-cli": "^5.0.0",
-    "webpack-dev-server": "^4.0.0"
+    "webpack-dev-server": "^5.0.0"
   },
   "peerDependencies": {
     "react": "^0.14.2 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0",
