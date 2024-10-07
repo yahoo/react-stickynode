@@ -238,6 +238,7 @@ class Sticky extends Component {
                     // Commentting out "break" is on purpose, because there is a chance to transit to FIXED
                     // from ORIGINAL when calling window.scrollTo().
                     // break;
+                    /* eslint-disable-next-line no-fallthrough */
                     case STATUS_RELEASED:
                         // If "top" and "bottom" are inbetween stickyTop and stickyBottom, then Sticky is in
                         // RELEASE status. Otherwise, it changes to FIXED status, and its bottom sticks to
@@ -492,6 +493,7 @@ Sticky.defaultProps = {
  *        Could be a selector representing a node whose bottom should serve as the bottom boudary.
  */
 Sticky.propTypes = {
+    children: PropTypes.elementType,
     enabled: PropTypes.bool,
     top: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     bottomBoundary: PropTypes.oneOfType([
