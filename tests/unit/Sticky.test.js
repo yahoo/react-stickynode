@@ -504,6 +504,7 @@ describe('Sticky', () => {
             render() {
                 return (
                     <Sticky
+                        /* eslint-disable-next-line react/no-string-refs */
                         ref="sticky"
                         bottomBoundary={`#boundary{this.state.boundary}`}
                         enabled={this.state.enabled}

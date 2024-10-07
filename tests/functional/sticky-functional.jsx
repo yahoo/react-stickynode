@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope,react/prop-types */
 const classNames = require('classnames');
 const Sticky = require('../../../dist/cjs/Sticky');
 
