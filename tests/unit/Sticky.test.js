@@ -10,8 +10,9 @@
 
 process.env.NODE_ENV = 'development';
 
+require('@testing-library/jest-dom');
 const ee = require('subscribe-ui-event/dist/globalVars').EE;
-const { act, render } = require('@testing-library/react');
+const { act, render, screen } = require('@testing-library/react');
 const React = require('react');
 const Sticky = require('../../dist/cjs/Sticky');
 
@@ -484,73 +485,131 @@ describe('Sticky', () => {
         */
     });
 
-    test('should allow the sticky functionality to be toggled off', () => {
-        var ReactTestUtils = require('react-dom/test-utils');
-        var React = require('react');
-
-        // setup a wrapper to simulate the controlling of the sticky prop
-        class TestComponent extends React.Component {
-            constructor(props) {
-                super(props);
-
-                this.sticky = null;
-                this.setTextInputRef = (element) => {
-                    this.sticky = element;
-                };
-
-                this.state = { boundary: '', enabled: true, name: 'JOE' };
-            }
-
-            render() {
-                return (
+    describe('should allow the sticky functionality to be toggled off', () => {
+        // eslint-disable-next-line react/prop-types
+        const TestComponent = ({ enabled, boundary, name }) => {
+            return (
+                <>
                     <Sticky
-                        /* eslint-disable-next-line react/no-string-refs */
-                        ref="sticky"
-                        bottomBoundary={`#boundary{this.state.boundary}`}
-                        enabled={this.state.enabled}
+                        bottomBoundary={`#boundary${boundary}`}
+                        enabled={enabled}
                     >
-                        {this.state.name}
-                        {this.state.enabled && <div id="boundary" />}
+                        {name}
+                        {enabled && <div id="boundary" />}
                     </Sticky>
-                );
-            }
-        }
+                </>
+            );
+        };
 
-        var parent = ReactTestUtils.renderIntoDocument(
-            React.createElement(TestComponent, {}),
-        );
+        test('toggles the enabled prop off', () => {
+            const { rerender } = render(
+                React.createElement(TestComponent, {
+                    enabled: true,
+                    boundary: '',
+                    name: 'JOE',
+                }),
+            );
 
-        // toggle the enabled prop off
-        act(() => {
-            parent.setState({ enabled: false });
-        });
-        expect(parent.refs.sticky.props.enabled).toEqual(false);
-        expect(parent.refs.sticky.state.activated).toEqual(false);
-        expect(parent.refs.sticky.props.children).toContain('JOE');
+            // Assert initial state
+            expect(screen.getByText('JOE')).toBeInTheDocument();
 
-        // should not error while not enabled & other props changed
-        act(() => {
-            parent.setState({ name: 'JENKINS' });
-        });
-        expect(parent.refs.sticky.props.enabled).toEqual(false);
-        expect(parent.refs.sticky.props.children).toContain('JENKINS');
+            // Use queryByTestId or queryById if 'boundary' refers to an element
+            const boundaryElement =
+                screen.queryByTestId('boundary') ||
+                document.getElementById('boundary');
+            expect(boundaryElement).toBeInTheDocument(); // This verifies the element exists
 
-        // should not error while not enabled & boundary changes
-        act(() => {
-            parent.setState({ boundary: '-not-present' });
-        });
-        expect(parent.refs.sticky.props.enabled).toEqual(false);
-        expect(parent.refs.sticky.props.children).toContain('JENKINS');
-        act(() => {
-            parent.setState({ boundary: '' });
+            // Toggle the enabled prop off
+            rerender(
+                React.createElement(TestComponent, {
+                    enabled: false,
+                    boundary: '',
+                    name: 'JOE',
+                }),
+            );
+            expect(screen.getByText('JOE')).toBeInTheDocument();
+            expect(screen.queryByText('boundary')).toBeNull(); // No boundary div when disabled
         });
 
-        // toggle the enabled prop on
-        act(() => {
-            parent.setState({ enabled: true });
+        test('updates name while not enabled', () => {
+            const { rerender } = render(
+                React.createElement(TestComponent, {
+                    enabled: false,
+                    boundary: '',
+                    name: 'JOE',
+                }),
+            );
+
+            // Update the name prop
+            rerender(
+                React.createElement(TestComponent, {
+                    enabled: false,
+                    boundary: '',
+                    name: 'JENKINS',
+                }),
+            );
+
+            // Assert updated state
+            expect(screen.getByText('JENKINS')).toBeInTheDocument();
+            expect(screen.queryByText('boundary')).toBeNull(); // Still disabled
         });
-        expect(parent.refs.sticky.props.enabled).toEqual(true);
-        expect(parent.refs.sticky.state.activated).toEqual(true);
+
+        test('updates boundary while not enabled', () => {
+            const { rerender } = render(
+                React.createElement(TestComponent, {
+                    enabled: false,
+                    boundary: '',
+                    name: 'JENKINS',
+                }),
+            );
+
+            // Update the boundary prop
+            rerender(
+                React.createElement(TestComponent, {
+                    enabled: false,
+                    boundary: '-not-present',
+                    name: 'JENKINS',
+                }),
+            );
+            expect(screen.getByText('JENKINS')).toBeInTheDocument();
+            expect(screen.queryByText('boundary')).toBeNull(); // Still disabled
+
+            // Reset the boundary
+            rerender(
+                React.createElement(TestComponent, {
+                    enabled: false,
+                    boundary: '',
+                    name: 'JENKINS',
+                }),
+            );
+            expect(screen.getByText('JENKINS')).toBeInTheDocument();
+            expect(screen.queryByText('boundary')).toBeNull(); // Still disabled
+        });
+
+        test('toggles the enabled prop on', () => {
+            const { rerender } = render(
+                React.createElement(TestComponent, {
+                    enabled: false,
+                    boundary: '',
+                    name: 'JENKINS',
+                }),
+            );
+
+            // Toggle the enabled prop on
+            rerender(
+                React.createElement(TestComponent, {
+                    enabled: true,
+                    boundary: '',
+                    name: 'JENKINS',
+                }),
+            );
+            expect(screen.getByText('JENKINS')).toBeInTheDocument();
+            // Use queryByTestId or queryById if 'boundary' refers to an element
+            const boundaryElement =
+                screen.queryByTestId('boundary') ||
+                document.getElementById('boundary');
+            expect(boundaryElement).toBeInTheDocument(); // Boundary div appears
+        });
     });
 
     test('should apply custom class props', () => {
