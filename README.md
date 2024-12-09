@@ -15,12 +15,12 @@ Another highlight is that `react-stickynode` can handle the case where a sticky 
 
 ## Features
 
--   Retrieve `scrollTop` only once for all sticky components.
--   Listen to throttled scrolling to have better performance.
--   Use rAF to update sticky status to have better performance.
--   Support top offset from the top of screen.
--   Support bottom boundary to stop sticky status.
--   Support any sticky target with various width units.
+- Retrieve `scrollTop` only once for all sticky components.
+- Listen to throttled scrolling to have better performance.
+- Use rAF to update sticky status to have better performance.
+- Support top offset from the top of screen.
+- Support bottom boundary to stop sticky status.
+- Support any sticky target with various width units.
 
 ## Usage
 
