@@ -13,6 +13,7 @@
 /tests/
 /tmp/
 *.conf*.js*
+eslint.config.mjs
 lcov-*
 xunit*
 TEST_*
