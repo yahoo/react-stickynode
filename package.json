@@ -47,7 +47,6 @@
   },
   "dependencies": {
     "classnames": "^2.0.0",
-    "core-js": "^3.6.5",
     "prop-types": "^15.6.0",
     "shallowequal": "^1.0.0",
     "subscribe-ui-event": "^2.0.6"
@@ -70,6 +69,7 @@
     "babel-jest": "^29.0.0",
     "babel-plugin-add-module-exports": "^1.0.4",
     "chromedriver": "^131.0.2",
+    "core-js": "^3.39.0",
     "eslint": "^9.0.0",
     "eslint-plugin-react": "^7.37.1",
     "gh-pages": "^6.0.0",
@@ -96,12 +96,7 @@
     "test"
   ],
   "license": "BSD-3-Clause",
-  "browserslist": [
-    "last 2 versions",
-    "ie >= 11",
-    "iOS >= 12",
-    "Android >= 11"
-  ],
+  "browserslist": "> 0.25%, not dead",
   "prettier": {
     "singleQuote": true,
     "tabWidth": 4
