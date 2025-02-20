@@ -493,7 +493,7 @@ Sticky.defaultProps = {
  *        Could be a selector representing a node whose bottom should serve as the bottom boudary.
  */
 Sticky.propTypes = {
-    children: PropTypes.elementType,
+    children: PropTypes.element,
     enabled: PropTypes.bool,
     top: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     bottomBoundary: PropTypes.oneOfType([
