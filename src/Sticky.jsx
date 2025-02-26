@@ -28,6 +28,7 @@ let M;
 let scrollDelta = 0;
 let win;
 let winHeight = -1;
+let resizeObserver;
 
 class Sticky extends Component {
     constructor(props, context) {
@@ -97,6 +98,15 @@ class Sticky extends Component {
         if (typeof boundary === 'string') {
             if (!this.bottomBoundaryTarget) {
                 this.bottomBoundaryTarget = doc.querySelector(boundary);
+            }
+            if (this.bottomBoundaryTarget) {
+                if (!resizeObserver) {
+                    resizeObserver = new ResizeObserver(() => {
+                        this.updateInitialDimension();
+                        this.update();
+                    });
+                }
+                resizeObserver.observe(this.bottomBoundaryTarget);
             }
             boundary = this.getTargetBottom(this.bottomBoundaryTarget);
         }
