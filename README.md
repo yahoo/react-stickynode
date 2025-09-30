@@ -1,3 +1,7 @@
+> ⚠️ **DEPRECATED / END-OF-LIFE (EOL)** — `react-stickynode` will be unmaintained as of **2025-12-31**.
+> No new features, issues, PRs, or security fixes will be provided.
+> See the issue for more information - https://github.com/yahoo/react-stickynode/issues/1094
+
 # react-stickynode
 
 [![npm version](https://badge.fury.io/js/react-stickynode.svg)](http://badge.fury.io/js/react-stickynode)
