@@ -66,7 +66,7 @@
     "@wdio/spec-reporter": "^9.2.14",
     "@wdio/static-server-service": "^9.2.2",
     "atomizer": "^3.9.1",
-    "babel-jest": "^29.0.0",
+    "babel-jest": "^30.2.0",
     "babel-plugin-add-module-exports": "^1.0.4",
     "chromedriver": "^134.0.0",
     "core-js": "^3.39.0",
